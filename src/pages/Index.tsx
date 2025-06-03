@@ -312,7 +312,7 @@ const Index = () => {
               <table className="w-full border-collapse border border-red-300">
                 <thead>
                   <tr className="bg-red-100">
-                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-base w-24">6 M's</th>
+                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-base w-20">6 M's</th>
                     <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-base w-48">Descripción</th>
                     <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-base w-40">Tiempo</th>
                     <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-base w-40">Costo</th>
@@ -322,7 +322,7 @@ const Index = () => {
                 <tbody>
                   {m6Categories.map((category, index) => (
                     <tr key={category.key} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                      <td className="border border-red-300 p-1 font-medium text-red-700 text-xs w-24">
+                      <td className="border border-red-300 p-1 font-medium text-red-700 text-xs w-20">
                         {category.label}
                       </td>
                       <td className="border border-red-300 p-1 w-48">
