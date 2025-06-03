@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -29,21 +28,21 @@ const Index = () => {
   const [porQueRelevante, setPorQueRelevante] = useState('');
   
   const [implementacion, setImplementacion] = useState<SectionData>({
-    manoDeObra: { duracion: 0, monto: 0, calidad: '' },
-    metodologia: { duracion: 0, monto: 0, calidad: '' },
-    medicion: { duracion: 0, monto: 0, calidad: '' },
-    maquinaria: { duracion: 0, monto: 0, calidad: '' },
-    materiales: { duracion: 0, monto: 0, calidad: '' },
-    medioAmbiente: { duracion: 0, monto: 0, calidad: '' }
+    manoDeObra: { duracion: 0, monto: 0, calidad: '', descripcion: '' },
+    metodologia: { duracion: 0, monto: 0, calidad: '', descripcion: '' },
+    medicion: { duracion: 0, monto: 0, calidad: '', descripcion: '' },
+    maquinaria: { duracion: 0, monto: 0, calidad: '', descripcion: '' },
+    materiales: { duracion: 0, monto: 0, calidad: '', descripcion: '' },
+    medioAmbiente: { duracion: 0, monto: 0, calidad: '', descripcion: '' }
   });
 
   const [operacion, setOperacion] = useState<SectionData>({
-    manoDeObra: { duracion: 0, monto: 0, calidad: '' },
-    metodologia: { duracion: 0, monto: 0, calidad: '' },
-    medicion: { duracion: 0, monto: 0, calidad: '' },
-    maquinaria: { duracion: 0, monto: 0, calidad: '' },
-    materiales: { duracion: 0, monto: 0, calidad: '' },
-    medioAmbiente: { duracion: 0, monto: 0, calidad: '' }
+    manoDeObra: { duracion: 0, monto: 0, calidad: '', descripcion: '' },
+    metodologia: { duracion: 0, monto: 0, calidad: '', descripcion: '' },
+    medicion: { duracion: 0, monto: 0, calidad: '', descripcion: '' },
+    maquinaria: { duracion: 0, monto: 0, calidad: '', descripcion: '' },
+    materiales: { duracion: 0, monto: 0, calidad: '', descripcion: '' },
+    medioAmbiente: { duracion: 0, monto: 0, calidad: '', descripcion: '' }
   });
 
   const [tiempoImplementacion, setTiempoImplementacion] = useState(0);
@@ -127,30 +126,6 @@ const Index = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="space-y-6">
               <div>
-                <Label htmlFor="direccion" className="font-semibold text-red-700">Dirección</Label>
-                <Select value={direccion} onValueChange={setDireccion}>
-                  <SelectTrigger className="mt-1 border-red-200 focus:border-red-400">
-                    <SelectValue placeholder="Seleccionar dirección" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {direccionOpciones.map((opcion) => (
-                      <SelectItem key={opcion} value={opcion}>
-                        {opcion}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="gerencia" className="font-semibold text-red-700">Gerencia</Label>
-                <Input
-                  id="gerencia"
-                  value={gerencia}
-                  onChange={(e) => setGerencia(e.target.value)}
-                  className="mt-1 border-red-200 focus:border-red-400"
-                />
-              </div>
-              <div>
                 <Label htmlFor="implementacion" className="font-semibold text-red-700">Nombre de implementación</Label>
                 <Input
                   id="implementacion"
@@ -158,6 +133,32 @@ const Index = () => {
                   onChange={(e) => setNombreImplementacion(e.target.value)}
                   className="mt-1 border-red-200 focus:border-red-400"
                 />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="direccion" className="font-semibold text-red-700">Dirección</Label>
+                  <Select value={direccion} onValueChange={setDireccion}>
+                    <SelectTrigger className="mt-1 border-red-200 focus:border-red-400">
+                      <SelectValue placeholder="Seleccionar dirección" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {direccionOpciones.map((opcion) => (
+                        <SelectItem key={opcion} value={opcion}>
+                          {opcion}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label htmlFor="gerencia" className="font-semibold text-red-700">Gerencia</Label>
+                  <Input
+                    id="gerencia"
+                    value={gerencia}
+                    onChange={(e) => setGerencia(e.target.value)}
+                    className="mt-1 border-red-200 focus:border-red-400"
+                  />
+                </div>
               </div>
             </div>
             <div className="space-y-6">
@@ -189,9 +190,9 @@ const Index = () => {
                 <thead>
                   <tr className="bg-red-100">
                     <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-16">6 M's</th>
-                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-40">Descripción</th>
-                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-32">Tiempo</th>
-                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-32">Costo</th>
+                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-48">Descripción</th>
+                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-36">Tiempo</th>
+                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-36">Costo</th>
                     <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs">Calidad</th>
                   </tr>
                 </thead>
@@ -201,8 +202,15 @@ const Index = () => {
                       <td className="border border-red-300 p-1 font-medium text-red-700 text-xs w-16">
                         {category.label}
                       </td>
-                      <td className="border border-red-300 p-1 w-40"></td>
-                      <td className="border border-red-300 p-1 w-32">
+                      <td className="border border-red-300 p-1 w-48">
+                        <Textarea
+                          value={implementacion[category.key].descripcion}
+                          onChange={(e) => updateImplementacion(category.key, 'descripcion', e.target.value)}
+                          className="text-xs h-6 resize-none border-red-200 px-2"
+                          rows={1}
+                        />
+                      </td>
+                      <td className="border border-red-300 p-1 w-36">
                         <div className="text-xs text-red-600 mb-0.5">Duración:</div>
                         <Input
                           type="number"
@@ -212,7 +220,7 @@ const Index = () => {
                           min="0"
                         />
                       </td>
-                      <td className="border border-red-300 p-1 w-32">
+                      <td className="border border-red-300 p-1 w-36">
                         <div className="text-xs text-red-600 mb-0.5">Monto: $</div>
                         <Input
                           type="number"
@@ -226,7 +234,7 @@ const Index = () => {
                         <Textarea
                           value={implementacion[category.key].calidad}
                           onChange={(e) => updateImplementacion(category.key, 'calidad', e.target.value)}
-                          className="text-xs h-4 resize-none border-red-200 px-2"
+                          className="text-xs h-6 resize-none border-red-200 px-2"
                           rows={1}
                         />
                       </td>
@@ -258,9 +266,9 @@ const Index = () => {
                 <thead>
                   <tr className="bg-red-100">
                     <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-16">6 M's</th>
-                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-40">Descripción</th>
-                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-32">Tiempo</th>
-                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-32">Costo</th>
+                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-48">Descripción</th>
+                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-36">Tiempo</th>
+                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-36">Costo</th>
                     <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs">Calidad</th>
                   </tr>
                 </thead>
@@ -270,8 +278,15 @@ const Index = () => {
                       <td className="border border-red-300 p-1 font-medium text-red-700 text-xs w-16">
                         {category.label}
                       </td>
-                      <td className="border border-red-300 p-1 w-40"></td>
-                      <td className="border border-red-300 p-1 w-32">
+                      <td className="border border-red-300 p-1 w-48">
+                        <Textarea
+                          value={operacion[category.key].descripcion}
+                          onChange={(e) => updateOperacion(category.key, 'descripcion', e.target.value)}
+                          className="text-xs h-6 resize-none border-red-200 px-2"
+                          rows={1}
+                        />
+                      </td>
+                      <td className="border border-red-300 p-1 w-36">
                         <div className="text-xs text-red-600 mb-0.5">Duración:</div>
                         <Input
                           type="number"
@@ -281,7 +296,7 @@ const Index = () => {
                           min="0"
                         />
                       </td>
-                      <td className="border border-red-300 p-1 w-32">
+                      <td className="border border-red-300 p-1 w-36">
                         <div className="text-xs text-red-600 mb-0.5">Monto: $</div>
                         <Input
                           type="number"
@@ -295,7 +310,7 @@ const Index = () => {
                         <Textarea
                           value={operacion[category.key].calidad}
                           onChange={(e) => updateOperacion(category.key, 'calidad', e.target.value)}
-                          className="text-xs h-4 resize-none border-red-200 px-2"
+                          className="text-xs h-6 resize-none border-red-200 px-2"
                           rows={1}
                         />
                       </td>
