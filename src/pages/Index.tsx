@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -8,7 +7,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 interface M6Data {
   duracion: number;
+  duracionJustificacion: string;
   monto: number;
+  montoJustificacion: string;
   calidad: string;
   descripcion: string;
 }
@@ -29,21 +30,21 @@ const Index = () => {
   const [porQueRelevante, setPorQueRelevante] = useState('');
   
   const [implementacion, setImplementacion] = useState<SectionData>({
-    manoDeObra: { duracion: 0, monto: 0, calidad: '', descripcion: '' },
-    metodologia: { duracion: 0, monto: 0, calidad: '', descripcion: '' },
-    medicion: { duracion: 0, monto: 0, calidad: '', descripcion: '' },
-    maquinaria: { duracion: 0, monto: 0, calidad: '', descripcion: '' },
-    materiales: { duracion: 0, monto: 0, calidad: '', descripcion: '' },
-    medioAmbiente: { duracion: 0, monto: 0, calidad: '', descripcion: '' }
+    manoDeObra: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    metodologia: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    medicion: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    maquinaria: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    materiales: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    medioAmbiente: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' }
   });
 
   const [operacion, setOperacion] = useState<SectionData>({
-    manoDeObra: { duracion: 0, monto: 0, calidad: '', descripcion: '' },
-    metodologia: { duracion: 0, monto: 0, calidad: '', descripcion: '' },
-    medicion: { duracion: 0, monto: 0, calidad: '', descripcion: '' },
-    maquinaria: { duracion: 0, monto: 0, calidad: '', descripcion: '' },
-    materiales: { duracion: 0, monto: 0, calidad: '', descripcion: '' },
-    medioAmbiente: { duracion: 0, monto: 0, calidad: '', descripcion: '' }
+    manoDeObra: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    metodologia: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    medicion: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    maquinaria: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    materiales: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    medioAmbiente: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' }
   });
 
   const [tiempoImplementacion, setTiempoImplementacion] = useState(0);
@@ -190,20 +191,20 @@ const Index = () => {
               <table className="w-full border-collapse border border-red-300">
                 <thead>
                   <tr className="bg-red-100">
-                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-20">6 M's</th>
-                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-40">Descripción</th>
+                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-24">6 M's</th>
+                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-44">Descripción</th>
                     <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-36">Tiempo</th>
                     <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-36">Costo</th>
-                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-40">Calidad</th>
+                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-44">Calidad</th>
                   </tr>
                 </thead>
                 <tbody>
                   {m6Categories.map((category, index) => (
                     <tr key={category.key} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                      <td className="border border-red-300 p-1 font-medium text-red-700 text-xs w-20">
+                      <td className="border border-red-300 p-1 font-medium text-red-700 text-xs w-24">
                         {category.label}
                       </td>
-                      <td className="border border-red-300 p-1 w-40">
+                      <td className="border border-red-300 p-1 w-44">
                         <Textarea
                           value={implementacion[category.key].descripcion}
                           onChange={(e) => updateImplementacion(category.key, 'descripcion', e.target.value)}
@@ -212,32 +213,58 @@ const Index = () => {
                         />
                       </td>
                       <td className="border border-red-300 p-1 w-36">
-                        <div className="text-xs text-red-600 mb-0.5">Duración:</div>
-                        <Input
-                          type="number"
-                          value={implementacion[category.key].duracion || ''}
-                          onChange={(e) => updateImplementacion(category.key, 'duracion', Number(e.target.value))}
-                          className="text-sm h-4 border-red-200 px-1 font-medium"
-                          min="0"
-                          max="99999"
-                        />
+                        <div className="space-y-1">
+                          <div>
+                            <div className="text-xs text-red-600 mb-0.5">Duración:</div>
+                            <Input
+                              type="number"
+                              value={implementacion[category.key].duracion || ''}
+                              onChange={(e) => updateImplementacion(category.key, 'duracion', Number(e.target.value))}
+                              className="text-base h-6 border-red-200 px-1 font-medium"
+                              min="0"
+                              max="99999"
+                            />
+                          </div>
+                          <div>
+                            <div className="text-xs text-red-600 mb-0.5">Justificación:</div>
+                            <Textarea
+                              value={implementacion[category.key].duracionJustificacion}
+                              onChange={(e) => updateImplementacion(category.key, 'duracionJustificacion', e.target.value)}
+                              className="text-xs h-6 resize-none border-red-200 px-2"
+                              rows={1}
+                            />
+                          </div>
+                        </div>
                       </td>
                       <td className="border border-red-300 p-1 w-36">
-                        <div className="text-xs text-red-600 mb-0.5">Monto: $</div>
-                        <Input
-                          type="number"
-                          value={implementacion[category.key].monto || ''}
-                          onChange={(e) => updateImplementacion(category.key, 'monto', Number(e.target.value))}
-                          className="text-sm h-4 border-red-200 px-1 font-medium"
-                          min="0"
-                          max="9999999999"
-                        />
+                        <div className="space-y-1">
+                          <div>
+                            <div className="text-xs text-red-600 mb-0.5">Monto: $</div>
+                            <Input
+                              type="number"
+                              value={implementacion[category.key].monto || ''}
+                              onChange={(e) => updateImplementacion(category.key, 'monto', Number(e.target.value))}
+                              className="text-base h-6 border-red-200 px-1 font-medium"
+                              min="0"
+                              max="9999999999"
+                            />
+                          </div>
+                          <div>
+                            <div className="text-xs text-red-600 mb-0.5">Justificación:</div>
+                            <Textarea
+                              value={implementacion[category.key].montoJustificacion}
+                              onChange={(e) => updateImplementacion(category.key, 'montoJustificacion', e.target.value)}
+                              className="text-xs h-6 resize-none border-red-200 px-2"
+                              rows={1}
+                            />
+                          </div>
+                        </div>
                       </td>
-                      <td className="border border-red-300 p-1 w-40">
+                      <td className="border border-red-300 p-1 w-44">
                         <Textarea
                           value={implementacion[category.key].calidad}
                           onChange={(e) => updateImplementacion(category.key, 'calidad', e.target.value)}
-                          className="text-xs h-4 resize-none border-red-200 px-2"
+                          className="text-xs h-6 resize-none border-red-200 px-2"
                           rows={1}
                         />
                       </td>
@@ -268,20 +295,20 @@ const Index = () => {
               <table className="w-full border-collapse border border-red-300">
                 <thead>
                   <tr className="bg-red-100">
-                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-20">6 M's</th>
-                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-40">Descripción</th>
+                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-24">6 M's</th>
+                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-44">Descripción</th>
                     <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-36">Tiempo</th>
                     <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-36">Costo</th>
-                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-40">Calidad</th>
+                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-44">Calidad</th>
                   </tr>
                 </thead>
                 <tbody>
                   {m6Categories.map((category, index) => (
                     <tr key={category.key} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                      <td className="border border-red-300 p-1 font-medium text-red-700 text-xs w-20">
+                      <td className="border border-red-300 p-1 font-medium text-red-700 text-xs w-24">
                         {category.label}
                       </td>
-                      <td className="border border-red-300 p-1 w-40">
+                      <td className="border border-red-300 p-1 w-44">
                         <Textarea
                           value={operacion[category.key].descripcion}
                           onChange={(e) => updateOperacion(category.key, 'descripcion', e.target.value)}
@@ -290,32 +317,58 @@ const Index = () => {
                         />
                       </td>
                       <td className="border border-red-300 p-1 w-36">
-                        <div className="text-xs text-red-600 mb-0.5">Duración:</div>
-                        <Input
-                          type="number"
-                          value={operacion[category.key].duracion || ''}
-                          onChange={(e) => updateOperacion(category.key, 'duracion', Number(e.target.value))}
-                          className="text-sm h-4 border-red-200 px-1 font-medium"
-                          min="0"
-                          max="99999"
-                        />
+                        <div className="space-y-1">
+                          <div>
+                            <div className="text-xs text-red-600 mb-0.5">Duración:</div>
+                            <Input
+                              type="number"
+                              value={operacion[category.key].duracion || ''}
+                              onChange={(e) => updateOperacion(category.key, 'duracion', Number(e.target.value))}
+                              className="text-base h-6 border-red-200 px-1 font-medium"
+                              min="0"
+                              max="99999"
+                            />
+                          </div>
+                          <div>
+                            <div className="text-xs text-red-600 mb-0.5">Justificación:</div>
+                            <Textarea
+                              value={operacion[category.key].duracionJustificacion}
+                              onChange={(e) => updateOperacion(category.key, 'duracionJustificacion', e.target.value)}
+                              className="text-xs h-6 resize-none border-red-200 px-2"
+                              rows={1}
+                            />
+                          </div>
+                        </div>
                       </td>
                       <td className="border border-red-300 p-1 w-36">
-                        <div className="text-xs text-red-600 mb-0.5">Monto: $</div>
-                        <Input
-                          type="number"
-                          value={operacion[category.key].monto || ''}
-                          onChange={(e) => updateOperacion(category.key, 'monto', Number(e.target.value))}
-                          className="text-sm h-4 border-red-200 px-1 font-medium"
-                          min="0"
-                          max="9999999999"
-                        />
+                        <div className="space-y-1">
+                          <div>
+                            <div className="text-xs text-red-600 mb-0.5">Monto: $</div>
+                            <Input
+                              type="number"
+                              value={operacion[category.key].monto || ''}
+                              onChange={(e) => updateOperacion(category.key, 'monto', Number(e.target.value))}
+                              className="text-base h-6 border-red-200 px-1 font-medium"
+                              min="0"
+                              max="9999999999"
+                            />
+                          </div>
+                          <div>
+                            <div className="text-xs text-red-600 mb-0.5">Justificación:</div>
+                            <Textarea
+                              value={operacion[category.key].montoJustificacion}
+                              onChange={(e) => updateOperacion(category.key, 'montoJustificacion', e.target.value)}
+                              className="text-xs h-6 resize-none border-red-200 px-2"
+                              rows={1}
+                            />
+                          </div>
+                        </div>
                       </td>
-                      <td className="border border-red-300 p-1 w-40">
+                      <td className="border border-red-300 p-1 w-44">
                         <Textarea
                           value={operacion[category.key].calidad}
                           onChange={(e) => updateOperacion(category.key, 'calidad', e.target.value)}
-                          className="text-xs h-4 resize-none border-red-200 px-2"
+                          className="text-xs h-6 resize-none border-red-200 px-2"
                           rows={1}
                         />
                       </td>
