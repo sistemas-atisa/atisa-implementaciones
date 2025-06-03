@@ -97,10 +97,6 @@ const Index = () => {
     }));
   };
 
-  const getRowClass = (index: number) => {
-    return index % 2 === 0 ? 'bg-red-50' : 'bg-white';
-  };
-
   const getCostHighlight = (monto: number) => {
     return monto > 10000 ? 'bg-red-200 border-red-400' : '';
   };
@@ -191,8 +187,8 @@ const Index = () => {
               <table className="w-full border-collapse border border-red-300">
                 <thead>
                   <tr className="bg-red-100">
-                    <th className="border border-red-300 p-2 text-left font-semibold text-red-700"></th>
                     <th className="border border-red-300 p-2 text-left font-semibold text-red-700">6 M's</th>
+                    <th className="border border-red-300 p-2 text-left font-semibold text-red-700 w-8"></th>
                     <th className="border border-red-300 p-2 text-center font-semibold text-red-700">Tiempo</th>
                     <th className="border border-red-300 p-2 text-center font-semibold text-red-700">Costo</th>
                     <th className="border border-red-300 p-2 text-center font-semibold text-red-700">Calidad</th>
@@ -200,11 +196,11 @@ const Index = () => {
                 </thead>
                 <tbody>
                   {m6Categories.map((category, index) => (
-                    <tr key={category.key} className={getRowClass(index)}>
-                      <td className="border border-red-300 p-2 w-8 bg-red-100"></td>
+                    <tr key={category.key} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                       <td className="border border-red-300 p-2 font-medium text-red-700">
                         {category.label}
                       </td>
+                      <td className="border border-red-300 p-2 w-8 bg-red-100"></td>
                       <td className="border border-red-300 p-1">
                         <div className="text-xs text-red-600 mb-1">Duración:</div>
                         <Input
@@ -236,8 +232,8 @@ const Index = () => {
                     </tr>
                   ))}
                   <tr className="bg-red-200 font-semibold">
-                    <td className="border border-red-300 p-2"></td>
                     <td className="border border-red-300 p-2 text-red-700">Tiempo de Implementación</td>
+                    <td className="border border-red-300 p-2"></td>
                     <td className="border border-red-300 p-2 text-center text-red-700">
                       {tiempoImplementacion} días
                     </td>
@@ -260,8 +256,8 @@ const Index = () => {
               <table className="w-full border-collapse border border-red-300">
                 <thead>
                   <tr className="bg-red-100">
-                    <th className="border border-red-300 p-2 text-left font-semibold text-red-700"></th>
                     <th className="border border-red-300 p-2 text-left font-semibold text-red-700">6 M's</th>
+                    <th className="border border-red-300 p-2 text-left font-semibold text-red-700 w-8"></th>
                     <th className="border border-red-300 p-2 text-center font-semibold text-red-700">Tiempo</th>
                     <th className="border border-red-300 p-2 text-center font-semibold text-red-700">Costo</th>
                     <th className="border border-red-300 p-2 text-center font-semibold text-red-700">Calidad</th>
@@ -269,11 +265,11 @@ const Index = () => {
                 </thead>
                 <tbody>
                   {m6Categories.map((category, index) => (
-                    <tr key={category.key} className={getRowClass(index)}>
-                      <td className="border border-red-300 p-2 w-8 bg-red-100"></td>
+                    <tr key={category.key} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                       <td className="border border-red-300 p-2 font-medium text-red-700">
                         {category.label}
                       </td>
+                      <td className="border border-red-300 p-2 w-8 bg-red-100"></td>
                       <td className="border border-red-300 p-1">
                         <div className="text-xs text-red-600 mb-1">Duración:</div>
                         <Input
@@ -305,10 +301,10 @@ const Index = () => {
                     </tr>
                   ))}
                   <tr className="bg-red-200 font-semibold">
-                    <td className="border border-red-300 p-2"></td>
                     <td className="border border-red-300 p-2 text-red-700" colSpan={3}>
                       Monto Total de Operación
                     </td>
+                    <td className="border border-red-300 p-2"></td>
                     <td className="border border-red-300 p-2 text-center text-red-700">
                       ${montoTotalOperacion.toLocaleString()}
                     </td>
