@@ -33,17 +33,17 @@ const M6Table: React.FC<M6TableProps> = ({ title, data, onUpdate, totalTime, tot
         <table className="w-full border-collapse border border-red-300" style={{ tableLayout: 'fixed' }}>
           <thead>
             <tr className="bg-red-100">
-              <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-base" style={{ width: '76px' }}>6 M's</th>
-              <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-base" style={{ width: '182px' }}>Descripción</th>
-              <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-base" style={{ width: '152px' }}>Tiempo</th>
-              <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-base" style={{ width: '152px' }}>Costo</th>
-              <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-base" style={{ width: '182px' }}>Calidad</th>
+              <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-lg" style={{ width: '76px' }}>6 M's</th>
+              <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-lg" style={{ width: '182px' }}>Descripción</th>
+              <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-lg" style={{ width: '152px' }}>Tiempo (Días)</th>
+              <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-lg" style={{ width: '152px' }}>Costo</th>
+              <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-lg" style={{ width: '182px' }}>Calidad</th>
             </tr>
           </thead>
           <tbody>
             {m6Categories.map((category, index) => (
               <tr key={category.key} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                <td className="border border-red-300 p-1 font-medium text-red-700 text-xs" style={{ width: '76px' }}>
+                <td className="border border-red-300 p-1 font-medium text-red-700 text-sm" style={{ width: '76px' }}>
                   {category.label}
                 </td>
                 <td className="border border-red-300 p-1" style={{ width: '182px' }}>
@@ -57,7 +57,7 @@ const M6Table: React.FC<M6TableProps> = ({ title, data, onUpdate, totalTime, tot
                 <td className="border border-red-300 p-1" style={{ width: '152px' }}>
                   <div className="space-y-1">
                     <div>
-                      <div className="text-xs text-red-600 mb-0.5">Duración:</div>
+                      <div className="text-sm text-red-600 mb-0.5 font-medium">Duración:</div>
                       <Input
                         type="number"
                         value={data[category.key].duracion || ''}
@@ -80,7 +80,7 @@ const M6Table: React.FC<M6TableProps> = ({ title, data, onUpdate, totalTime, tot
                 <td className="border border-red-300 p-1" style={{ width: '152px' }}>
                   <div className="space-y-1">
                     <div>
-                      <div className="text-xs text-red-600 mb-0.5">Monto: $</div>
+                      <div className="text-sm text-red-600 mb-0.5 font-medium">Monto: $</div>
                       <Input
                         type="number"
                         value={data[category.key].monto || ''}
