@@ -190,10 +190,10 @@ const Index = () => {
                 <thead>
                   <tr className="bg-red-100">
                     <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-16">6 M's</th>
-                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-48">Descripción</th>
+                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-40">Descripción</th>
                     <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-36">Tiempo</th>
                     <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-36">Costo</th>
-                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs">Calidad</th>
+                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-40">Calidad</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -202,7 +202,7 @@ const Index = () => {
                       <td className="border border-red-300 p-1 font-medium text-red-700 text-xs w-16">
                         {category.label}
                       </td>
-                      <td className="border border-red-300 p-1 w-48">
+                      <td className="border border-red-300 p-1 w-40">
                         <Textarea
                           value={implementacion[category.key].descripcion}
                           onChange={(e) => updateImplementacion(category.key, 'descripcion', e.target.value)}
@@ -216,7 +216,7 @@ const Index = () => {
                           type="number"
                           value={implementacion[category.key].duracion || ''}
                           onChange={(e) => updateImplementacion(category.key, 'duracion', Number(e.target.value))}
-                          className="text-xs h-4 border-red-200 px-1"
+                          className="text-sm h-4 border-red-200 px-1 font-medium"
                           min="0"
                         />
                       </td>
@@ -226,15 +226,15 @@ const Index = () => {
                           type="number"
                           value={implementacion[category.key].monto || ''}
                           onChange={(e) => updateImplementacion(category.key, 'monto', Number(e.target.value))}
-                          className={`text-xs h-4 border-red-200 px-1 ${getCostHighlight(implementacion[category.key].monto)}`}
+                          className={`text-sm h-4 border-red-200 px-1 font-medium ${getCostHighlight(implementacion[category.key].monto)}`}
                           min="0"
                         />
                       </td>
-                      <td className="border border-red-300 p-1">
+                      <td className="border border-red-300 p-1 w-40">
                         <Textarea
                           value={implementacion[category.key].calidad}
                           onChange={(e) => updateImplementacion(category.key, 'calidad', e.target.value)}
-                          className="text-xs h-6 resize-none border-red-200 px-2"
+                          className="text-xs h-4 resize-none border-red-200 px-2"
                           rows={1}
                         />
                       </td>
@@ -266,10 +266,10 @@ const Index = () => {
                 <thead>
                   <tr className="bg-red-100">
                     <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-16">6 M's</th>
-                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-48">Descripción</th>
+                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-40">Descripción</th>
                     <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-36">Tiempo</th>
                     <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-36">Costo</th>
-                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs">Calidad</th>
+                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-40">Calidad</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -278,7 +278,7 @@ const Index = () => {
                       <td className="border border-red-300 p-1 font-medium text-red-700 text-xs w-16">
                         {category.label}
                       </td>
-                      <td className="border border-red-300 p-1 w-48">
+                      <td className="border border-red-300 p-1 w-40">
                         <Textarea
                           value={operacion[category.key].descripcion}
                           onChange={(e) => updateOperacion(category.key, 'descripcion', e.target.value)}
@@ -292,7 +292,7 @@ const Index = () => {
                           type="number"
                           value={operacion[category.key].duracion || ''}
                           onChange={(e) => updateOperacion(category.key, 'duracion', Number(e.target.value))}
-                          className="text-xs h-4 border-red-200 px-1"
+                          className="text-sm h-4 border-red-200 px-1 font-medium"
                           min="0"
                         />
                       </td>
@@ -302,15 +302,15 @@ const Index = () => {
                           type="number"
                           value={operacion[category.key].monto || ''}
                           onChange={(e) => updateOperacion(category.key, 'monto', Number(e.target.value))}
-                          className={`text-xs h-4 border-red-200 px-1 ${getCostHighlight(operacion[category.key].monto)}`}
+                          className={`text-sm h-4 border-red-200 px-1 font-medium ${getCostHighlight(operacion[category.key].monto)}`}
                           min="0"
                         />
                       </td>
-                      <td className="border border-red-300 p-1">
+                      <td className="border border-red-300 p-1 w-40">
                         <Textarea
                           value={operacion[category.key].calidad}
                           onChange={(e) => updateOperacion(category.key, 'calidad', e.target.value)}
-                          className="text-xs h-6 resize-none border-red-200 px-2"
+                          className="text-xs h-4 resize-none border-red-200 px-2"
                           rows={1}
                         />
                       </td>
@@ -339,13 +339,15 @@ const Index = () => {
             <div>
               <h4 className="text-lg font-semibold mb-4 text-red-600">Implementación</h4>
               <div className="space-y-4">
-                <div className="bg-red-50 p-6 rounded-lg text-center border border-red-200">
-                  <div className="text-sm text-red-600">Tiempo Total de Implementación</div>
-                  <div className="text-3xl font-bold text-red-700">{tiempoImplementacion} días</div>
-                </div>
-                <div className="bg-red-100 p-6 rounded-lg text-center border border-red-300">
-                  <div className="text-sm text-red-600">Costo Total de Implementación</div>
-                  <div className="text-3xl font-bold text-red-700">${montoTotalImplementacion.toLocaleString()}</div>
+                <div className="bg-red-50 p-4 rounded-lg border border-red-200 flex justify-between items-center">
+                  <div>
+                    <div className="text-xs text-red-600">Tiempo Total</div>
+                    <div className="text-lg font-bold text-red-700">{tiempoImplementacion} días</div>
+                  </div>
+                  <div>
+                    <div className="text-xs text-red-600">Costo Total</div>
+                    <div className="text-lg font-bold text-red-700">${montoTotalImplementacion.toLocaleString()}</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -354,9 +356,9 @@ const Index = () => {
             <div>
               <h4 className="text-lg font-semibold mb-4 text-red-600">Operación</h4>
               <div className="space-y-4">
-                <div className="bg-red-200 p-6 rounded-lg text-center border border-red-400">
-                  <div className="text-sm text-red-600">Costo Total de Operación</div>
-                  <div className="text-3xl font-bold text-red-700">${montoTotalOperacion.toLocaleString()}</div>
+                <div className="bg-red-200 p-4 rounded-lg border border-red-400 text-center">
+                  <div className="text-xs text-red-600">Costo Total de Operación</div>
+                  <div className="text-lg font-bold text-red-700">${montoTotalOperacion.toLocaleString()}</div>
                 </div>
               </div>
             </div>
