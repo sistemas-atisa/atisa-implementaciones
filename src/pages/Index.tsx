@@ -10,6 +10,7 @@ interface M6Data {
   duracion: number;
   monto: number;
   calidad: string;
+  descripcion: string;
 }
 
 interface SectionData {
