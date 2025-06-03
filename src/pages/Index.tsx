@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -189,7 +190,7 @@ const Index = () => {
               <table className="w-full border-collapse border border-red-300">
                 <thead>
                   <tr className="bg-red-100">
-                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-16">6 M's</th>
+                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-20">6 M's</th>
                     <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-40">Descripción</th>
                     <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-36">Tiempo</th>
                     <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-36">Costo</th>
@@ -199,7 +200,7 @@ const Index = () => {
                 <tbody>
                   {m6Categories.map((category, index) => (
                     <tr key={category.key} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                      <td className="border border-red-300 p-1 font-medium text-red-700 text-xs w-16">
+                      <td className="border border-red-300 p-1 font-medium text-red-700 text-xs w-20">
                         {category.label}
                       </td>
                       <td className="border border-red-300 p-1 w-40">
@@ -218,6 +219,7 @@ const Index = () => {
                           onChange={(e) => updateImplementacion(category.key, 'duracion', Number(e.target.value))}
                           className="text-sm h-4 border-red-200 px-1 font-medium"
                           min="0"
+                          max="99999"
                         />
                       </td>
                       <td className="border border-red-300 p-1 w-36">
@@ -226,8 +228,9 @@ const Index = () => {
                           type="number"
                           value={implementacion[category.key].monto || ''}
                           onChange={(e) => updateImplementacion(category.key, 'monto', Number(e.target.value))}
-                          className={`text-sm h-4 border-red-200 px-1 font-medium ${getCostHighlight(implementacion[category.key].monto)}`}
+                          className="text-sm h-4 border-red-200 px-1 font-medium"
                           min="0"
+                          max="9999999999"
                         />
                       </td>
                       <td className="border border-red-300 p-1 w-40">
@@ -265,7 +268,7 @@ const Index = () => {
               <table className="w-full border-collapse border border-red-300">
                 <thead>
                   <tr className="bg-red-100">
-                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-16">6 M's</th>
+                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-20">6 M's</th>
                     <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-40">Descripción</th>
                     <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-36">Tiempo</th>
                     <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-36">Costo</th>
@@ -275,7 +278,7 @@ const Index = () => {
                 <tbody>
                   {m6Categories.map((category, index) => (
                     <tr key={category.key} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                      <td className="border border-red-300 p-1 font-medium text-red-700 text-xs w-16">
+                      <td className="border border-red-300 p-1 font-medium text-red-700 text-xs w-20">
                         {category.label}
                       </td>
                       <td className="border border-red-300 p-1 w-40">
@@ -294,6 +297,7 @@ const Index = () => {
                           onChange={(e) => updateOperacion(category.key, 'duracion', Number(e.target.value))}
                           className="text-sm h-4 border-red-200 px-1 font-medium"
                           min="0"
+                          max="99999"
                         />
                       </td>
                       <td className="border border-red-300 p-1 w-36">
@@ -302,8 +306,9 @@ const Index = () => {
                           type="number"
                           value={operacion[category.key].monto || ''}
                           onChange={(e) => updateOperacion(category.key, 'monto', Number(e.target.value))}
-                          className={`text-sm h-4 border-red-200 px-1 font-medium ${getCostHighlight(operacion[category.key].monto)}`}
+                          className="text-sm h-4 border-red-200 px-1 font-medium"
                           min="0"
+                          max="9999999999"
                         />
                       </td>
                       <td className="border border-red-300 p-1 w-40">
@@ -338,16 +343,14 @@ const Index = () => {
             {/* Implementación Summary */}
             <div>
               <h4 className="text-lg font-semibold mb-4 text-red-600">Implementación</h4>
-              <div className="space-y-4">
-                <div className="bg-red-50 p-4 rounded-lg border border-red-200 flex justify-between items-center">
-                  <div>
-                    <div className="text-xs text-red-600">Tiempo Total</div>
-                    <div className="text-lg font-bold text-red-700">{tiempoImplementacion} días</div>
-                  </div>
-                  <div>
-                    <div className="text-xs text-red-600">Costo Total</div>
-                    <div className="text-lg font-bold text-red-700">${montoTotalImplementacion.toLocaleString()}</div>
-                  </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-red-50 p-4 rounded-lg border border-red-200 text-center">
+                  <div className="text-xs text-red-600">Tiempo Total</div>
+                  <div className="text-lg font-bold text-red-700">{tiempoImplementacion} días</div>
+                </div>
+                <div className="bg-red-50 p-4 rounded-lg border border-red-200 text-center">
+                  <div className="text-xs text-red-600">Costo Total</div>
+                  <div className="text-lg font-bold text-red-700">${montoTotalImplementacion.toLocaleString()}</div>
                 </div>
               </div>
             </div>
