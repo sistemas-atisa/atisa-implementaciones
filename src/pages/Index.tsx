@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -169,7 +170,8 @@ const Index = () => {
               <div>
                 <Label className="font-semibold text-red-700">¿Por qué es relevante?</Label>
                 <div className="mt-2 space-y-3">
-                  <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-red-600 font-semibold text-sm">#1</span>
                     <Input
                       value={razon1}
                       onChange={(e) => setRazon1(e.target.value)}
@@ -177,7 +179,8 @@ const Index = () => {
                       className="border-red-200 focus:border-red-400"
                     />
                   </div>
-                  <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-red-600 font-semibold text-sm">#2</span>
                     <Input
                       value={razon2}
                       onChange={(e) => setRazon2(e.target.value)}
@@ -185,7 +188,8 @@ const Index = () => {
                       className="border-red-200 focus:border-red-400"
                     />
                   </div>
-                  <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-red-600 font-semibold text-sm">#3</span>
                     <Input
                       value={razon3}
                       onChange={(e) => setRazon3(e.target.value)}
@@ -225,10 +229,11 @@ const Index = () => {
                         {category.label}
                       </td>
                       <td className="border border-red-300 p-1 w-44">
-                        <Input
+                        <Textarea
                           value={implementacion[category.key].descripcion}
                           onChange={(e) => updateImplementacion(category.key, 'descripcion', e.target.value)}
-                          className="text-xs h-6 border-red-200 px-2"
+                          className="text-xs border-red-200 px-2 py-1 min-h-[60px] resize-none"
+                          rows={3}
                         />
                       </td>
                       <td className="border border-red-300 p-1 w-36">
@@ -245,10 +250,11 @@ const Index = () => {
                             />
                           </div>
                           <div>
-                            <Input
+                            <Textarea
                               value={implementacion[category.key].duracionJustificacion}
                               onChange={(e) => updateImplementacion(category.key, 'duracionJustificacion', e.target.value)}
-                              className="text-xs h-6 border-red-200 px-2"
+                              className="text-xs border-red-200 px-2 py-1 min-h-[60px] resize-none"
+                              rows={3}
                             />
                           </div>
                         </div>
@@ -267,19 +273,21 @@ const Index = () => {
                             />
                           </div>
                           <div>
-                            <Input
+                            <Textarea
                               value={implementacion[category.key].montoJustificacion}
                               onChange={(e) => updateImplementacion(category.key, 'montoJustificacion', e.target.value)}
-                              className="text-xs h-6 border-red-200 px-2"
+                              className="text-xs border-red-200 px-2 py-1 min-h-[60px] resize-none"
+                              rows={3}
                             />
                           </div>
                         </div>
                       </td>
                       <td className="border border-red-300 p-1 w-44">
-                        <Input
+                        <Textarea
                           value={implementacion[category.key].calidad}
                           onChange={(e) => updateImplementacion(category.key, 'calidad', e.target.value)}
-                          className="text-xs h-6 border-red-200 px-2"
+                          className="text-xs border-red-200 px-2 py-1 min-h-[60px] resize-none"
+                          rows={3}
                         />
                       </td>
                     </tr>
@@ -323,10 +331,11 @@ const Index = () => {
                         {category.label}
                       </td>
                       <td className="border border-red-300 p-1 w-44">
-                        <Input
+                        <Textarea
                           value={operacion[category.key].descripcion}
                           onChange={(e) => updateOperacion(category.key, 'descripcion', e.target.value)}
-                          className="text-xs h-6 border-red-200 px-2"
+                          className="text-xs border-red-200 px-2 py-1 min-h-[60px] resize-none"
+                          rows={3}
                         />
                       </td>
                       <td className="border border-red-300 p-1 w-36">
@@ -343,10 +352,11 @@ const Index = () => {
                             />
                           </div>
                           <div>
-                            <Input
+                            <Textarea
                               value={operacion[category.key].duracionJustificacion}
                               onChange={(e) => updateOperacion(category.key, 'duracionJustificacion', e.target.value)}
-                              className="text-xs h-6 border-red-200 px-2"
+                              className="text-xs border-red-200 px-2 py-1 min-h-[60px] resize-none"
+                              rows={3}
                             />
                           </div>
                         </div>
@@ -365,19 +375,21 @@ const Index = () => {
                             />
                           </div>
                           <div>
-                            <Input
+                            <Textarea
                               value={operacion[category.key].montoJustificacion}
                               onChange={(e) => updateOperacion(category.key, 'montoJustificacion', e.target.value)}
-                              className="text-xs h-6 border-red-200 px-2"
+                              className="text-xs border-red-200 px-2 py-1 min-h-[60px] resize-none"
+                              rows={3}
                             />
                           </div>
                         </div>
                       </td>
                       <td className="border border-red-300 p-1 w-44">
-                        <Input
+                        <Textarea
                           value={operacion[category.key].calidad}
                           onChange={(e) => updateOperacion(category.key, 'calidad', e.target.value)}
-                          className="text-xs h-6 border-red-200 px-2"
+                          className="text-xs border-red-200 px-2 py-1 min-h-[60px] resize-none"
+                          rows={3}
                         />
                       </td>
                     </tr>
