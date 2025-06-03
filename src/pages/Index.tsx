@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -118,8 +119,8 @@ const Index = () => {
             </div>
             <div className="text-right">
               <img 
-                src="/lovable-uploads/441a03f4-a193-4088-8265-7f033451acc1.png" 
-                alt="ATISA GROUP Logo" 
+                src="/lovable-uploads/0a197d74-5e2a-44f3-aa78-87fa28f9646e.png" 
+                alt="Logo" 
                 className="h-12 object-contain"
               />
             </div>
