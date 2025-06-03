@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -102,8 +101,8 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-full mx-auto px-4">
+    <div className="min-h-screen bg-gray-100 p-4">
+      <div className="max-w-full mx-auto px-2">
         {/* Header Section */}
         <Card className="mb-6 p-8 bg-white border-red-200 border-2">
           <div className="flex justify-between items-start mb-6">
@@ -123,7 +122,7 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="space-y-6">
               <div>
                 <Label htmlFor="direccion" className="font-semibold text-red-700">Dirección</Label>
@@ -176,10 +175,10 @@ const Index = () => {
         </Card>
 
         {/* Main Tables */}
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
           {/* Implementación Table */}
-          <Card className="p-6 bg-white border-red-200 border-2">
-            <h2 className="text-xl font-bold text-center mb-4 bg-red-600 text-white py-3 rounded">
+          <Card className="p-4 bg-white border-red-200 border-2">
+            <h2 className="text-lg font-bold text-center mb-3 bg-red-600 text-white py-2 rounded">
               Implementación
             </h2>
             
@@ -187,37 +186,37 @@ const Index = () => {
               <table className="w-full border-collapse border border-red-300">
                 <thead>
                   <tr className="bg-red-100">
-                    <th className="border border-red-300 p-2 text-left font-semibold text-red-700 text-sm">6 M's</th>
-                    <th className="border border-red-300 p-2 text-left font-semibold text-red-700 w-16 text-sm"></th>
-                    <th className="border border-red-300 p-2 text-center font-semibold text-red-700 text-sm">Tiempo</th>
-                    <th className="border border-red-300 p-2 text-center font-semibold text-red-700 text-sm">Costo</th>
-                    <th className="border border-red-300 p-2 text-center font-semibold text-red-700 text-sm">Calidad</th>
+                    <th className="border border-red-300 p-1.5 text-left font-semibold text-red-700 text-xs">6 M's</th>
+                    <th className="border border-red-300 p-1.5 text-left font-semibold text-red-700 w-12 text-xs"></th>
+                    <th className="border border-red-300 p-1.5 text-center font-semibold text-red-700 text-xs w-16">Tiempo</th>
+                    <th className="border border-red-300 p-1.5 text-center font-semibold text-red-700 text-xs w-20">Costo</th>
+                    <th className="border border-red-300 p-1.5 text-center font-semibold text-red-700 text-xs">Calidad</th>
                   </tr>
                 </thead>
                 <tbody>
                   {m6Categories.map((category, index) => (
                     <tr key={category.key} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                      <td className="border border-red-300 p-2 font-medium text-red-700 text-sm">
+                      <td className="border border-red-300 p-1.5 font-medium text-red-700 text-xs">
                         {category.label}
                       </td>
-                      <td className="border border-red-300 p-2 w-16"></td>
-                      <td className="border border-red-300 p-1">
-                        <div className="text-xs text-red-600 mb-1">Duración:</div>
+                      <td className="border border-red-300 p-1.5 w-12"></td>
+                      <td className="border border-red-300 p-1 w-16">
+                        <div className="text-xs text-red-600 mb-0.5">Duración:</div>
                         <Input
                           type="number"
                           value={implementacion[category.key].duracion || ''}
                           onChange={(e) => updateImplementacion(category.key, 'duracion', Number(e.target.value))}
-                          className="text-xs h-6 border-red-200"
+                          className="text-xs h-5 border-red-200 px-1"
                           min="0"
                         />
                       </td>
-                      <td className="border border-red-300 p-1">
-                        <div className="text-xs text-red-600 mb-1">Monto: $</div>
+                      <td className="border border-red-300 p-1 w-20">
+                        <div className="text-xs text-red-600 mb-0.5">Monto: $</div>
                         <Input
                           type="number"
                           value={implementacion[category.key].monto || ''}
                           onChange={(e) => updateImplementacion(category.key, 'monto', Number(e.target.value))}
-                          className={`text-xs h-6 border-red-200 ${getCostHighlight(implementacion[category.key].monto)}`}
+                          className={`text-xs h-5 border-red-200 px-1 ${getCostHighlight(implementacion[category.key].monto)}`}
                           min="0"
                         />
                       </td>
@@ -225,19 +224,19 @@ const Index = () => {
                         <Textarea
                           value={implementacion[category.key].calidad}
                           onChange={(e) => updateImplementacion(category.key, 'calidad', e.target.value)}
-                          className="text-xs h-6 resize-none border-red-200"
+                          className="text-xs h-5 resize-none border-red-200 px-2"
                           rows={1}
                         />
                       </td>
                     </tr>
                   ))}
                   <tr className="bg-red-200 font-semibold">
-                    <td className="border border-red-300 p-2 text-red-700 text-sm">Tiempo de Implementación</td>
-                    <td className="border border-red-300 p-2"></td>
-                    <td className="border border-red-300 p-2 text-center text-red-700 text-sm">
+                    <td className="border border-red-300 p-1.5 text-red-700 text-xs">Tiempo de Implementación</td>
+                    <td className="border border-red-300 p-1.5"></td>
+                    <td className="border border-red-300 p-1.5 text-center text-red-700 text-xs">
                       {tiempoImplementacion} días
                     </td>
-                    <td className="border border-red-300 p-2 text-center text-red-700 text-sm" colSpan={2}>
+                    <td className="border border-red-300 p-1.5 text-center text-red-700 text-xs" colSpan={2}>
                       Monto Total de Implementación: ${montoTotalImplementacion.toLocaleString()}
                     </td>
                   </tr>
@@ -247,8 +246,8 @@ const Index = () => {
           </Card>
 
           {/* Operación Table */}
-          <Card className="p-6 bg-white border-red-200 border-2">
-            <h2 className="text-xl font-bold text-center mb-4 bg-red-600 text-white py-3 rounded">
+          <Card className="p-4 bg-white border-red-200 border-2">
+            <h2 className="text-lg font-bold text-center mb-3 bg-red-600 text-white py-2 rounded">
               Operación
             </h2>
             
@@ -256,37 +255,37 @@ const Index = () => {
               <table className="w-full border-collapse border border-red-300">
                 <thead>
                   <tr className="bg-red-100">
-                    <th className="border border-red-300 p-2 text-left font-semibold text-red-700 text-sm">6 M's</th>
-                    <th className="border border-red-300 p-2 text-left font-semibold text-red-700 w-16 text-sm"></th>
-                    <th className="border border-red-300 p-2 text-center font-semibold text-red-700 text-sm">Tiempo</th>
-                    <th className="border border-red-300 p-2 text-center font-semibold text-red-700 text-sm">Costo</th>
-                    <th className="border border-red-300 p-2 text-center font-semibold text-red-700 text-sm">Calidad</th>
+                    <th className="border border-red-300 p-1.5 text-left font-semibold text-red-700 text-xs">6 M's</th>
+                    <th className="border border-red-300 p-1.5 text-left font-semibold text-red-700 w-12 text-xs"></th>
+                    <th className="border border-red-300 p-1.5 text-center font-semibold text-red-700 text-xs w-16">Tiempo</th>
+                    <th className="border border-red-300 p-1.5 text-center font-semibold text-red-700 text-xs w-20">Costo</th>
+                    <th className="border border-red-300 p-1.5 text-center font-semibold text-red-700 text-xs">Calidad</th>
                   </tr>
                 </thead>
                 <tbody>
                   {m6Categories.map((category, index) => (
                     <tr key={category.key} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                      <td className="border border-red-300 p-2 font-medium text-red-700 text-sm">
+                      <td className="border border-red-300 p-1.5 font-medium text-red-700 text-xs">
                         {category.label}
                       </td>
-                      <td className="border border-red-300 p-2 w-16"></td>
-                      <td className="border border-red-300 p-1">
-                        <div className="text-xs text-red-600 mb-1">Duración:</div>
+                      <td className="border border-red-300 p-1.5 w-12"></td>
+                      <td className="border border-red-300 p-1 w-16">
+                        <div className="text-xs text-red-600 mb-0.5">Duración:</div>
                         <Input
                           type="number"
                           value={operacion[category.key].duracion || ''}
                           onChange={(e) => updateOperacion(category.key, 'duracion', Number(e.target.value))}
-                          className="text-xs h-6 border-red-200"
+                          className="text-xs h-5 border-red-200 px-1"
                           min="0"
                         />
                       </td>
-                      <td className="border border-red-300 p-1">
-                        <div className="text-xs text-red-600 mb-1">Monto: $</div>
+                      <td className="border border-red-300 p-1 w-20">
+                        <div className="text-xs text-red-600 mb-0.5">Monto: $</div>
                         <Input
                           type="number"
                           value={operacion[category.key].monto || ''}
                           onChange={(e) => updateOperacion(category.key, 'monto', Number(e.target.value))}
-                          className={`text-xs h-6 border-red-200 ${getCostHighlight(operacion[category.key].monto)}`}
+                          className={`text-xs h-5 border-red-200 px-1 ${getCostHighlight(operacion[category.key].monto)}`}
                           min="0"
                         />
                       </td>
@@ -294,18 +293,18 @@ const Index = () => {
                         <Textarea
                           value={operacion[category.key].calidad}
                           onChange={(e) => updateOperacion(category.key, 'calidad', e.target.value)}
-                          className="text-xs h-6 resize-none border-red-200"
+                          className="text-xs h-5 resize-none border-red-200 px-2"
                           rows={1}
                         />
                       </td>
                     </tr>
                   ))}
                   <tr className="bg-red-200 font-semibold">
-                    <td className="border border-red-300 p-2 text-red-700 text-sm" colSpan={3}>
+                    <td className="border border-red-300 p-1.5 text-red-700 text-xs" colSpan={3}>
                       Monto Total de Operación
                     </td>
-                    <td className="border border-red-300 p-2"></td>
-                    <td className="border border-red-300 p-2 text-center text-red-700 text-sm">
+                    <td className="border border-red-300 p-1.5"></td>
+                    <td className="border border-red-300 p-1.5 text-center text-red-700 text-xs">
                       ${montoTotalOperacion.toLocaleString()}
                     </td>
                   </tr>
@@ -316,7 +315,7 @@ const Index = () => {
         </div>
 
         {/* Summary Section */}
-        <Card className="mt-8 p-8 bg-white border-red-200 border-2">
+        <Card className="mt-6 p-6 bg-white border-red-200 border-2">
           <h3 className="text-xl font-bold mb-6 text-red-700">Resumen de Costos</h3>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Implementación Summary */}
