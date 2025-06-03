@@ -188,7 +188,7 @@ const Index = () => {
                 <thead>
                   <tr className="bg-red-100">
                     <th className="border border-red-300 p-2 text-left font-semibold text-red-700">6 M's</th>
-                    <th className="border border-red-300 p-2 text-left font-semibold text-red-700 w-8"></th>
+                    <th className="border border-red-300 p-2 text-left font-semibold text-red-700 w-16"></th>
                     <th className="border border-red-300 p-2 text-center font-semibold text-red-700">Tiempo</th>
                     <th className="border border-red-300 p-2 text-center font-semibold text-red-700">Costo</th>
                     <th className="border border-red-300 p-2 text-center font-semibold text-red-700">Calidad</th>
@@ -200,7 +200,7 @@ const Index = () => {
                       <td className="border border-red-300 p-2 font-medium text-red-700">
                         {category.label}
                       </td>
-                      <td className="border border-red-300 p-2 w-8 bg-red-100"></td>
+                      <td className="border border-red-300 p-2 w-16"></td>
                       <td className="border border-red-300 p-1">
                         <div className="text-xs text-red-600 mb-1">Duración:</div>
                         <Input
@@ -318,18 +318,31 @@ const Index = () => {
         {/* Summary Section */}
         <Card className="mt-6 p-6 bg-white border-red-200 border-2">
           <h3 className="text-lg font-bold mb-4 text-red-700">Resumen de Costos</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-red-50 p-4 rounded-lg text-center border border-red-200">
-              <div className="text-sm text-red-600">Tiempo Total de Implementación</div>
-              <div className="text-2xl font-bold text-red-700">{tiempoImplementacion} días</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Implementación Summary */}
+            <div>
+              <h4 className="text-md font-semibold mb-3 text-red-600">Implementación</h4>
+              <div className="space-y-3">
+                <div className="bg-red-50 p-4 rounded-lg text-center border border-red-200">
+                  <div className="text-sm text-red-600">Tiempo Total de Implementación</div>
+                  <div className="text-2xl font-bold text-red-700">{tiempoImplementacion} días</div>
+                </div>
+                <div className="bg-red-100 p-4 rounded-lg text-center border border-red-300">
+                  <div className="text-sm text-red-600">Costo Total de Implementación</div>
+                  <div className="text-2xl font-bold text-red-700">${montoTotalImplementacion.toLocaleString()}</div>
+                </div>
+              </div>
             </div>
-            <div className="bg-red-100 p-4 rounded-lg text-center border border-red-300">
-              <div className="text-sm text-red-600">Costo Total de Implementación</div>
-              <div className="text-2xl font-bold text-red-700">${montoTotalImplementacion.toLocaleString()}</div>
-            </div>
-            <div className="bg-red-200 p-4 rounded-lg text-center border border-red-400">
-              <div className="text-sm text-red-600">Costo Total de Operación</div>
-              <div className="text-2xl font-bold text-red-700">${montoTotalOperacion.toLocaleString()}</div>
+            
+            {/* Operación Summary */}
+            <div>
+              <h4 className="text-md font-semibold mb-3 text-red-600">Operación</h4>
+              <div className="space-y-3">
+                <div className="bg-red-200 p-4 rounded-lg text-center border border-red-400">
+                  <div className="text-sm text-red-600">Costo Total de Operación</div>
+                  <div className="text-2xl font-bold text-red-700">${montoTotalOperacion.toLocaleString()}</div>
+                </div>
+              </div>
             </div>
           </div>
         </Card>
