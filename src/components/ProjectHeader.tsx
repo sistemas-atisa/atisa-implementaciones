@@ -3,6 +3,7 @@ import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ProjectHeaderData } from '@/types/project';
 
@@ -30,8 +31,8 @@ const ProjectHeader: React.FC<ProjectHeaderProps> = ({ data, onUpdate }) => {
         </div>
         <div className="text-right">
           <img 
-            src="/lovable-uploads/0a197d74-5e2a-44f3-aa78-87fa28f9646e.png" 
-            alt="Logo" 
+            src="/lovable-uploads/441a03f4-a193-4088-8265-7f033451acc1.png" 
+            alt="Logo Atisa" 
             className="h-12 object-contain"
           />
         </div>
@@ -78,32 +79,14 @@ const ProjectHeader: React.FC<ProjectHeaderProps> = ({ data, onUpdate }) => {
         <div className="space-y-6">
           <div>
             <Label className="font-semibold text-red-700">¿Por qué es relevante?</Label>
-            <div className="mt-2 space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="text-red-600 font-semibold text-sm">#1</span>
-                <Input
-                  value={data.razon1}
-                  onChange={(e) => onUpdate('razon1', e.target.value)}
-                  placeholder="¿Que habilidad nueva nos da?"
-                  className="border-red-200 focus:border-red-400"
-                />
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-red-600 font-semibold text-sm">#2</span>
-                <Input
-                  value={data.razon2}
-                  onChange={(e) => onUpdate('razon2', e.target.value)}
-                  className="border-red-200 focus:border-red-400"
-                />
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-red-600 font-semibold text-sm">#3</span>
-                <Input
-                  value={data.razon3}
-                  onChange={(e) => onUpdate('razon3', e.target.value)}
-                  className="border-red-200 focus:border-red-400"
-                />
-              </div>
+            <div className="mt-2">
+              <Textarea
+                value={data.razon1}
+                onChange={(e) => onUpdate('razon1', e.target.value)}
+                placeholder="Describe por qué es relevante esta implementación..."
+                className="border-red-200 focus:border-red-400 min-h-[120px]"
+                rows={6}
+              />
             </div>
           </div>
         </div>
