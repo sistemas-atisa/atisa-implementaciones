@@ -186,37 +186,37 @@ const Index = () => {
               <table className="w-full border-collapse border border-red-300">
                 <thead>
                   <tr className="bg-red-100">
-                    <th className="border border-red-300 p-1.5 text-left font-semibold text-red-700 text-xs">6 M's</th>
-                    <th className="border border-red-300 p-1.5 text-left font-semibold text-red-700 w-12 text-xs"></th>
-                    <th className="border border-red-300 p-1.5 text-center font-semibold text-red-700 text-xs w-16">Tiempo</th>
-                    <th className="border border-red-300 p-1.5 text-center font-semibold text-red-700 text-xs w-20">Costo</th>
-                    <th className="border border-red-300 p-1.5 text-center font-semibold text-red-700 text-xs">Calidad</th>
+                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-24">6 M's</th>
+                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-20"></th>
+                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-20">Tiempo</th>
+                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-24">Costo</th>
+                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs">Calidad</th>
                   </tr>
                 </thead>
                 <tbody>
                   {m6Categories.map((category, index) => (
                     <tr key={category.key} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                      <td className="border border-red-300 p-1.5 font-medium text-red-700 text-xs">
+                      <td className="border border-red-300 p-1 font-medium text-red-700 text-xs w-24">
                         {category.label}
                       </td>
-                      <td className="border border-red-300 p-1.5 w-12"></td>
-                      <td className="border border-red-300 p-1 w-16">
+                      <td className="border border-red-300 p-1 w-20"></td>
+                      <td className="border border-red-300 p-1 w-20">
                         <div className="text-xs text-red-600 mb-0.5">Duración:</div>
                         <Input
                           type="number"
                           value={implementacion[category.key].duracion || ''}
                           onChange={(e) => updateImplementacion(category.key, 'duracion', Number(e.target.value))}
-                          className="text-xs h-5 border-red-200 px-1"
+                          className="text-xs h-4 border-red-200 px-1"
                           min="0"
                         />
                       </td>
-                      <td className="border border-red-300 p-1 w-20">
+                      <td className="border border-red-300 p-1 w-24">
                         <div className="text-xs text-red-600 mb-0.5">Monto: $</div>
                         <Input
                           type="number"
                           value={implementacion[category.key].monto || ''}
                           onChange={(e) => updateImplementacion(category.key, 'monto', Number(e.target.value))}
-                          className={`text-xs h-5 border-red-200 px-1 ${getCostHighlight(implementacion[category.key].monto)}`}
+                          className={`text-xs h-4 border-red-200 px-1 ${getCostHighlight(implementacion[category.key].monto)}`}
                           min="0"
                         />
                       </td>
@@ -224,19 +224,19 @@ const Index = () => {
                         <Textarea
                           value={implementacion[category.key].calidad}
                           onChange={(e) => updateImplementacion(category.key, 'calidad', e.target.value)}
-                          className="text-xs h-5 resize-none border-red-200 px-2"
+                          className="text-xs h-4 resize-none border-red-200 px-2"
                           rows={1}
                         />
                       </td>
                     </tr>
                   ))}
                   <tr className="bg-red-200 font-semibold">
-                    <td className="border border-red-300 p-1.5 text-red-700 text-xs">Tiempo de Implementación</td>
-                    <td className="border border-red-300 p-1.5"></td>
-                    <td className="border border-red-300 p-1.5 text-center text-red-700 text-xs">
+                    <td className="border border-red-300 p-1 text-red-700 text-xs">Tiempo de Implementación</td>
+                    <td className="border border-red-300 p-1"></td>
+                    <td className="border border-red-300 p-1 text-center text-red-700 text-xs">
                       {tiempoImplementacion} días
                     </td>
-                    <td className="border border-red-300 p-1.5 text-center text-red-700 text-xs" colSpan={2}>
+                    <td className="border border-red-300 p-1 text-center text-red-700 text-xs" colSpan={2}>
                       Monto Total de Implementación: ${montoTotalImplementacion.toLocaleString()}
                     </td>
                   </tr>
@@ -255,37 +255,37 @@ const Index = () => {
               <table className="w-full border-collapse border border-red-300">
                 <thead>
                   <tr className="bg-red-100">
-                    <th className="border border-red-300 p-1.5 text-left font-semibold text-red-700 text-xs">6 M's</th>
-                    <th className="border border-red-300 p-1.5 text-left font-semibold text-red-700 w-12 text-xs"></th>
-                    <th className="border border-red-300 p-1.5 text-center font-semibold text-red-700 text-xs w-16">Tiempo</th>
-                    <th className="border border-red-300 p-1.5 text-center font-semibold text-red-700 text-xs w-20">Costo</th>
-                    <th className="border border-red-300 p-1.5 text-center font-semibold text-red-700 text-xs">Calidad</th>
+                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-24">6 M's</th>
+                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-20"></th>
+                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-20">Tiempo</th>
+                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-24">Costo</th>
+                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs">Calidad</th>
                   </tr>
                 </thead>
                 <tbody>
                   {m6Categories.map((category, index) => (
                     <tr key={category.key} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                      <td className="border border-red-300 p-1.5 font-medium text-red-700 text-xs">
+                      <td className="border border-red-300 p-1 font-medium text-red-700 text-xs w-24">
                         {category.label}
                       </td>
-                      <td className="border border-red-300 p-1.5 w-12"></td>
-                      <td className="border border-red-300 p-1 w-16">
+                      <td className="border border-red-300 p-1 w-20"></td>
+                      <td className="border border-red-300 p-1 w-20">
                         <div className="text-xs text-red-600 mb-0.5">Duración:</div>
                         <Input
                           type="number"
                           value={operacion[category.key].duracion || ''}
                           onChange={(e) => updateOperacion(category.key, 'duracion', Number(e.target.value))}
-                          className="text-xs h-5 border-red-200 px-1"
+                          className="text-xs h-4 border-red-200 px-1"
                           min="0"
                         />
                       </td>
-                      <td className="border border-red-300 p-1 w-20">
+                      <td className="border border-red-300 p-1 w-24">
                         <div className="text-xs text-red-600 mb-0.5">Monto: $</div>
                         <Input
                           type="number"
                           value={operacion[category.key].monto || ''}
                           onChange={(e) => updateOperacion(category.key, 'monto', Number(e.target.value))}
-                          className={`text-xs h-5 border-red-200 px-1 ${getCostHighlight(operacion[category.key].monto)}`}
+                          className={`text-xs h-4 border-red-200 px-1 ${getCostHighlight(operacion[category.key].monto)}`}
                           min="0"
                         />
                       </td>
@@ -293,18 +293,18 @@ const Index = () => {
                         <Textarea
                           value={operacion[category.key].calidad}
                           onChange={(e) => updateOperacion(category.key, 'calidad', e.target.value)}
-                          className="text-xs h-5 resize-none border-red-200 px-2"
+                          className="text-xs h-4 resize-none border-red-200 px-2"
                           rows={1}
                         />
                       </td>
                     </tr>
                   ))}
                   <tr className="bg-red-200 font-semibold">
-                    <td className="border border-red-300 p-1.5 text-red-700 text-xs" colSpan={3}>
+                    <td className="border border-red-300 p-1 text-red-700 text-xs" colSpan={3}>
                       Monto Total de Operación
                     </td>
-                    <td className="border border-red-300 p-1.5"></td>
-                    <td className="border border-red-300 p-1.5 text-center text-red-700 text-xs">
+                    <td className="border border-red-300 p-1"></td>
+                    <td className="border border-red-300 p-1 text-center text-red-700 text-xs">
                       ${montoTotalOperacion.toLocaleString()}
                     </td>
                   </tr>
