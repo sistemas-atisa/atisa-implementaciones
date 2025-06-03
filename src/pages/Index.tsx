@@ -165,7 +165,7 @@ const Index = () => {
             </div>
             <div className="space-y-6">
               <div>
-                <Label className="font-semibold text-red-700">¿Por qué es relevante?</Label>
+                <Label className="font-semibold text-red-700">Habilidades</Label>
                 <div className="mt-2 space-y-3">
                   <div className="flex items-center gap-2">
                     <span className="text-red-600 font-semibold text-sm">#1</span>
