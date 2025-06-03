@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -118,13 +117,11 @@ const Index = () => {
               </h1>
             </div>
             <div className="text-right">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">A</span>
-                </div>
-                <span className="font-bold text-xl text-red-700">ATISA</span>
-                <span className="text-sm text-gray-600 ml-1">GROUP</span>
-              </div>
+              <img 
+                src="/lovable-uploads/441a03f4-a193-4088-8265-7f033451acc1.png" 
+                alt="ATISA GROUP Logo" 
+                className="h-12 object-contain"
+              />
             </div>
           </div>
 
