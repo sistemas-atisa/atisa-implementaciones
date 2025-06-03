@@ -172,7 +172,7 @@ const Index = () => {
                     <Input
                       value={razon1}
                       onChange={(e) => setRazon1(e.target.value)}
-                      placeholder="Razón #1"
+                      placeholder="¿Que habilidad nueva nos da?"
                       className="border-red-200 focus:border-red-400"
                     />
                   </div>
@@ -181,7 +181,6 @@ const Index = () => {
                     <Input
                       value={razon2}
                       onChange={(e) => setRazon2(e.target.value)}
-                      placeholder="Razón #2"
                       className="border-red-200 focus:border-red-400"
                     />
                   </div>
@@ -190,7 +189,6 @@ const Index = () => {
                     <Input
                       value={razon3}
                       onChange={(e) => setRazon3(e.target.value)}
-                      placeholder="Razón #3"
                       className="border-red-200 focus:border-red-400"
                     />
                   </div>
