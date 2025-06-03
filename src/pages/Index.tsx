@@ -232,8 +232,8 @@ const Index = () => {
                         <Textarea
                           value={implementacion[category.key].descripcion}
                           onChange={(e) => updateImplementacion(category.key, 'descripcion', e.target.value)}
-                          className="text-xs border-red-200 px-2 py-1 min-h-[60px] resize-none"
-                          rows={3}
+                          className="text-xs border-red-200 px-2 py-1 min-h-[80px] resize-none"
+                          rows={4}
                         />
                       </td>
                       <td className="border border-red-300 p-1 w-36">
@@ -286,8 +286,8 @@ const Index = () => {
                         <Textarea
                           value={implementacion[category.key].calidad}
                           onChange={(e) => updateImplementacion(category.key, 'calidad', e.target.value)}
-                          className="text-xs border-red-200 px-2 py-1 min-h-[60px] resize-none"
-                          rows={3}
+                          className="text-xs border-red-200 px-2 py-1 min-h-[80px] resize-none"
+                          rows={4}
                         />
                       </td>
                     </tr>
@@ -334,8 +334,8 @@ const Index = () => {
                         <Textarea
                           value={operacion[category.key].descripcion}
                           onChange={(e) => updateOperacion(category.key, 'descripcion', e.target.value)}
-                          className="text-xs border-red-200 px-2 py-1 min-h-[60px] resize-none"
-                          rows={3}
+                          className="text-xs border-red-200 px-2 py-1 min-h-[80px] resize-none"
+                          rows={4}
                         />
                       </td>
                       <td className="border border-red-300 p-1 w-36">
@@ -388,8 +388,8 @@ const Index = () => {
                         <Textarea
                           value={operacion[category.key].calidad}
                           onChange={(e) => updateOperacion(category.key, 'calidad', e.target.value)}
-                          className="text-xs border-red-200 px-2 py-1 min-h-[60px] resize-none"
-                          rows={3}
+                          className="text-xs border-red-200 px-2 py-1 min-h-[80px] resize-none"
+                          rows={4}
                         />
                       </td>
                     </tr>
