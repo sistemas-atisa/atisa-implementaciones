@@ -203,7 +203,7 @@ const Index = () => {
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
           {/* Implementación Table */}
           <Card className="p-4 bg-white border-red-200 border-2">
-            <h2 className="text-lg font-bold text-center mb-3 bg-red-600 text-white py-2 rounded">
+            <h2 className="text-xl font-bold text-center mb-4 bg-red-600 text-white py-3 rounded">
               Implementación
             </h2>
             
@@ -211,11 +211,11 @@ const Index = () => {
               <table className="w-full border-collapse border border-red-300">
                 <thead>
                   <tr className="bg-red-100">
-                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-20">6 M's</th>
-                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-44">Descripción</th>
-                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-36">Tiempo</th>
-                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-36">Costo</th>
-                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-44">Calidad</th>
+                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-sm w-20">6 M's</th>
+                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-sm w-44">Descripción</th>
+                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-sm w-36">Tiempo</th>
+                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-sm w-36">Costo</th>
+                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-sm w-44">Calidad</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -289,12 +289,12 @@ const Index = () => {
                     </tr>
                   ))}
                   <tr className="bg-red-200 font-semibold">
-                    <td className="border border-red-300 p-1 text-red-700 text-xs">Tiempo de Implementación</td>
+                    <td className="border border-red-300 p-1 text-red-700 text-sm">Tiempo de Implementación</td>
                     <td className="border border-red-300 p-1"></td>
-                    <td className="border border-red-300 p-1 text-center text-red-700 text-xs">
+                    <td className="border border-red-300 p-1 text-center text-red-700 text-sm">
                       {tiempoImplementacion} días
                     </td>
-                    <td className="border border-red-300 p-1 text-center text-red-700 text-xs" colSpan={2}>
+                    <td className="border border-red-300 p-1 text-center text-red-700 text-sm" colSpan={2}>
                       Monto Total de Implementación: ${montoTotalImplementacion.toLocaleString()}
                     </td>
                   </tr>
@@ -305,7 +305,7 @@ const Index = () => {
 
           {/* Operación Table */}
           <Card className="p-4 bg-white border-red-200 border-2">
-            <h2 className="text-lg font-bold text-center mb-3 bg-red-600 text-white py-2 rounded">
+            <h2 className="text-xl font-bold text-center mb-4 bg-red-600 text-white py-3 rounded">
               Operación
             </h2>
             
@@ -313,11 +313,11 @@ const Index = () => {
               <table className="w-full border-collapse border border-red-300">
                 <thead>
                   <tr className="bg-red-100">
-                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-20">6 M's</th>
-                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-xs w-44">Descripción</th>
-                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-36">Tiempo</th>
-                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-36">Costo</th>
-                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-xs w-44">Calidad</th>
+                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-sm w-20">6 M's</th>
+                    <th className="border border-red-300 p-1 text-left font-semibold text-red-700 text-sm w-44">Descripción</th>
+                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-sm w-36">Tiempo</th>
+                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-sm w-36">Costo</th>
+                    <th className="border border-red-300 p-1 text-center font-semibold text-red-700 text-sm w-44">Calidad</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -391,11 +391,11 @@ const Index = () => {
                     </tr>
                   ))}
                   <tr className="bg-red-200 font-semibold">
-                    <td className="border border-red-300 p-1 text-red-700 text-xs" colSpan={3}>
+                    <td className="border border-red-300 p-1 text-red-700 text-sm" colSpan={3}>
                       Monto Total de Operación
                     </td>
                     <td className="border border-red-300 p-1"></td>
-                    <td className="border border-red-300 p-1 text-center text-red-700 text-xs">
+                    <td className="border border-red-300 p-1 text-center text-red-700 text-sm">
                       ${montoTotalOperacion.toLocaleString()}
                     </td>
                   </tr>
