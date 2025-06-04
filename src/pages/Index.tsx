@@ -5,6 +5,7 @@ import { AppSidebar } from '@/components/AppSidebar';
 import ProjectHeader from '@/components/ProjectHeader';
 import M6Table from '@/components/M6Table';
 import CostSummary from '@/components/CostSummary';
+import SixMsAnalysis from '@/components/SixMsAnalysis';
 import { SectionData, ProjectHeaderData } from '@/types/project';
 
 // Datos de ejemplo para Administración
@@ -266,6 +267,8 @@ const Index = () => {
               montoTotalImplementacion={montoTotalImplementacion}
               montoTotalOperacion={montoTotalOperacion}
             />
+
+            <SixMsAnalysis />
           </div>
         </div>
       </div>
