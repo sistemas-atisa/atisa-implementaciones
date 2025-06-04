@@ -2,10 +2,9 @@
 import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ProjectHeaderData } from '@/types/project';
+import ApprovalButtons from './ApprovalButtons';
 
 interface ProjectHeaderProps {
   data: ProjectHeaderData;
@@ -13,89 +12,96 @@ interface ProjectHeaderProps {
 }
 
 const ProjectHeader: React.FC<ProjectHeaderProps> = ({ data, onUpdate }) => {
-  const direccionOpciones = [
-    'CREO',
-    'COO',
-    'Administración',
-    'Capital humano',
-    'Finanzas'
-  ];
+  const handleApprove = () => {
+    console.log('Implementación aprobada');
+    // Aquí se puede agregar lógica para manejar la aprobación
+  };
+
+  const handleReject = () => {
+    console.log('Implementación rechazada');
+    // Aquí se puede agregar lógica para manejar el rechazo
+  };
 
   return (
-    <Card className="mb-8 p-8 bg-white border-gray-200 shadow-lg">
-      <div className="flex justify-between items-start mb-8">
-        <div className="flex-1">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2 leading-tight">
-            Evaluación de Implementación de Proyectos
-          </h1>
-          <p className="text-lg text-red-600 font-semibold">Metodología 6M</p>
-        </div>
-        <div className="text-right">
-          <img 
-            src="/lovable-uploads/441a03f4-a193-4088-8265-7f033451acc1.png" 
-            alt="Logo Atisa" 
-            className="h-14 object-contain drop-shadow-sm"
-          />
-        </div>
+    <Card className="p-8 mb-8 bg-white border-gray-200 shadow-xl">
+      <div className="bg-gradient-to-r from-red-600 to-red-700 text-white py-6 px-8 rounded-xl mb-8 -m-8 mb-8">
+        <h1 className="text-3xl font-bold text-center">
+          Análisis de las 6 M's
+        </h1>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Left Column */}
         <div className="space-y-6">
-          <div className="space-y-2">
-            <Label htmlFor="implementacion" className="text-sm font-semibold text-gray-800">
-              Nombre de implementación
-            </Label>
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              Dirección:
+            </label>
             <Input
-              id="implementacion"
-              value={data.nombreImplementacion}
-              onChange={(e) => onUpdate('nombreImplementacion', e.target.value)}
-              className="border-gray-300 focus:border-red-500 focus:ring-red-500/20 rounded-lg transition-all duration-200"
-              placeholder="Ingrese el nombre de la implementación"
+              value={data.direccion}
+              onChange={(e) => onUpdate('direccion', e.target.value)}
+              placeholder="Ingrese la dirección"
+              className="border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg transition-all duration-200"
             />
           </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="direccion" className="text-sm font-semibold text-gray-800">
-                Dirección
-              </Label>
-              <Select value={data.direccion} onValueChange={(value) => onUpdate('direccion', value)}>
-                <SelectTrigger className="border-gray-300 focus:border-red-500 focus:ring-red-500/20 rounded-lg">
-                  <SelectValue placeholder="Seleccionar dirección" />
-                </SelectTrigger>
-                <SelectContent>
-                  {direccionOpciones.map((opcion) => (
-                    <SelectItem key={opcion} value={opcion}>
-                      {opcion}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="gerencia" className="text-sm font-semibold text-gray-800">
-                Gerencia
-              </Label>
-              <Input
-                id="gerencia"
-                value={data.gerencia}
-                onChange={(e) => onUpdate('gerencia', e.target.value)}
-                className="border-gray-300 focus:border-red-500 focus:ring-red-500/20 rounded-lg transition-all duration-200"
-                placeholder="Ingrese la gerencia"
-              />
-            </div>
+          
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              Gerencia:
+            </label>
+            <Input
+              value={data.gerencia}
+              onChange={(e) => onUpdate('gerencia', e.target.value)}
+              placeholder="Ingrese la gerencia"
+              className="border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg transition-all duration-200"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              Nombre de la Implementación:
+            </label>
+            <Input
+              value={data.nombreImplementacion}
+              onChange={(e) => onUpdate('nombreImplementacion', e.target.value)}
+              placeholder="Ingrese el nombre de la implementación"
+              className="border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg transition-all duration-200"
+            />
           </div>
         </div>
-        <div className="space-y-3">
-          <Label className="text-sm font-semibold text-gray-800">
-            ¿Por qué es relevante?
-          </Label>
-          <Textarea
-            value={data.razon1}
-            onChange={(e) => onUpdate('razon1', e.target.value)}
-            placeholder="Describe por qué es relevante esta implementación..."
-            className="border-gray-300 focus:border-red-500 focus:ring-red-500/20 rounded-lg min-h-[140px] transition-all duration-200"
-            rows={7}
-          />
+
+        {/* Right Column */}
+        <div className="space-y-6">
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              ¿Por qué es relevante?
+            </label>
+            <div className="space-y-4">
+              <Textarea
+                value={data.razon1}
+                onChange={(e) => onUpdate('razon1', e.target.value)}
+                placeholder="Razón 1"
+                className="border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg transition-all duration-200"
+                rows={2}
+              />
+              <Textarea
+                value={data.razon2}
+                onChange={(e) => onUpdate('razon2', e.target.value)}
+                placeholder="Razón 2"
+                className="border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg transition-all duration-200"
+                rows={2}
+              />
+              <Textarea
+                value={data.razon3}
+                onChange={(e) => onUpdate('razon3', e.target.value)}
+                placeholder="Razón 3"
+                className="border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg transition-all duration-200"
+                rows={2}
+              />
+            </div>
+
+            <ApprovalButtons onApprove={handleApprove} onReject={handleReject} />
+          </div>
         </div>
       </div>
     </Card>
