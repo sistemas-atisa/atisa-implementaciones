@@ -22,38 +22,44 @@ const ProjectHeader: React.FC<ProjectHeaderProps> = ({ data, onUpdate }) => {
   ];
 
   return (
-    <Card className="mb-6 p-8 bg-white border-red-200 border-2">
-      <div className="flex justify-between items-start mb-6">
+    <Card className="mb-8 p-8 bg-gradient-to-br from-white to-slate-50 border-slate-200 shadow-lg">
+      <div className="flex justify-between items-start mb-8">
         <div className="flex-1">
-          <h1 className="text-3xl font-bold text-red-700 mb-4">
-            Evaluación de Implementación de Proyectos - Metodología 6M
+          <h1 className="text-3xl font-bold text-slate-800 mb-2 leading-tight">
+            Evaluación de Implementación de Proyectos
           </h1>
+          <p className="text-lg text-slate-600 font-medium">Metodología 6M</p>
         </div>
         <div className="text-right">
           <img 
             src="/lovable-uploads/441a03f4-a193-4088-8265-7f033451acc1.png" 
             alt="Logo Atisa" 
-            className="h-12 object-contain"
+            className="h-14 object-contain drop-shadow-sm"
           />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="space-y-6">
-          <div>
-            <Label htmlFor="implementacion" className="font-semibold text-red-700">Nombre de implementación</Label>
+          <div className="space-y-2">
+            <Label htmlFor="implementacion" className="text-sm font-semibold text-slate-700">
+              Nombre de implementación
+            </Label>
             <Input
               id="implementacion"
               value={data.nombreImplementacion}
               onChange={(e) => onUpdate('nombreImplementacion', e.target.value)}
-              className="mt-1 border-red-200 focus:border-red-400"
+              className="border-slate-300 focus:border-blue-500 focus:ring-blue-500/20 rounded-lg transition-all duration-200"
+              placeholder="Ingrese el nombre de la implementación"
             />
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="direccion" className="font-semibold text-red-700">Dirección</Label>
+            <div className="space-y-2">
+              <Label htmlFor="direccion" className="text-sm font-semibold text-slate-700">
+                Dirección
+              </Label>
               <Select value={data.direccion} onValueChange={(value) => onUpdate('direccion', value)}>
-                <SelectTrigger className="mt-1 border-red-200 focus:border-red-400">
+                <SelectTrigger className="border-slate-300 focus:border-blue-500 focus:ring-blue-500/20 rounded-lg">
                   <SelectValue placeholder="Seleccionar dirección" />
                 </SelectTrigger>
                 <SelectContent>
@@ -65,30 +71,31 @@ const ProjectHeader: React.FC<ProjectHeaderProps> = ({ data, onUpdate }) => {
                 </SelectContent>
               </Select>
             </div>
-            <div>
-              <Label htmlFor="gerencia" className="font-semibold text-red-700">Gerencia</Label>
+            <div className="space-y-2">
+              <Label htmlFor="gerencia" className="text-sm font-semibold text-slate-700">
+                Gerencia
+              </Label>
               <Input
                 id="gerencia"
                 value={data.gerencia}
                 onChange={(e) => onUpdate('gerencia', e.target.value)}
-                className="mt-1 border-red-200 focus:border-red-400"
+                className="border-slate-300 focus:border-blue-500 focus:ring-blue-500/20 rounded-lg transition-all duration-200"
+                placeholder="Ingrese la gerencia"
               />
             </div>
           </div>
         </div>
-        <div className="space-y-6">
-          <div>
-            <Label className="font-semibold text-red-700">¿Por qué es relevante?</Label>
-            <div className="mt-2">
-              <Textarea
-                value={data.razon1}
-                onChange={(e) => onUpdate('razon1', e.target.value)}
-                placeholder="Describe por qué es relevante esta implementación..."
-                className="border-red-200 focus:border-red-400 min-h-[120px]"
-                rows={6}
-              />
-            </div>
-          </div>
+        <div className="space-y-3">
+          <Label className="text-sm font-semibold text-slate-700">
+            ¿Por qué es relevante?
+          </Label>
+          <Textarea
+            value={data.razon1}
+            onChange={(e) => onUpdate('razon1', e.target.value)}
+            placeholder="Describe por qué es relevante esta implementación..."
+            className="border-slate-300 focus:border-blue-500 focus:ring-blue-500/20 rounded-lg min-h-[140px] transition-all duration-200"
+            rows={7}
+          />
         </div>
       </div>
     </Card>

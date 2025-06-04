@@ -24,45 +24,47 @@ const M6Table: React.FC<M6TableProps> = ({ title, data, onUpdate, totalTime, tot
   ];
 
   return (
-    <Card className="p-4 bg-white border-red-200 border-2">
-      <h2 className="text-2xl font-bold text-center mb-4 bg-red-600 text-white py-3 rounded">
-        {title}
-      </h2>
+    <Card className="p-6 bg-white border-slate-200 shadow-lg">
+      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 px-6 rounded-t-lg mb-6 -m-6 mb-6">
+        <h2 className="text-2xl font-bold text-center">
+          {title}
+        </h2>
+      </div>
       
       <div className="overflow-x-auto">
-        <table className="w-full border-collapse border border-red-300">
+        <table className="w-full border-collapse rounded-lg overflow-hidden shadow-sm">
           <thead>
-            <tr className="bg-red-100">
-              <th className="border border-red-300 p-2 text-left font-semibold text-red-700 text-base w-20">6 M's</th>
-              <th className="border border-red-300 p-2 text-left font-semibold text-red-700 text-base w-44">Descripción</th>
-              <th className="border border-red-300 p-2 text-center font-semibold text-red-700 text-base w-36">Tiempo (Días)</th>
-              <th className="border border-red-300 p-2 text-center font-semibold text-red-700 text-base w-36">Costo</th>
-              <th className="border border-red-300 p-2 text-center font-semibold text-red-700 text-base w-44">Calidad</th>
+            <tr className="bg-gradient-to-r from-slate-50 to-slate-100">
+              <th className="border border-slate-200 p-4 text-left font-semibold text-slate-700 text-sm w-24">6 M's</th>
+              <th className="border border-slate-200 p-4 text-left font-semibold text-slate-700 text-sm w-48">Descripción</th>
+              <th className="border border-slate-200 p-4 text-center font-semibold text-slate-700 text-sm w-40">Tiempo (Días)</th>
+              <th className="border border-slate-200 p-4 text-center font-semibold text-slate-700 text-sm w-40">Costo</th>
+              <th className="border border-slate-200 p-4 text-center font-semibold text-slate-700 text-sm w-48">Calidad</th>
             </tr>
           </thead>
           <tbody>
             {m6Categories.map((category, index) => (
-              <tr key={category.key} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                <td className="border border-red-300 p-2 font-medium text-red-700 text-base align-top">
+              <tr key={category.key} className={index % 2 === 0 ? 'bg-white hover:bg-slate-25' : 'bg-slate-50/50 hover:bg-slate-50'}>
+                <td className="border border-slate-200 p-4 font-medium text-slate-700 text-sm align-top bg-slate-50/30">
                   {category.label}
                 </td>
-                <td className="border border-red-300 p-2 align-top">
+                <td className="border border-slate-200 p-3 align-top">
                   <Textarea
                     value={data[category.key].descripcion}
                     onChange={(e) => onUpdate(category.key, 'descripcion', e.target.value)}
-                    className="text-sm border-red-200 px-2 py-1 min-h-[80px] resize-none w-full"
+                    className="text-sm border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-md min-h-[80px] resize-none w-full transition-all duration-200"
                     rows={4}
                   />
                 </td>
-                <td className="border border-red-300 p-2 align-top">
-                  <div className="space-y-2">
+                <td className="border border-slate-200 p-3 align-top">
+                  <div className="space-y-3">
                     <div>
-                      <div className="text-sm text-red-600 mb-1 font-medium">Duración:</div>
+                      <div className="text-xs text-slate-600 mb-2 font-medium">Duración:</div>
                       <Input
                         type="number"
                         value={data[category.key].duracion || ''}
                         onChange={(e) => onUpdate(category.key, 'duracion', Number(e.target.value))}
-                        className="text-base h-8 border-red-200 px-2 font-medium w-full"
+                        className="text-sm h-9 border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-md font-medium w-full transition-all duration-200"
                         min="0"
                         max="99999"
                       />
@@ -71,21 +73,22 @@ const M6Table: React.FC<M6TableProps> = ({ title, data, onUpdate, totalTime, tot
                       <Textarea
                         value={data[category.key].duracionJustificacion}
                         onChange={(e) => onUpdate(category.key, 'duracionJustificacion', e.target.value)}
-                        className="text-xs border-red-200 px-2 py-1 min-h-[60px] resize-none w-full"
+                        className="text-xs border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-md min-h-[60px] resize-none w-full transition-all duration-200"
                         rows={3}
+                        placeholder="Justificación..."
                       />
                     </div>
                   </div>
                 </td>
-                <td className="border border-red-300 p-2 align-top">
-                  <div className="space-y-2">
+                <td className="border border-slate-200 p-3 align-top">
+                  <div className="space-y-3">
                     <div>
-                      <div className="text-sm text-red-600 mb-1 font-medium">Monto: $</div>
+                      <div className="text-xs text-slate-600 mb-2 font-medium">Monto: $</div>
                       <Input
                         type="number"
                         value={data[category.key].monto || ''}
                         onChange={(e) => onUpdate(category.key, 'monto', Number(e.target.value))}
-                        className="text-base h-8 border-red-200 px-2 font-medium w-full"
+                        className="text-sm h-9 border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-md font-medium w-full transition-all duration-200"
                         min="0"
                         max="9999999999"
                       />
@@ -94,41 +97,43 @@ const M6Table: React.FC<M6TableProps> = ({ title, data, onUpdate, totalTime, tot
                       <Textarea
                         value={data[category.key].montoJustificacion}
                         onChange={(e) => onUpdate(category.key, 'montoJustificacion', e.target.value)}
-                        className="text-xs border-red-200 px-2 py-1 min-h-[60px] resize-none w-full"
+                        className="text-xs border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-md min-h-[60px] resize-none w-full transition-all duration-200"
                         rows={3}
+                        placeholder="Justificación..."
                       />
                     </div>
                   </div>
                 </td>
-                <td className="border border-red-300 p-2 align-top">
+                <td className="border border-slate-200 p-3 align-top">
                   <Textarea
                     value={data[category.key].calidad}
                     onChange={(e) => onUpdate(category.key, 'calidad', e.target.value)}
-                    className="text-sm border-red-200 px-2 py-1 min-h-[80px] resize-none w-full"
+                    className="text-sm border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-md min-h-[80px] resize-none w-full transition-all duration-200"
                     rows={4}
+                    placeholder="Descripción de calidad..."
                   />
                 </td>
               </tr>
             ))}
-            <tr className="bg-red-200 font-semibold">
+            <tr className="bg-gradient-to-r from-blue-50 to-indigo-50 font-semibold">
               {title === 'Implementación' ? (
                 <>
-                  <td className="border border-red-300 p-2 text-red-700 text-sm">Tiempo de Implementación</td>
-                  <td className="border border-red-300 p-2"></td>
-                  <td className="border border-red-300 p-2 text-center text-red-700 text-sm">
+                  <td className="border border-slate-200 p-4 text-slate-700 text-sm">Tiempo de Implementación</td>
+                  <td className="border border-slate-200 p-4"></td>
+                  <td className="border border-slate-200 p-4 text-center text-blue-700 text-sm font-bold">
                     {totalTime} días
                   </td>
-                  <td className="border border-red-300 p-2 text-center text-red-700 text-sm" colSpan={2}>
+                  <td className="border border-slate-200 p-4 text-center text-blue-700 text-sm font-bold" colSpan={2}>
                     Monto Total de Implementación: ${totalCost.toLocaleString()}
                   </td>
                 </>
               ) : (
                 <>
-                  <td className="border border-red-300 p-2 text-red-700 text-sm" colSpan={3}>
+                  <td className="border border-slate-200 p-4 text-slate-700 text-sm" colSpan={3}>
                     Monto Total de Operación
                   </td>
-                  <td className="border border-red-300 p-2"></td>
-                  <td className="border border-red-300 p-2 text-center text-red-700 text-sm">
+                  <td className="border border-slate-200 p-4"></td>
+                  <td className="border border-slate-200 p-4 text-center text-blue-700 text-sm font-bold">
                     ${totalCost.toLocaleString()}
                   </td>
                 </>

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import ProjectHeader from '@/components/ProjectHeader';
 import M6Table from '@/components/M6Table';
@@ -73,12 +72,12 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      <div className="max-w-full mx-auto px-2">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 p-6">
+      <div className="max-w-full mx-auto">
         <ProjectHeader data={headerData} onUpdate={updateHeaderData} />
 
         {/* Main Tables */}
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
           <M6Table
             title="Implementación"
             data={implementacion}
