@@ -236,11 +236,12 @@ const Index = () => {
       />
       
       <div className="flex-1 min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        {/* Fixed header with sidebar trigger */}
+        <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm border-b border-gray-200 p-4">
+          <SidebarTrigger />
+        </div>
+        
         <div className="p-6">
-          <div className="mb-4">
-            <SidebarTrigger />
-          </div>
-          
           <div className="max-w-full mx-auto">
             <ProjectHeader data={headerData} onUpdate={updateHeaderData} />
 
