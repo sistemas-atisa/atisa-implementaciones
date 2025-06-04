@@ -16,37 +16,37 @@ const directions = [
   {
     title: "ADMINISTRACIÓN",
     icon: Building2,
-    count: 1,
+    count: 2,
     id: "administracion"
   },
   {
     title: "FISCAL",
     icon: Calculator,
-    count: 0,
+    count: 1,
     id: "fiscal"
   },
   {
     title: "FINANZAS",
     icon: Calculator,
-    count: 0,
+    count: 1,
     id: "finanzas"
   },
   {
     title: "TECNOLOGÍA Y SISTEMAS",
     icon: Laptop,
-    count: 0,
+    count: 1,
     id: "tecnologia"
   },
   {
     title: "CAPITAL HUMANO",
     icon: Users,
-    count: 0,
+    count: 1,
     id: "capital-humano"
   },
   {
     title: "MAQUINARIA",
     icon: Settings,
-    count: 0,
+    count: 1,
     id: "maquinaria"
   },
   {
@@ -135,7 +135,11 @@ export function AppSidebar({ onDirectionSelect, selectedDirection }: AppSidebarP
                     >
                       <direction.icon className="h-4 w-4" />
                       <span className="flex-1 text-sm">{direction.title}</span>
-                      <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
+                      <span className={`text-xs px-2 py-1 rounded-full ${
+                        direction.count > 0 
+                          ? 'bg-red-100 text-red-700 font-medium' 
+                          : 'bg-gray-200 text-gray-700'
+                      }`}>
                         ({direction.count})
                       </span>
                     </button>

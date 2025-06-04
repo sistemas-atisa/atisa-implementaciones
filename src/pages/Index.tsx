@@ -7,121 +7,13 @@ import M6Table from '@/components/M6Table';
 import CostSummary from '@/components/CostSummary';
 import SixMsAnalysis from '@/components/SixMsAnalysis';
 import { SectionData, ProjectHeaderData } from '@/types/project';
-
-// Datos de ejemplo para Administración
-const administracionExample: ProjectHeaderData = {
-  direccion: 'ADMINISTRACIÓN',
-  gerencia: 'Gerencia General',
-  nombreImplementacion: 'Sistema de Control de Gestión Documental',
-  razon1: 'Mejora la eficiencia en el manejo de documentos administrativos y reduce los tiempos de búsqueda y archivo.',
-  razon2: 'Garantiza el cumplimiento de normativas legales y auditorías mediante un control adecuado de la documentación.',
-  razon3: 'Facilita el acceso remoto a documentos importantes y mejora la colaboración entre departamentos.'
-};
-
-const administracionImplementacion: SectionData = {
-  manoDeObra: { 
-    duracion: 15, 
-    duracionJustificacion: 'Capacitación del personal en nuevos procesos', 
-    monto: 45000, 
-    montoJustificacion: 'Salarios durante capacitación y consultorías', 
-    calidad: 'Alta - Personal especializado en gestión documental', 
-    descripcion: 'Capacitación de 10 empleados en el nuevo sistema de gestión documental y procesos administrativos' 
-  },
-  metodologia: { 
-    duracion: 10, 
-    duracionJustificacion: 'Análisis y diseño de procesos optimizados', 
-    monto: 25000, 
-    montoJustificacion: 'Consultoría especializada en metodologías', 
-    calidad: 'Excelente - Metodología probada en organizaciones similares', 
-    descripcion: 'Implementación de metodología LEAN para optimizar procesos administrativos y flujos de trabajo' 
-  },
-  medicion: { 
-    duracion: 5, 
-    duracionJustificacion: 'Definición de KPIs y métricas de control', 
-    monto: 15000, 
-    montoJustificacion: 'Software de medición y dashboard', 
-    calidad: 'Alta - Métricas precisas y en tiempo real', 
-    descripcion: 'Sistema de métricas para medir eficiencia en gestión documental y tiempos de respuesta' 
-  },
-  maquinaria: { 
-    duracion: 7, 
-    duracionJustificacion: 'Instalación y configuración de equipos', 
-    monto: 120000, 
-    montoJustificacion: 'Servidores, escáneres y equipos de digitalización', 
-    calidad: 'Excelente - Equipos de última generación con garantía extendida', 
-    descripcion: 'Servidores para almacenamiento, escáneres industriales y equipos de digitalización masiva' 
-  },
-  materiales: { 
-    duracion: 3, 
-    duracionJustificacion: 'Adquisición e instalación de materiales', 
-    monto: 30000, 
-    montoJustificacion: 'Software, licencias y materiales de oficina', 
-    calidad: 'Alta - Software licenciado y materiales certificados', 
-    descripcion: 'Licencias de software de gestión documental, material de archivo y suministros de oficina' 
-  },
-  medioAmbiente: { 
-    duracion: 5, 
-    duracionJustificacion: 'Adecuación de espacios y medidas ambientales', 
-    monto: 20000, 
-    montoJustificacion: 'Climatización y adecuación de espacios', 
-    calidad: 'Buena - Cumple con estándares ambientales requeridos', 
-    descripcion: 'Acondicionamiento de espacios para archivo digital, climatización adecuada y medidas de seguridad' 
-  }
-};
-
-const administracionOperacion: SectionData = {
-  manoDeObra: { 
-    duracion: 0, 
-    duracionJustificacion: '', 
-    monto: 180000, 
-    montoJustificacion: 'Salarios anuales del personal especializado', 
-    calidad: 'Alta - Personal capacitado y certificado', 
-    descripcion: 'Operación del sistema por personal especializado en gestión documental (2 empleados)' 
-  },
-  metodologia: { 
-    duracion: 0, 
-    duracionJustificacion: '', 
-    monto: 12000, 
-    montoJustificacion: 'Mantenimiento y actualización de procesos', 
-    calidad: 'Excelente - Mejora continua de procesos', 
-    descripcion: 'Mantenimiento y optimización continua de metodologías implementadas' 
-  },
-  medicion: { 
-    duracion: 0, 
-    duracionJustificacion: '', 
-    monto: 8000, 
-    montoJustificacion: 'Licencias anuales de software de métricas', 
-    calidad: 'Alta - Monitoreo constante de indicadores', 
-    descripcion: 'Operación del sistema de métricas y generación de reportes mensuales' 
-  },
-  maquinaria: { 
-    duracion: 0, 
-    duracionJustificacion: '', 
-    monto: 25000, 
-    montoJustificacion: 'Mantenimiento anual de equipos', 
-    calidad: 'Excelente - Mantenimiento preventivo programado', 
-    descripcion: 'Mantenimiento preventivo y correctivo de servidores y equipos de digitalización' 
-  },
-  materiales: { 
-    duracion: 0, 
-    duracionJustificacion: '', 
-    monto: 15000, 
-    montoJustificacion: 'Licencias anuales y suministros', 
-    calidad: 'Alta - Renovación oportuna de licencias', 
-    descripcion: 'Renovación de licencias de software y suministros operativos anuales' 
-  },
-  medioAmbiente: { 
-    duracion: 0, 
-    duracionJustificacion: '', 
-    monto: 10000, 
-    montoJustificacion: 'Mantenimiento de instalaciones', 
-    calidad: 'Buena - Mantenimiento programado de instalaciones', 
-    descripcion: 'Mantenimiento de climatización y sistemas de seguridad en espacios de archivo' 
-  }
-};
+import { implementacionesData } from '@/data/implementaciones';
+import { Button } from '@/components/ui/button';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const Index = () => {
   const [selectedDirection, setSelectedDirection] = useState('administracion');
+  const [currentImplementationIndex, setCurrentImplementationIndex] = useState(0);
   
   const [headerData, setHeaderData] = useState<ProjectHeaderData>({
     direccion: '',
@@ -154,14 +46,16 @@ const Index = () => {
   const [montoTotalImplementacion, setMontoTotalImplementacion] = useState(0);
   const [montoTotalOperacion, setMontoTotalOperacion] = useState(0);
 
-  // Load example data when Administración is selected
+  // Load data when direction or implementation index changes
   useEffect(() => {
-    if (selectedDirection === 'administracion') {
-      setHeaderData(administracionExample);
-      setImplementacion(administracionImplementacion);
-      setOperacion(administracionOperacion);
+    const implementations = implementacionesData[selectedDirection as keyof typeof implementacionesData];
+    if (implementations && implementations[currentImplementationIndex]) {
+      const currentImpl = implementations[currentImplementationIndex];
+      setHeaderData(currentImpl.header);
+      setImplementacion(currentImpl.implementacion);
+      setOperacion(currentImpl.operacion);
     } else {
-      // Reset to empty data for other directions
+      // Reset to empty data for directions without implementations
       setHeaderData({
         direccion: '',
         gerencia: '',
@@ -187,7 +81,7 @@ const Index = () => {
         medioAmbiente: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' }
       });
     }
-  }, [selectedDirection]);
+  }, [selectedDirection, currentImplementationIndex]);
 
   // Calculate totals automatically
   useEffect(() => {
@@ -226,6 +120,26 @@ const Index = () => {
 
   const handleDirectionSelect = (directionId: string) => {
     setSelectedDirection(directionId);
+    setCurrentImplementationIndex(0); // Reset to first implementation
+  };
+
+  const getCurrentImplementations = () => {
+    return implementacionesData[selectedDirection as keyof typeof implementacionesData] || [];
+  };
+
+  const currentImplementations = getCurrentImplementations();
+  const hasMultipleImplementations = currentImplementations.length > 1;
+
+  const nextImplementation = () => {
+    if (currentImplementationIndex < currentImplementations.length - 1) {
+      setCurrentImplementationIndex(currentImplementationIndex + 1);
+    }
+  };
+
+  const previousImplementation = () => {
+    if (currentImplementationIndex > 0) {
+      setCurrentImplementationIndex(currentImplementationIndex - 1);
+    }
   };
 
   return (
@@ -238,7 +152,36 @@ const Index = () => {
       <div className="flex-1 min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
         {/* Fixed header with sidebar trigger */}
         <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm border-b border-gray-200 p-4">
-          <SidebarTrigger />
+          <div className="flex items-center justify-between">
+            <SidebarTrigger />
+            
+            {/* Navigation for multiple implementations */}
+            {hasMultipleImplementations && (
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-gray-600">
+                  Implementación {currentImplementationIndex + 1} de {currentImplementations.length}
+                </span>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={previousImplementation}
+                    disabled={currentImplementationIndex === 0}
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={nextImplementation}
+                    disabled={currentImplementationIndex === currentImplementations.length - 1}
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
         
         <div className="p-6">
