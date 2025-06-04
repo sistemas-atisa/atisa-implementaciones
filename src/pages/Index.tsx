@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/AppSidebar';
@@ -14,6 +13,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const Index = () => {
   const [selectedDirection, setSelectedDirection] = useState('administracion');
   const [currentImplementationIndex, setCurrentImplementationIndex] = useState(0);
+  const [expandedTable, setExpandedTable] = useState<'implementacion' | 'operacion' | null>(null);
   
   const [headerData, setHeaderData] = useState<ProjectHeaderData>({
     direccion: '',
@@ -142,6 +142,10 @@ const Index = () => {
     }
   };
 
+  const handleExpandTable = (tableType: 'implementacion' | 'operacion') => {
+    setExpandedTable(expandedTable === tableType ? null : tableType);
+  };
+
   return (
     <div className="flex w-full">
       <AppSidebar 
@@ -188,22 +192,34 @@ const Index = () => {
           <div className="max-w-full mx-auto">
             <ProjectHeader data={headerData} onUpdate={updateHeaderData} />
 
-            {/* Main Tables */}
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-              <M6Table
-                title="Implementación"
-                data={implementacion}
-                onUpdate={updateImplementacion}
-                totalTime={tiempoImplementacion}
-                totalCost={montoTotalImplementacion}
-              />
+            {/* Main Tables with Expandable Layout */}
+            <div className={`transition-all duration-300 ${
+              expandedTable === null 
+                ? 'grid grid-cols-1 xl:grid-cols-2 gap-8' 
+                : 'grid grid-cols-1 gap-8'
+            }`}>
+              {(expandedTable === null || expandedTable === 'implementacion') && (
+                <M6Table
+                  title="Implementación"
+                  data={implementacion}
+                  onUpdate={updateImplementacion}
+                  totalTime={tiempoImplementacion}
+                  totalCost={montoTotalImplementacion}
+                  isExpanded={expandedTable === 'implementacion'}
+                  onToggleExpand={() => handleExpandTable('implementacion')}
+                />
+              )}
               
-              <M6Table
-                title="Operación"
-                data={operacion}
-                onUpdate={updateOperacion}
-                totalCost={montoTotalOperacion}
-              />
+              {(expandedTable === null || expandedTable === 'operacion') && (
+                <M6Table
+                  title="Operación"
+                  data={operacion}
+                  onUpdate={updateOperacion}
+                  totalCost={montoTotalOperacion}
+                  isExpanded={expandedTable === 'operacion'}
+                  onToggleExpand={() => handleExpandTable('operacion')}
+                />
+              )}
             </div>
 
             <CostSummary

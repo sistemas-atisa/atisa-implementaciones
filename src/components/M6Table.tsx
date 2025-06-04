@@ -1,8 +1,9 @@
-
 import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
+import { Expand } from 'lucide-react';
 import { SectionData, M6Data } from '@/types/project';
 
 interface M6TableProps {
@@ -11,9 +12,19 @@ interface M6TableProps {
   onUpdate: (category: keyof SectionData, field: keyof M6Data, value: string | number) => void;
   totalTime?: number;
   totalCost: number;
+  isExpanded?: boolean;
+  onToggleExpand?: () => void;
 }
 
-const M6Table: React.FC<M6TableProps> = ({ title, data, onUpdate, totalTime, totalCost }) => {
+const M6Table: React.FC<M6TableProps> = ({ 
+  title, 
+  data, 
+  onUpdate, 
+  totalTime, 
+  totalCost, 
+  isExpanded = false,
+  onToggleExpand 
+}) => {
   const m6Categories = [
     { key: 'manoDeObra' as keyof SectionData, label: 'Mano de obra' },
     { key: 'metodologia' as keyof SectionData, label: 'Metodología' },
@@ -24,11 +35,25 @@ const M6Table: React.FC<M6TableProps> = ({ title, data, onUpdate, totalTime, tot
   ];
 
   return (
-    <Card className="p-2 bg-white border-gray-200 shadow-xl">
-      <div className="bg-gradient-to-r from-red-600 to-red-700 text-white py-4 px-4 rounded-xl mb-2 -m-2 mb-2">
-        <h2 className="text-xl font-bold text-center">
+    <Card className="p-1 bg-white border-gray-200 shadow-xl">
+      <div className="bg-gradient-to-r from-red-600 to-red-700 text-white py-3 px-3 rounded-xl mb-1 -m-1 mb-1 relative">
+        <h2 className="text-xl font-bold text-center pr-12">
           {title}
         </h2>
+        {onToggleExpand && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onToggleExpand}
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white hover:bg-white/20 p-2"
+          >
+            <Expand 
+              className={`h-5 w-5 transition-transform duration-200 ${
+                isExpanded ? 'rotate-180' : ''
+              }`} 
+            />
+          </Button>
+        )}
       </div>
       
       <div className="overflow-x-auto">
