@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import ProjectHeader from '@/components/ProjectHeader';
 import M6Table from '@/components/M6Table';
@@ -72,7 +73,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 p-6">
       <div className="max-w-full mx-auto">
         <ProjectHeader data={headerData} onUpdate={updateHeaderData} />
 

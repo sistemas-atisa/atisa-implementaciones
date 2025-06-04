@@ -22,13 +22,13 @@ const ProjectHeader: React.FC<ProjectHeaderProps> = ({ data, onUpdate }) => {
   ];
 
   return (
-    <Card className="mb-8 p-8 bg-gradient-to-br from-white to-slate-50 border-slate-200 shadow-lg">
+    <Card className="mb-8 p-8 bg-white border-gray-200 shadow-lg">
       <div className="flex justify-between items-start mb-8">
         <div className="flex-1">
-          <h1 className="text-3xl font-bold text-slate-800 mb-2 leading-tight">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2 leading-tight">
             Evaluación de Implementación de Proyectos
           </h1>
-          <p className="text-lg text-slate-600 font-medium">Metodología 6M</p>
+          <p className="text-lg text-red-600 font-semibold">Metodología 6M</p>
         </div>
         <div className="text-right">
           <img 
@@ -42,24 +42,24 @@ const ProjectHeader: React.FC<ProjectHeaderProps> = ({ data, onUpdate }) => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="implementacion" className="text-sm font-semibold text-slate-700">
+            <Label htmlFor="implementacion" className="text-sm font-semibold text-gray-800">
               Nombre de implementación
             </Label>
             <Input
               id="implementacion"
               value={data.nombreImplementacion}
               onChange={(e) => onUpdate('nombreImplementacion', e.target.value)}
-              className="border-slate-300 focus:border-blue-500 focus:ring-blue-500/20 rounded-lg transition-all duration-200"
+              className="border-gray-300 focus:border-red-500 focus:ring-red-500/20 rounded-lg transition-all duration-200"
               placeholder="Ingrese el nombre de la implementación"
             />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="direccion" className="text-sm font-semibold text-slate-700">
+              <Label htmlFor="direccion" className="text-sm font-semibold text-gray-800">
                 Dirección
               </Label>
               <Select value={data.direccion} onValueChange={(value) => onUpdate('direccion', value)}>
-                <SelectTrigger className="border-slate-300 focus:border-blue-500 focus:ring-blue-500/20 rounded-lg">
+                <SelectTrigger className="border-gray-300 focus:border-red-500 focus:ring-red-500/20 rounded-lg">
                   <SelectValue placeholder="Seleccionar dirección" />
                 </SelectTrigger>
                 <SelectContent>
@@ -72,28 +72,28 @@ const ProjectHeader: React.FC<ProjectHeaderProps> = ({ data, onUpdate }) => {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="gerencia" className="text-sm font-semibold text-slate-700">
+              <Label htmlFor="gerencia" className="text-sm font-semibold text-gray-800">
                 Gerencia
               </Label>
               <Input
                 id="gerencia"
                 value={data.gerencia}
                 onChange={(e) => onUpdate('gerencia', e.target.value)}
-                className="border-slate-300 focus:border-blue-500 focus:ring-blue-500/20 rounded-lg transition-all duration-200"
+                className="border-gray-300 focus:border-red-500 focus:ring-red-500/20 rounded-lg transition-all duration-200"
                 placeholder="Ingrese la gerencia"
               />
             </div>
           </div>
         </div>
         <div className="space-y-3">
-          <Label className="text-sm font-semibold text-slate-700">
+          <Label className="text-sm font-semibold text-gray-800">
             ¿Por qué es relevante?
           </Label>
           <Textarea
             value={data.razon1}
             onChange={(e) => onUpdate('razon1', e.target.value)}
             placeholder="Describe por qué es relevante esta implementación..."
-            className="border-slate-300 focus:border-blue-500 focus:ring-blue-500/20 rounded-lg min-h-[140px] transition-all duration-200"
+            className="border-gray-300 focus:border-red-500 focus:ring-red-500/20 rounded-lg min-h-[140px] transition-all duration-200"
             rows={7}
           />
         </div>
