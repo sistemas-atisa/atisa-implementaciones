@@ -108,9 +108,10 @@ const directions = [
 interface AppSidebarProps {
   onDirectionSelect: (directionId: string) => void;
   selectedDirection: string;
+  onToggleView: () => void;
 }
 
-export function AppSidebar({ onDirectionSelect, selectedDirection }: AppSidebarProps) {
+export function AppSidebar({ onDirectionSelect, selectedDirection, onToggleView }: AppSidebarProps) {
   return (
     <Sidebar>
       <SidebarHeader>
@@ -149,6 +150,17 @@ export function AppSidebar({ onDirectionSelect, selectedDirection }: AppSidebarP
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        
+        {/* Toggle View Section at bottom */}
+        <div className="mt-auto p-2 border-t border-gray-200">
+          <button
+            onClick={onToggleView}
+            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+          >
+            <User className="h-4 w-4" />
+            Vista Usuario
+          </button>
+        </div>
       </SidebarContent>
     </Sidebar>
   );

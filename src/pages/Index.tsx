@@ -1,19 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/AppSidebar';
+import { UserSidebar } from '@/components/UserSidebar';
 import ProjectHeader from '@/components/ProjectHeader';
+import UserProjectHeader from '@/components/UserProjectHeader';
 import M6Table from '@/components/M6Table';
+import UserM6Table from '@/components/UserM6Table';
 import CostSummary from '@/components/CostSummary';
 import SixMsAnalysis from '@/components/SixMsAnalysis';
+import ViewToggle from '@/components/ViewToggle';
 import { SectionData, ProjectHeaderData } from '@/types/project';
 import { implementacionesData } from '@/data/implementaciones';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Shield } from 'lucide-react';
 
 const Index = () => {
+  const [isAdminView, setIsAdminView] = useState(true);
   const [selectedDirection, setSelectedDirection] = useState('administracion');
   const [currentImplementationIndex, setCurrentImplementationIndex] = useState(0);
   const [expandedTable, setExpandedTable] = useState<'implementacion' | 'operacion' | null>(null);
+  
+  // Employee data for user view
+  const [employeeData, setEmployeeData] = useState({
+    nombre: '',
+    numeroEmpleado: '',
+    direccion: ''
+  });
   
   const [headerData, setHeaderData] = useState<ProjectHeaderData>({
     direccion: '',
@@ -98,6 +110,10 @@ const Index = () => {
     setHeaderData(prev => ({ ...prev, [field]: value }));
   };
 
+  const updateEmployeeData = (field: keyof typeof employeeData, value: string) => {
+    setEmployeeData(prev => ({ ...prev, [field]: value }));
+  };
+
   const updateImplementacion = (category: keyof SectionData, field: keyof SectionData[keyof SectionData], value: string | number) => {
     setImplementacion(prev => ({
       ...prev,
@@ -121,6 +137,10 @@ const Index = () => {
   const handleDirectionSelect = (directionId: string) => {
     setSelectedDirection(directionId);
     setCurrentImplementationIndex(0); // Reset to first implementation
+  };
+
+  const handleToggleView = () => {
+    setIsAdminView(!isAdminView);
   };
 
   const getCurrentImplementations = () => {
@@ -148,10 +168,18 @@ const Index = () => {
 
   return (
     <div className="flex w-full">
-      <AppSidebar 
-        onDirectionSelect={handleDirectionSelect}
-        selectedDirection={selectedDirection}
-      />
+      {isAdminView ? (
+        <AppSidebar 
+          onDirectionSelect={handleDirectionSelect}
+          selectedDirection={selectedDirection}
+          onToggleView={handleToggleView}
+        />
+      ) : (
+        <UserSidebar 
+          employeeData={employeeData}
+          onEmployeeUpdate={updateEmployeeData}
+        />
+      )}
       
       <div className="flex-1 min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
         {/* Fixed header with sidebar trigger */}
@@ -159,8 +187,19 @@ const Index = () => {
           <div className="flex items-center justify-between">
             <SidebarTrigger />
             
-            {/* Navigation for multiple implementations */}
-            {hasMultipleImplementations && (
+            {/* View toggle for user view */}
+            {!isAdminView && (
+              <button
+                onClick={handleToggleView}
+                className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors border border-gray-200"
+              >
+                <Shield className="h-4 w-4" />
+                Vista Administrador
+              </button>
+            )}
+            
+            {/* Navigation for multiple implementations - only in admin view */}
+            {isAdminView && hasMultipleImplementations && (
               <div className="flex items-center gap-4">
                 <span className="text-sm text-gray-600">
                   Implementación {currentImplementationIndex + 1} de {currentImplementations.length}
@@ -190,7 +229,11 @@ const Index = () => {
         
         <div className="p-6">
           <div className="max-w-full mx-auto">
-            <ProjectHeader data={headerData} onUpdate={updateHeaderData} />
+            {isAdminView ? (
+              <ProjectHeader data={headerData} onUpdate={updateHeaderData} />
+            ) : (
+              <UserProjectHeader data={headerData} onUpdate={updateHeaderData} />
+            )}
 
             {/* Main Tables with Expandable Layout */}
             <div className={`transition-all duration-300 ${
@@ -199,26 +242,49 @@ const Index = () => {
                 : 'grid grid-cols-1 gap-8'
             }`}>
               {(expandedTable === null || expandedTable === 'implementacion') && (
-                <M6Table
-                  title="Implementación"
-                  data={implementacion}
-                  onUpdate={updateImplementacion}
-                  totalTime={tiempoImplementacion}
-                  totalCost={montoTotalImplementacion}
-                  isExpanded={expandedTable === 'implementacion'}
-                  onToggleExpand={() => handleExpandTable('implementacion')}
-                />
+                isAdminView ? (
+                  <M6Table
+                    title="Implementación"
+                    data={implementacion}
+                    onUpdate={updateImplementacion}
+                    totalTime={tiempoImplementacion}
+                    totalCost={montoTotalImplementacion}
+                    isExpanded={expandedTable === 'implementacion'}
+                    onToggleExpand={() => handleExpandTable('implementacion')}
+                  />
+                ) : (
+                  <UserM6Table
+                    title="Implementación"
+                    data={implementacion}
+                    onUpdate={updateImplementacion}
+                    totalTime={tiempoImplementacion}
+                    totalCost={montoTotalImplementacion}
+                    isExpanded={expandedTable === 'implementacion'}
+                    onToggleExpand={() => handleExpandTable('implementacion')}
+                  />
+                )
               )}
               
               {(expandedTable === null || expandedTable === 'operacion') && (
-                <M6Table
-                  title="Operación"
-                  data={operacion}
-                  onUpdate={updateOperacion}
-                  totalCost={montoTotalOperacion}
-                  isExpanded={expandedTable === 'operacion'}
-                  onToggleExpand={() => handleExpandTable('operacion')}
-                />
+                isAdminView ? (
+                  <M6Table
+                    title="Operación"
+                    data={operacion}
+                    onUpdate={updateOperacion}
+                    totalCost={montoTotalOperacion}
+                    isExpanded={expandedTable === 'operacion'}
+                    onToggleExpand={() => handleExpandTable('operacion')}
+                  />
+                ) : (
+                  <UserM6Table
+                    title="Operación"
+                    data={operacion}
+                    onUpdate={updateOperacion}
+                    totalCost={montoTotalOperacion}
+                    isExpanded={expandedTable === 'operacion'}
+                    onToggleExpand={() => handleExpandTable('operacion')}
+                  />
+                )
               )}
             </div>
 
