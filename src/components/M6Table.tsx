@@ -35,11 +35,11 @@ const M6Table: React.FC<M6TableProps> = ({ title, data, onUpdate, totalTime, tot
         <table className="w-full border-collapse rounded-xl overflow-hidden shadow-lg">
           <thead>
             <tr className="bg-gradient-to-r from-gray-800 to-gray-900">
-              <th className="border border-gray-200 p-1 text-left font-bold text-white text-sm" style={{width: '15%'}}>6 M's</th>
-              <th className="border border-gray-200 p-1 text-left font-bold text-white text-sm" style={{width: '25%'}}>Descripción</th>
-              <th className="border border-gray-200 p-1 text-center font-bold text-white text-sm" style={{width: '20%'}}>Tiempo (Días)</th>
-              <th className="border border-gray-200 p-1 text-center font-bold text-white text-sm" style={{width: '20%'}}>Costo</th>
-              <th className="border border-gray-200 p-1 text-center font-bold text-white text-sm" style={{width: '20%'}}>Calidad</th>
+              <th className="border border-gray-200 py-3 px-2 text-left font-bold text-white text-sm" style={{width: '15%'}}>6 M's</th>
+              <th className="border border-gray-200 py-3 px-2 text-left font-bold text-white text-sm" style={{width: '25%'}}>Descripción</th>
+              <th className="border border-gray-200 py-3 px-2 text-center font-bold text-white text-sm" style={{width: '20%'}}>Tiempo (Días)</th>
+              <th className="border border-gray-200 py-3 px-2 text-center font-bold text-white text-sm" style={{width: '20%'}}>Costo</th>
+              <th className="border border-gray-200 py-3 px-2 text-center font-bold text-white text-sm" style={{width: '20%'}}>Calidad</th>
             </tr>
           </thead>
           <tbody>
@@ -115,25 +115,25 @@ const M6Table: React.FC<M6TableProps> = ({ title, data, onUpdate, totalTime, tot
             <tr className="bg-gradient-to-r from-red-50 to-red-100 font-semibold">
               {title === 'Implementación' ? (
                 <>
-                  <td className="border border-gray-200 p-1 text-gray-900 text-sm" style={{width: '15%'}}>Tiempo de Implementación</td>
-                  <td className="border border-gray-200 p-1" style={{width: '25%'}}></td>
-                  <td className="border border-gray-200 p-1 text-center text-red-700 text-sm font-bold" style={{width: '20%'}}>
+                  <td className="border border-gray-200 py-3 px-2 text-gray-900 text-sm" style={{width: '15%'}}>Tiempo de Implementación</td>
+                  <td className="border border-gray-200 py-3 px-2" style={{width: '25%'}}></td>
+                  <td className="border border-gray-200 py-3 px-2 text-center text-red-700 text-sm font-bold" style={{width: '20%'}}>
                     {totalTime} días
                   </td>
-                  <td className="border border-gray-200 p-1 text-center text-red-700 text-sm font-bold" style={{width: '20%'}}>
+                  <td className="border border-gray-200 py-3 px-2 text-center text-red-700 text-sm font-bold" style={{width: '20%'}}>
                     ${totalCost.toLocaleString()}
                   </td>
-                  <td className="border border-gray-200 p-1" style={{width: '20%'}}></td>
+                  <td className="border border-gray-200 py-3 px-2" style={{width: '20%'}}></td>
                 </>
               ) : (
                 <>
-                  <td className="border border-gray-200 p-1 text-gray-900 text-sm" style={{width: '15%'}}>Monto Total</td>
-                  <td className="border border-gray-200 p-1" style={{width: '25%'}}></td>
-                  <td className="border border-gray-200 p-1" style={{width: '20%'}}></td>
-                  <td className="border border-gray-200 p-1 text-center text-red-700 text-sm font-bold" style={{width: '20%'}}>
+                  <td className="border border-gray-200 py-3 px-2 text-gray-900 text-sm" style={{width: '15%'}}>Monto Total</td>
+                  <td className="border border-gray-200 py-3 px-2" style={{width: '25%'}}></td>
+                  <td className="border border-gray-200 py-3 px-2" style={{width: '20%'}}></td>
+                  <td className="border border-gray-200 py-3 px-2 text-center text-red-700 text-sm font-bold" style={{width: '20%'}}>
                     ${totalCost.toLocaleString()}
                   </td>
-                  <td className="border border-gray-200 p-1" style={{width: '20%'}}></td>
+                  <td className="border border-gray-200 py-3 px-2" style={{width: '20%'}}></td>
                 </>
               )}
             </tr>
