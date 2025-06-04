@@ -30,21 +30,6 @@ const ProjectHeader: React.FC<ProjectHeaderProps> = ({ data, onUpdate }) => {
         </h1>
       </div>
 
-      {/* Nombre de la Implementación - Destacado */}
-      <div className="mb-8">
-        <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 px-6 rounded-lg mb-4">
-          <h2 className="text-2xl font-bold text-center">
-            Nombre de la Implementación
-          </h2>
-        </div>
-        <Input
-          value={data.nombreImplementacion}
-          onChange={(e) => onUpdate('nombreImplementacion', e.target.value)}
-          placeholder="Ingrese el nombre de la implementación"
-          className="text-lg font-semibold border-2 border-blue-300 focus:border-blue-600 focus:ring-blue-600/20 rounded-lg transition-all duration-200 py-3"
-        />
-      </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left Column */}
         <div className="space-y-6">
@@ -68,6 +53,18 @@ const ProjectHeader: React.FC<ProjectHeaderProps> = ({ data, onUpdate }) => {
               value={data.gerencia}
               onChange={(e) => onUpdate('gerencia', e.target.value)}
               placeholder="Ingrese la gerencia"
+              className="border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg transition-all duration-200"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              Nombre de la Implementación:
+            </label>
+            <Input
+              value={data.nombreImplementacion}
+              onChange={(e) => onUpdate('nombreImplementacion', e.target.value)}
+              placeholder="Ingrese el nombre de la implementación"
               className="border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg transition-all duration-200"
             />
           </div>
