@@ -115,25 +115,42 @@ const M6Table: React.FC<M6TableProps> = ({ title, data, onUpdate, totalTime, tot
             <tr className="bg-gradient-to-r from-red-50 to-red-100 font-semibold">
               {title === 'Implementación' ? (
                 <>
-                  <td className="border border-gray-200 py-3 px-2 text-gray-900 text-sm" style={{width: '15%'}}>Tiempo de Implementación</td>
-                  <td className="border border-gray-200 py-3 px-2" style={{width: '25%'}}></td>
-                  <td className="border border-gray-200 py-3 px-2 text-center text-red-700 text-sm font-bold" style={{width: '20%'}}>
-                    {totalTime} días
+                  <td className="border border-gray-200 py-3 px-2 text-center text-gray-900 text-sm font-bold" colSpan={3}>
+                    Tiempo de Implementación
                   </td>
-                  <td className="border border-gray-200 py-3 px-2 text-center text-red-700 text-sm font-bold" style={{width: '20%'}}>
-                    ${totalCost.toLocaleString()}
+                  <td className="border border-gray-200 py-3 px-2 text-center text-gray-900 text-sm font-bold" colSpan={2}>
+                    Monto Total de Implementación
                   </td>
-                  <td className="border border-gray-200 py-3 px-2" style={{width: '20%'}}></td>
                 </>
               ) : (
                 <>
-                  <td className="border border-gray-200 py-3 px-2 text-gray-900 text-sm" style={{width: '15%'}}>Monto Total</td>
-                  <td className="border border-gray-200 py-3 px-2" style={{width: '25%'}}></td>
-                  <td className="border border-gray-200 py-3 px-2" style={{width: '20%'}}></td>
-                  <td className="border border-gray-200 py-3 px-2 text-center text-red-700 text-sm font-bold" style={{width: '20%'}}>
+                  <td className="border border-gray-200 py-3 px-2 text-center text-gray-900 text-sm font-bold" colSpan={3}>
+                    Tiempo de Implementación
+                  </td>
+                  <td className="border border-gray-200 py-3 px-2 text-center text-gray-900 text-sm font-bold" colSpan={2}>
+                    Monto Total
+                  </td>
+                </>
+              )}
+            </tr>
+            <tr className="bg-gradient-to-r from-red-50 to-red-100 font-semibold">
+              {title === 'Implementación' ? (
+                <>
+                  <td className="border border-gray-200 py-3 px-2 text-center text-red-700 text-lg font-bold" colSpan={3}>
+                    {totalTime} días
+                  </td>
+                  <td className="border border-gray-200 py-3 px-2 text-center text-red-700 text-lg font-bold" colSpan={2}>
                     ${totalCost.toLocaleString()}
                   </td>
-                  <td className="border border-gray-200 py-3 px-2" style={{width: '20%'}}></td>
+                </>
+              ) : (
+                <>
+                  <td className="border border-gray-200 py-3 px-2 text-center text-red-700 text-lg font-bold" colSpan={3}>
+                    -
+                  </td>
+                  <td className="border border-gray-200 py-3 px-2 text-center text-red-700 text-lg font-bold" colSpan={2}>
+                    ${totalCost.toLocaleString()}
+                  </td>
                 </>
               )}
             </tr>
