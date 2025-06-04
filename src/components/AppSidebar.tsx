@@ -1,5 +1,4 @@
-
-import { Building2, Users, Calculator, Laptop, UserCheck, Truck, Mountain, Hammer, Package, Home, Store, Archive, Settings, MapPin, Wrench } from "lucide-react";
+import { Building2, Users, Calculator, Laptop, UserCheck, Truck, Mountain, Hammer, Package, Home, Store, Archive, Settings, MapPin, Wrench, User } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
