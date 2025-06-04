@@ -178,7 +178,6 @@ const Index = () => {
         <UserSidebar 
           employeeData={employeeData}
           onEmployeeUpdate={updateEmployeeData}
-          onToggleView={handleToggleView}
         />
       )}
       
@@ -187,6 +186,17 @@ const Index = () => {
         <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm border-b border-gray-200 p-4">
           <div className="flex items-center justify-between">
             <SidebarTrigger />
+            
+            {/* View toggle for user view */}
+            {!isAdminView && (
+              <button
+                onClick={handleToggleView}
+                className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors border border-gray-200"
+              >
+                <Shield className="h-4 w-4" />
+                Vista Administrador
+              </button>
+            )}
             
             {/* Navigation for multiple implementations - only in admin view */}
             {isAdminView && hasMultipleImplementations && (
