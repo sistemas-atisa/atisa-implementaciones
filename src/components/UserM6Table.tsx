@@ -1,16 +1,16 @@
 
 import React from 'react';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Expand } from 'lucide-react';
-import { SectionData, M6Data } from '@/types/project';
+import { Maximize2, Minimize2 } from 'lucide-react';
+import { SectionData } from '@/types/project';
 
 interface UserM6TableProps {
   title: string;
   data: SectionData;
-  onUpdate: (category: keyof SectionData, field: keyof M6Data, value: string | number) => void;
+  onUpdate: (category: keyof SectionData, field: keyof SectionData[keyof SectionData], value: string | number) => void;
   totalTime?: number;
   totalCost: number;
   isExpanded?: boolean;
@@ -22,12 +22,12 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
   data, 
   onUpdate, 
   totalTime, 
-  totalCost, 
+  totalCost,
   isExpanded = false,
-  onToggleExpand 
+  onToggleExpand
 }) => {
-  const m6Categories = [
-    { key: 'manoDeObra' as keyof SectionData, label: 'Mano de obra' },
+  const msCategories = [
+    { key: 'manoDeObra' as keyof SectionData, label: 'Mano de Obra' },
     { key: 'metodologia' as keyof SectionData, label: 'Metodología' },
     { key: 'medicion' as keyof SectionData, label: 'Medición' },
     { key: 'maquinaria' as keyof SectionData, label: 'Maquinaria' },
@@ -36,155 +36,125 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
   ];
 
   return (
-    <Card className="p-1 bg-white border-gray-200 shadow-xl">
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-3 rounded-xl mb-1 -m-1 mb-1 relative">
-        <h2 className="text-xl font-bold text-center pr-12">
-          {title}
-        </h2>
-        {onToggleExpand && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onToggleExpand}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white hover:bg-white/20 p-2"
-          >
-            <Expand 
-              className={`h-5 w-5 transition-transform duration-200 ${
-                isExpanded ? 'rotate-180' : ''
-              }`} 
-            />
-          </Button>
-        )}
-      </div>
-      
-      <div className="overflow-x-auto">
-        <table className="w-full border-collapse rounded-xl overflow-hidden shadow-lg">
-          <thead>
-            <tr className="bg-gradient-to-r from-gray-800 to-gray-900">
-              <th className="border border-gray-200 py-2 px-1 text-left font-bold text-white text-xs" style={{width: '15%'}}>6 M's</th>
-              <th className="border border-gray-200 py-2 px-1 text-left font-bold text-white text-xs" style={{width: '25%'}}>Descripción</th>
-              <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Tiempo (Días)</th>
-              <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Costo</th>
-              <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Calidad</th>
-            </tr>
-          </thead>
-          <tbody>
-            {m6Categories.map((category, index) => (
-              <tr key={category.key} className={index % 2 === 0 ? 'bg-white hover:bg-gray-25' : 'bg-gray-25 hover:bg-gray-50'}>
-                <td className="border border-gray-200 p-0.5 font-semibold text-gray-900 text-xs align-top bg-gray-50" style={{width: '15%'}}>
-                  <div className="p-1">
-                    {category.label}
-                  </div>
-                </td>
-                <td className="border border-gray-200 p-0.5 align-top" style={{width: '25%'}}>
-                  <Textarea
-                    value={data[category.key].descripcion}
-                    onChange={(e) => onUpdate(category.key, 'descripcion', e.target.value)}
-                    className="text-xs border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 rounded-lg min-h-[60px] resize-none w-full transition-all duration-200"
-                    rows={3}
-                  />
-                </td>
-                <td className="border border-gray-200 p-0.5 align-top" style={{width: '20%'}}>
-                  <div className="space-y-0.5">
-                    <div>
-                      <div className="text-xs text-gray-700 mb-0.5 font-semibold">Duración:</div>
+    <Card className={`bg-white border-gray-200 shadow-md transition-all duration-300 ${
+      isExpanded ? 'col-span-full' : ''
+    }`}>
+      <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
+        <div className="flex justify-between items-center">
+          <CardTitle className="text-xl font-bold text-gray-900">{title}</CardTitle>
+          {onToggleExpand && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onToggleExpand}
+              className="text-gray-600 hover:text-gray-800"
+            >
+              {isExpanded ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+            </Button>
+          )}
+        </div>
+      </CardHeader>
+      <CardContent className="p-6">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-gray-200">
+                <th className="text-left py-3 px-2 font-semibold text-gray-700">M's</th>
+                {title === 'Implementación' && (
+                  <th className="text-left py-3 px-2 font-semibold text-gray-700 min-w-[120px]">Duración (días)</th>
+                )}
+                <th className="text-left py-3 px-2 font-semibold text-gray-700 min-w-[120px]">Monto ($)</th>
+                <th className="text-left py-3 px-2 font-semibold text-gray-700 min-w-[120px]">Calidad (%)</th>
+                <th className="text-left py-3 px-2 font-semibold text-gray-700 min-w-[200px]">Descripción</th>
+                {title === 'Implementación' && (
+                  <th className="text-left py-3 px-2 font-semibold text-gray-700 min-w-[200px]">Justificación de Duración</th>
+                )}
+                <th className="text-left py-3 px-2 font-semibold text-gray-700 min-w-[200px]">Justificación de Monto</th>
+              </tr>
+            </thead>
+            <tbody>
+              {msCategories.map((category) => (
+                <tr key={category.key} className="border-b border-gray-100 hover:bg-gray-50">
+                  <td className="py-4 px-2 font-medium text-gray-900">{category.label}</td>
+                  {title === 'Implementación' && (
+                    <td className="py-4 px-2">
                       <Input
                         type="number"
                         value={data[category.key].duracion || ''}
                         onChange={(e) => onUpdate(category.key, 'duracion', Number(e.target.value))}
-                        className="text-xs h-5 border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 rounded-lg font-medium w-full transition-all duration-200"
-                        min="0"
-                        max="99999"
+                        placeholder="0"
+                        className="border-gray-200 focus:border-gray-500 focus:ring-gray-500/20 rounded-lg"
                       />
-                    </div>
-                    <div>
+                    </td>
+                  )}
+                  <td className="py-4 px-2">
+                    <Input
+                      type="number"
+                      value={data[category.key].monto || ''}
+                      onChange={(e) => onUpdate(category.key, 'monto', Number(e.target.value))}
+                      placeholder="0"
+                      className="border-gray-200 focus:border-gray-500 focus:ring-gray-500/20 rounded-lg"
+                    />
+                  </td>
+                  <td className="py-4 px-2">
+                    <Input
+                      value={data[category.key].calidad || ''}
+                      onChange={(e) => onUpdate(category.key, 'calidad', e.target.value)}
+                      placeholder="0%"
+                      className="border-gray-200 focus:border-gray-500 focus:ring-gray-500/20 rounded-lg"
+                    />
+                  </td>
+                  <td className="py-4 px-2">
+                    <Textarea
+                      value={data[category.key].descripcion || ''}
+                      onChange={(e) => onUpdate(category.key, 'descripcion', e.target.value)}
+                      placeholder="Descripción..."
+                      className="border-gray-200 focus:border-gray-500 focus:ring-gray-500/20 rounded-lg min-h-[60px]"
+                      rows={2}
+                    />
+                  </td>
+                  {title === 'Implementación' && (
+                    <td className="py-4 px-2">
                       <Textarea
-                        value={data[category.key].duracionJustificacion}
+                        value={data[category.key].duracionJustificacion || ''}
                         onChange={(e) => onUpdate(category.key, 'duracionJustificacion', e.target.value)}
-                        className="text-xs border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 rounded-lg min-h-[30px] resize-none w-full transition-all duration-200"
+                        placeholder="Justificación..."
+                        className="border-gray-200 focus:border-gray-500 focus:ring-gray-500/20 rounded-lg min-h-[60px]"
                         rows={2}
                       />
-                    </div>
-                  </div>
-                </td>
-                <td className="border border-gray-200 p-0.5 align-top" style={{width: '20%'}}>
-                  <div className="space-y-0.5">
-                    <div>
-                      <div className="text-xs text-gray-700 mb-0.5 font-semibold">Monto: $</div>
-                      <Input
-                        type="number"
-                        value={data[category.key].monto || ''}
-                        onChange={(e) => onUpdate(category.key, 'monto', Number(e.target.value))}
-                        className="text-xs h-5 border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 rounded-lg font-medium w-full transition-all duration-200"
-                        min="0"
-                        max="9999999999"
-                      />
-                    </div>
-                    <div>
-                      <Textarea
-                        value={data[category.key].montoJustificacion}
-                        onChange={(e) => onUpdate(category.key, 'montoJustificacion', e.target.value)}
-                        className="text-xs border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 rounded-lg min-h-[30px] resize-none w-full transition-all duration-200"
-                        rows={2}
-                      />
-                    </div>
-                  </div>
-                </td>
-                <td className="border border-gray-200 p-0.5 align-top" style={{width: '20%'}}>
-                  <Textarea
-                    value={data[category.key].calidad}
-                    onChange={(e) => onUpdate(category.key, 'calidad', e.target.value)}
-                    className="text-xs border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 rounded-lg min-h-[60px] resize-none w-full transition-all duration-200"
-                    rows={3}
-                  />
-                </td>
-              </tr>
-            ))}
-            <tr className="bg-gradient-to-r from-blue-50 to-blue-100 font-semibold">
-              {title === 'Implementación' ? (
-                <>
-                  <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
-                    Tiempo de Implementación
+                    </td>
+                  )}
+                  <td className="py-4 px-2">
+                    <Textarea
+                      value={data[category.key].montoJustificacion || ''}
+                      onChange={(e) => onUpdate(category.key, 'montoJustificacion', e.target.value)}
+                      placeholder="Justificación..."
+                      className="border-gray-200 focus:border-gray-500 focus:ring-gray-500/20 rounded-lg min-h-[60px]"
+                      rows={2}
+                    />
                   </td>
-                  <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={2}>
-                    Monto Total de Implementación
-                  </td>
-                </>
-              ) : (
-                <>
-                  <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
-                    Tiempo de Implementación
-                  </td>
-                  <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={2}>
-                    Monto Total
-                  </td>
-                </>
-              )}
-            </tr>
-            <tr className="bg-gradient-to-r from-blue-50 to-blue-100 font-semibold">
-              {title === 'Implementación' ? (
-                <>
-                  <td className="border border-gray-200 py-2 px-1 text-center text-blue-700 text-base font-bold" colSpan={3}>
-                    {totalTime} días
-                  </td>
-                  <td className="border border-gray-200 py-2 px-1 text-center text-blue-700 text-base font-bold" colSpan={2}>
-                    ${totalCost.toLocaleString()}
-                  </td>
-                </>
-              ) : (
-                <>
-                  <td className="border border-gray-200 py-2 px-1 text-center text-blue-700 text-base font-bold" colSpan={3}>
-                    -
-                  </td>
-                  <td className="border border-gray-200 py-2 px-1 text-center text-blue-700 text-base font-bold" colSpan={2}>
-                    ${totalCost.toLocaleString()}
-                  </td>
-                </>
-              )}
-            </tr>
-          </tbody>
-        </table>
-      </div>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        
+        {/* Summary section */}
+        <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+          <div className="flex flex-wrap gap-6">
+            {totalTime !== undefined && (
+              <div className="flex flex-col">
+                <span className="text-sm font-medium text-gray-600">Tiempo Total</span>
+                <span className="text-lg font-bold text-gray-900">{totalTime} días</span>
+              </div>
+            )}
+            <div className="flex flex-col">
+              <span className="text-sm font-medium text-gray-600">Costo Total</span>
+              <span className="text-lg font-bold text-gray-900">${totalCost.toLocaleString()}</span>
+            </div>
+          </div>
+        </div>
+      </CardContent>
     </Card>
   );
 };
