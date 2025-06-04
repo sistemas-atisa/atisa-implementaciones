@@ -35,11 +35,11 @@ const M6Table: React.FC<M6TableProps> = ({ title, data, onUpdate, totalTime, tot
         <table className="w-full border-collapse rounded-xl overflow-hidden shadow-lg">
           <thead>
             <tr className="bg-gradient-to-r from-gray-800 to-gray-900">
-              <th className="border border-gray-200 p-4 text-left font-bold text-white text-sm w-24">6 M's</th>
-              <th className="border border-gray-200 p-4 text-left font-bold text-white text-sm w-48">Descripción</th>
-              <th className="border border-gray-200 p-4 text-center font-bold text-white text-sm w-40">Tiempo (Días)</th>
-              <th className="border border-gray-200 p-4 text-center font-bold text-white text-sm w-40">Costo</th>
-              <th className="border border-gray-200 p-4 text-center font-bold text-white text-sm w-48">Calidad</th>
+              <th className="border border-gray-200 p-4 text-left font-bold text-white text-sm" style={{width: '15%'}}>6 M's</th>
+              <th className="border border-gray-200 p-4 text-left font-bold text-white text-sm" style={{width: '25%'}}>Descripción</th>
+              <th className="border border-gray-200 p-4 text-center font-bold text-white text-sm" style={{width: '20%'}}>Tiempo (Días)</th>
+              <th className="border border-gray-200 p-4 text-center font-bold text-white text-sm" style={{width: '20%'}}>Costo</th>
+              <th className="border border-gray-200 p-4 text-center font-bold text-white text-sm" style={{width: '20%'}}>Calidad</th>
             </tr>
           </thead>
           <tbody>
