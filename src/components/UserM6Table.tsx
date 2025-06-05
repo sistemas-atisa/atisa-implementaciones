@@ -1,188 +1,104 @@
-
 import React from 'react';
 import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Expand } from 'lucide-react';
-import { SectionData, M6Data } from '@/types/project';
+import { Expand, Shrink, Clock, DollarSign } from 'lucide-react';
+import { SectionData } from '@/types/project';
+import { formatNumber } from '@/utils/formatCurrency';
 
-interface UserM6TableProps {
+interface M6TableProps {
   title: string;
   data: SectionData;
-  onUpdate: (category: keyof SectionData, field: keyof M6Data, value: string | number) => void;
-  totalTime?: number;
+  onUpdate: (category: keyof SectionData, field: keyof SectionData[keyof SectionData], value: string | number) => void;
+  totalTime: number;
   totalCost: number;
-  isExpanded?: boolean;
-  onToggleExpand?: () => void;
+  isExpanded: boolean;
+  onToggleExpand: () => void;
 }
 
-const UserM6Table: React.FC<UserM6TableProps> = ({ 
+const UserM6Table: React.FC<M6TableProps> = ({ 
   title, 
   data, 
   onUpdate, 
   totalTime, 
   totalCost, 
-  isExpanded = false,
+  isExpanded, 
   onToggleExpand 
 }) => {
-  const m6Categories = [
-    { key: 'manoDeObra' as keyof SectionData, label: 'Mano de obra' },
-    { key: 'metodologia' as keyof SectionData, label: 'Metodología' },
-    { key: 'medicion' as keyof SectionData, label: 'Medición' },
-    { key: 'maquinaria' as keyof SectionData, label: 'Maquinaria' },
-    { key: 'materiales' as keyof SectionData, label: 'Materiales' },
-    { key: 'medioAmbiente' as keyof SectionData, label: 'Medio Ambiente' }
+  const categories = [
+    { name: 'Mano de Obra', key: 'manoDeObra' },
+    { name: 'Metodología', key: 'metodologia' },
+    { name: 'Medición', key: 'medicion' },
+    { name: 'Maquinaria', key: 'maquinaria' },
+    { name: 'Materiales', key: 'materiales' },
+    { name: 'Medio Ambiente', key: 'medioAmbiente' }
   ];
 
   return (
-    <Card className="p-1 bg-white border-gray-200 shadow-xl">
-      <div className="bg-gradient-to-r from-gray-700 to-gray-800 text-white py-3 px-3 rounded-xl mb-1 -m-1 mb-1 relative">
-        <h2 className="text-xl font-bold text-center pr-12">
-          {title}
-        </h2>
-        {onToggleExpand && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onToggleExpand}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white hover:bg-white/20 p-2"
-          >
-            <Expand 
-              className={`h-5 w-5 transition-transform duration-200 ${
-                isExpanded ? 'rotate-180' : ''
-              }`} 
-            />
-          </Button>
-        )}
+    <Card className="p-6 bg-white border-gray-200 shadow-lg">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-xl font-semibold text-gray-900">{title}</h3>
+        <Button variant="ghost" size="sm" onClick={onToggleExpand}>
+          {isExpanded ? (
+            <>
+              <Shrink className="h-4 w-4 mr-2" />
+              Colapsar
+            </>
+          ) : (
+            <>
+              <Expand className="h-4 w-4 mr-2" />
+              Expandir
+            </>
+          )}
+        </Button>
       </div>
-      
+
       <div className="overflow-x-auto">
-        <table className="w-full border-collapse rounded-xl overflow-hidden shadow-lg">
+        <table className="w-full">
           <thead>
-            <tr className="bg-gradient-to-r from-gray-800 to-gray-900">
-              <th className="border border-gray-200 py-2 px-1 text-left font-bold text-white text-xs" style={{width: '15%'}}>6 M's</th>
-              <th className="border border-gray-200 py-2 px-1 text-left font-bold text-white text-xs" style={{width: '25%'}}>Descripción</th>
-              <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Tiempo (Días)</th>
-              <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Costo</th>
-              <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Calidad</th>
+            <tr className="bg-gray-50 text-gray-700">
+              <th className="px-4 py-3 text-left">Categoría</th>
+              <th className="px-4 py-3 text-right">Tiempo (días)</th>
+              <th className="px-4 py-3 text-left">Justificación Tiempo</th>
+              <th className="px-4 py-3 text-right">Costo</th>
+              <th className="px-4 py-3 text-left">Justificación Costo</th>
+              <th className="px-4 py-3 text-left">Calidad</th>
+              <th className="px-4 py-3 text-left">Descripción</th>
             </tr>
           </thead>
+          
           <tbody>
-            {m6Categories.map((category, index) => (
-              <tr key={category.key} className={index % 2 === 0 ? 'bg-white hover:bg-gray-25' : 'bg-gray-25 hover:bg-gray-50'}>
-                <td className="border border-gray-200 p-0.5 font-semibold text-gray-900 text-xs align-top bg-gray-50" style={{width: '15%'}}>
-                  <div className="p-1">
-                    {category.label}
-                  </div>
+            {categories.map((category) => (
+              <tr key={category.key} className="border-b border-gray-100">
+                <td className="px-4 py-4 font-medium text-gray-900">{category.name}</td>
+                <td className="px-4 py-4 text-right">
+                  {data[category.key].duracion ? `${formatNumber(data[category.key].duracion as number)} días` : '0 días'}
                 </td>
-                <td className="border border-gray-200 p-0.5 align-top" style={{width: '25%'}}>
-                  <Textarea
-                    value={data[category.key].descripcion}
-                    onChange={(e) => onUpdate(category.key, 'descripcion', e.target.value)}
-                    className="text-xs border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg min-h-[60px] resize-none w-full transition-all duration-200"
-                    rows={3}
-                  />
+                <td className="px-4 py-4 text-gray-700">{data[category.key].duracionJustificacion || 'Sin especificar'}</td>
+                <td className="px-4 py-4 text-right font-medium">
+                  ${formatNumber((data[category.key].monto as number) || 0)}
                 </td>
-                <td className="border border-gray-200 p-0.5 align-top" style={{width: '20%'}}>
-                  <div className="space-y-0.5">
-                    <div>
-                      <div className="text-xs text-gray-700 mb-0.5 font-semibold">Duración:</div>
-                      <Input
-                        type="number"
-                        value={data[category.key].duracion || ''}
-                        onChange={(e) => onUpdate(category.key, 'duracion', Number(e.target.value))}
-                        className="text-xs h-5 border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg font-medium w-full transition-all duration-200"
-                        min="0"
-                        max="99999"
-                      />
-                    </div>
-                    <div>
-                      <Textarea
-                        value={data[category.key].duracionJustificacion}
-                        onChange={(e) => onUpdate(category.key, 'duracionJustificacion', e.target.value)}
-                        className="text-xs border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg min-h-[30px] resize-none w-full transition-all duration-200"
-                        rows={2}
-                      />
-                    </div>
-                  </div>
-                </td>
-                <td className="border border-gray-200 p-0.5 align-top" style={{width: '20%'}}>
-                  <div className="space-y-0.5">
-                    <div>
-                      <div className="text-xs text-gray-700 mb-0.5 font-semibold">Monto: $</div>
-                      <Input
-                        type="number"
-                        value={data[category.key].monto || ''}
-                        onChange={(e) => onUpdate(category.key, 'monto', Number(e.target.value))}
-                        className="text-xs h-5 border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg font-medium w-full transition-all duration-200"
-                        min="0"
-                        max="9999999999"
-                      />
-                    </div>
-                    <div>
-                      <Textarea
-                        value={data[category.key].montoJustificacion}
-                        onChange={(e) => onUpdate(category.key, 'montoJustificacion', e.target.value)}
-                        className="text-xs border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg min-h-[30px] resize-none w-full transition-all duration-200"
-                        rows={2}
-                      />
-                    </div>
-                  </div>
-                </td>
-                <td className="border border-gray-200 p-0.5 align-top" style={{width: '20%'}}>
-                  <Textarea
-                    value={data[category.key].calidad}
-                    onChange={(e) => onUpdate(category.key, 'calidad', e.target.value)}
-                    className="text-xs border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg min-h-[60px] resize-none w-full transition-all duration-200"
-                    rows={3}
-                  />
-                </td>
+                <td className="px-4 py-4 text-gray-700">{data[category.key].montoJustificacion || 'Sin especificar'}</td>
+                <td className="px-4 py-4 text-gray-700">{data[category.key].calidad || 'Sin especificar'}</td>
+                <td className="px-4 py-4 text-gray-700">{data[category.key].descripcion || 'Sin especificar'}</td>
               </tr>
             ))}
-            <tr className="bg-gradient-to-r from-gray-50 to-gray-100 font-semibold">
-              {title === 'Implementación' ? (
-                <>
-                  <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
-                    Tiempo de Implementación
-                  </td>
-                  <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={2}>
-                    Monto Total de Implementación
-                  </td>
-                </>
-              ) : (
-                <>
-                  <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
-                    Tiempo de Implementación
-                  </td>
-                  <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={2}>
-                    Monto Total
-                  </td>
-                </>
-              )}
-            </tr>
-            <tr className="bg-gradient-to-r from-gray-50 to-gray-100 font-semibold">
-              {title === 'Implementación' ? (
-                <>
-                  <td className="border border-gray-200 py-2 px-1 text-center text-gray-700 text-base font-bold" colSpan={3}>
-                    {totalTime} días
-                  </td>
-                  <td className="border border-gray-200 py-2 px-1 text-center text-gray-700 text-base font-bold" colSpan={2}>
-                    ${totalCost.toLocaleString()}
-                  </td>
-                </>
-              ) : (
-                <>
-                  <td className="border border-gray-200 py-2 px-1 text-center text-gray-700 text-base font-bold" colSpan={3}>
-                    -
-                  </td>
-                  <td className="border border-gray-200 py-2 px-1 text-center text-gray-700 text-base font-bold" colSpan={2}>
-                    ${totalCost.toLocaleString()}
-                  </td>
-                </>
-              )}
-            </tr>
           </tbody>
+          
+          <tfoot className="bg-gradient-to-r from-gray-600 to-gray-700 text-white">
+            <tr>
+              <td className="px-4 py-4 font-bold">TOTAL</td>
+              <td className="px-4 py-4 font-bold text-right">
+                {totalTime ? `${formatNumber(totalTime)} días` : '0 días'}
+              </td>
+              <td className="px-4 py-4"></td>
+              <td className="px-4 py-4 font-bold text-right">
+                ${formatNumber(totalCost || 0)}
+              </td>
+              <td className="px-4 py-4"></td>
+              <td className="px-4 py-4"></td>
+              <td className="px-4 py-4"></td>
+            </tr>
+          </tfoot>
         </table>
       </div>
     </Card>

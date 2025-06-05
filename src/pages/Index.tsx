@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/AppSidebar';
@@ -8,6 +9,7 @@ import M6Table from '@/components/M6Table';
 import UserM6Table from '@/components/UserM6Table';
 import CostSummary from '@/components/CostSummary';
 import SixMsAnalysis from '@/components/SixMsAnalysis';
+import CommentsSection from '@/components/CommentsSection';
 import ViewToggle from '@/components/ViewToggle';
 import { SectionData, ProjectHeaderData } from '@/types/project';
 import { implementacionesData } from '@/data/implementaciones';
@@ -283,6 +285,9 @@ const Index = () => {
               montoTotalImplementacion={montoTotalImplementacion}
               montoTotalOperacion={montoTotalOperacion}
             />
+
+            {/* Comments Section - only show in admin view */}
+            {isAdminView && <CommentsSection />}
 
             <SixMsAnalysis />
           </div>

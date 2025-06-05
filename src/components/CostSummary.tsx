@@ -2,6 +2,7 @@
 import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Clock, DollarSign, TrendingUp } from 'lucide-react';
+import { formatNumber } from '@/utils/formatCurrency';
 
 interface CostSummaryProps {
   tiempoImplementacion: number;
@@ -9,57 +10,62 @@ interface CostSummaryProps {
   montoTotalOperacion: number;
 }
 
-const CostSummary: React.FC<CostSummaryProps> = ({
-  tiempoImplementacion,
-  montoTotalImplementacion,
-  montoTotalOperacion
+const CostSummary: React.FC<CostSummaryProps> = ({ 
+  tiempoImplementacion, 
+  montoTotalImplementacion, 
+  montoTotalOperacion 
 }) => {
+  const montoTotal = montoTotalImplementacion + montoTotalOperacion;
+
   return (
-    <Card className="mt-8 p-8 bg-white border-gray-200 shadow-lg">
-      <div className="flex items-center gap-3 mb-8">
-        <TrendingUp className="h-6 w-6 text-red-600" />
-        <h3 className="text-2xl font-bold text-gray-900">Resumen de Costos</h3>
-      </div>
+    <Card className="p-8 mb-8 bg-gradient-to-r from-gray-50 to-white border-gray-200 shadow-xl">
+      <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
+        Resumen de Costos y Tiempo
+      </h3>
       
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Implementación Summary */}
-        <div className="space-y-6">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-            <h4 className="text-lg font-semibold text-gray-800">Implementación</h4>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <Card className="p-6 bg-gradient-to-br from-red-50 to-red-100 border-red-200 shadow-md hover:shadow-lg transition-shadow duration-200">
-              <div className="flex items-center gap-3 mb-3">
-                <Clock className="h-5 w-5 text-red-600" />
-                <div className="text-sm text-gray-700 font-medium">Tiempo Total</div>
-              </div>
-              <div className="text-2xl font-bold text-red-700">{tiempoImplementacion}</div>
-              <div className="text-sm text-gray-600">días</div>
-            </Card>
-            <Card className="p-6 bg-gradient-to-br from-gray-50 to-gray-100 border-gray-200 shadow-md hover:shadow-lg transition-shadow duration-200">
-              <div className="flex items-center gap-3 mb-3">
-                <DollarSign className="h-5 w-5 text-gray-800" />
-                <div className="text-sm text-gray-700 font-medium">Costo Total</div>
-              </div>
-              <div className="text-2xl font-bold text-gray-800">${montoTotalImplementacion.toLocaleString()}</div>
-            </Card>
-          </div>
-        </div>
-        
-        {/* Operación Summary */}
-        <div className="space-y-6">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-3 h-3 bg-gray-800 rounded-full"></div>
-            <h4 className="text-lg font-semibold text-gray-800">Operación</h4>
-          </div>
-          <Card className="p-8 bg-gradient-to-br from-gray-50 to-gray-100 border-gray-200 shadow-md hover:shadow-lg transition-shadow duration-200">
-            <div className="flex items-center gap-3 mb-4">
-              <DollarSign className="h-6 w-6 text-gray-800" />
-              <div className="text-sm text-gray-700 font-medium">Costo Total de Operación</div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100 text-center">
+          <div className="flex justify-center mb-4">
+            <div className="p-3 bg-blue-100 rounded-full">
+              <Clock className="h-8 w-8 text-blue-600" />
             </div>
-            <div className="text-3xl font-bold text-gray-800">${montoTotalOperacion.toLocaleString()}</div>
-          </Card>
+          </div>
+          <h4 className="text-lg font-semibold text-gray-900 mb-2">Tiempo de Implementación</h4>
+          <p className="text-3xl font-bold text-blue-600">{formatNumber(tiempoImplementacion)}</p>
+          <p className="text-sm text-gray-600">días</p>
+        </div>
+
+        <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100 text-center">
+          <div className="flex justify-center mb-4">
+            <div className="p-3 bg-green-100 rounded-full">
+              <DollarSign className="h-8 w-8 text-green-600" />
+            </div>
+          </div>
+          <h4 className="text-lg font-semibold text-gray-900 mb-2">Costo de Implementación</h4>
+          <p className="text-2xl font-bold text-green-600">${formatNumber(montoTotalImplementacion)}</p>
+          <p className="text-sm text-gray-600">MXN</p>
+        </div>
+
+        <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100 text-center">
+          <div className="flex justify-center mb-4">
+            <div className="p-3 bg-orange-100 rounded-full">
+              <DollarSign className="h-8 w-8 text-orange-600" />
+            </div>
+          </div>
+          <h4 className="text-lg font-semibold text-gray-900 mb-2">Costo de Operación</h4>
+          <p className="text-2xl font-bold text-orange-600">${formatNumber(montoTotalOperacion)}</p>
+          <p className="text-sm text-gray-600">MXN</p>
+        </div>
+
+        <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100 text-center">
+          <div className="flex justify-center mb-4">
+            <div className="p-3 bg-purple-100 rounded-full">
+              <TrendingUp className="h-8 w-8 text-purple-600" />
+            </div>
+          </div>
+          <h4 className="text-lg font-semibold text-gray-900 mb-2">Costo Total</h4>
+          <p className="text-2xl font-bold text-purple-600">${formatNumber(montoTotal)}</p>
+          <p className="text-sm text-gray-600">MXN</p>
         </div>
       </div>
     </Card>
