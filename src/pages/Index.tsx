@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/AppSidebar';
@@ -9,7 +8,6 @@ import M6Table from '@/components/M6Table';
 import UserM6Table from '@/components/UserM6Table';
 import CostSummary from '@/components/CostSummary';
 import SixMsAnalysis from '@/components/SixMsAnalysis';
-import CommentsSection from '@/components/CommentsSection';
 import ViewToggle from '@/components/ViewToggle';
 import { SectionData, ProjectHeaderData } from '@/types/project';
 import { implementacionesData } from '@/data/implementaciones';
@@ -57,7 +55,6 @@ const Index = () => {
   });
 
   const [tiempoImplementacion, setTiempoImplementacion] = useState(0);
-  const [tiempoOperacion, setTiempoOperacion] = useState(0);
   const [montoTotalImplementacion, setMontoTotalImplementacion] = useState(0);
   const [montoTotalOperacion, setMontoTotalOperacion] = useState(0);
 
@@ -101,12 +98,10 @@ const Index = () => {
   // Calculate totals automatically
   useEffect(() => {
     const calcTiempoImpl = Object.values(implementacion).reduce((sum, item) => sum + (item.duracion || 0), 0);
-    const calcTiempoOp = Object.values(operacion).reduce((sum, item) => sum + (item.duracion || 0), 0);
     const calcMontoImpl = Object.values(implementacion).reduce((sum, item) => sum + (item.monto || 0), 0);
     const calcMontoOp = Object.values(operacion).reduce((sum, item) => sum + (item.monto || 0), 0);
     
     setTiempoImplementacion(calcTiempoImpl);
-    setTiempoOperacion(calcTiempoOp);
     setMontoTotalImplementacion(calcMontoImpl);
     setMontoTotalOperacion(calcMontoOp);
   }, [implementacion, operacion]);
@@ -266,7 +261,6 @@ const Index = () => {
                     title="Operación"
                     data={operacion}
                     onUpdate={updateOperacion}
-                    totalTime={tiempoOperacion}
                     totalCost={montoTotalOperacion}
                     isExpanded={expandedTable === 'operacion'}
                     onToggleExpand={() => handleExpandTable('operacion')}
@@ -276,7 +270,6 @@ const Index = () => {
                     title="Operación"
                     data={operacion}
                     onUpdate={updateOperacion}
-                    totalTime={tiempoOperacion}
                     totalCost={montoTotalOperacion}
                     isExpanded={expandedTable === 'operacion'}
                     onToggleExpand={() => handleExpandTable('operacion')}
@@ -290,9 +283,6 @@ const Index = () => {
               montoTotalImplementacion={montoTotalImplementacion}
               montoTotalOperacion={montoTotalOperacion}
             />
-
-            {/* Comments Section - only show in admin view */}
-            {isAdminView && <CommentsSection />}
 
             <SixMsAnalysis />
           </div>

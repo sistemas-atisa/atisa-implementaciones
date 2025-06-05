@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {
   Sidebar,
@@ -7,7 +8,6 @@ import {
 import EmployeeCard from './EmployeeCard';
 import { Button } from '@/components/ui/button';
 import { Shield } from 'lucide-react';
-import { User } from 'lucide-react';
 
 interface EmployeeData {
   nombre: string;
@@ -41,12 +41,16 @@ export function UserSidebar({ employeeData, onEmployeeUpdate, onToggleView }: Us
           <EmployeeCard data={oscarData} onUpdate={onEmployeeUpdate} />
         </div>
         
-        {/* Current View Status */}
+        {/* Toggle View Section at bottom */}
         <div className="mt-auto p-2 border-t border-gray-200">
-          <div className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 bg-gray-50 rounded-md">
-            <User className="h-4 w-4" />
-            <span>Vista Usuario</span>
-          </div>
+          <Button
+            onClick={onToggleView}
+            variant="outline"
+            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+          >
+            <Shield className="h-4 w-4" />
+            Vista Administrador
+          </Button>
         </div>
       </SidebarContent>
     </Sidebar>

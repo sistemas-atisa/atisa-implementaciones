@@ -150,12 +150,15 @@ export function AppSidebar({ onDirectionSelect, selectedDirection, onToggleView 
           </SidebarGroupContent>
         </SidebarGroup>
         
-        {/* Current View Status */}
+        {/* Toggle View Section at bottom */}
         <div className="mt-auto p-2 border-t border-gray-200">
-          <div className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 bg-gray-50 rounded-md">
+          <button
+            onClick={onToggleView}
+            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+          >
             <User className="h-4 w-4" />
-            <span>Vista Administrador</span>
-          </div>
+            Vista Usuario
+          </button>
         </div>
       </SidebarContent>
     </Sidebar>
