@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/AppSidebar';
@@ -7,6 +8,7 @@ import UserProjectHeader from '@/components/UserProjectHeader';
 import M6Table from '@/components/M6Table';
 import UserM6Table from '@/components/UserM6Table';
 import CostSummary from '@/components/CostSummary';
+import CommentsSection from '@/components/CommentsSection';
 import SixMsAnalysis from '@/components/SixMsAnalysis';
 import ViewToggle from '@/components/ViewToggle';
 import { SectionData, ProjectHeaderData } from '@/types/project';
@@ -283,6 +285,8 @@ const Index = () => {
               montoTotalImplementacion={montoTotalImplementacion}
               montoTotalOperacion={montoTotalOperacion}
             />
+
+            <CommentsSection />
 
             <SixMsAnalysis />
           </div>
