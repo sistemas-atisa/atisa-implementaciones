@@ -1,5 +1,6 @@
-import { Building2, Users, Calculator, Laptop, UserCheck, Truck, Mountain, Hammer, Package, Home, Store, Archive, Settings, MapPin, Wrench, User } from "lucide-react";
+import { Building2, Users, Calculator, Laptop, UserCheck, Truck, Mountain, Hammer, Package, Home, Store, Archive, Settings, MapPin, Wrench, User, ArrowRight } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader } from "@/components/ui/sidebar";
+
 const directions = [{
   title: "ADMINISTRACIÓN",
   icon: Building2,
@@ -76,11 +77,13 @@ const directions = [{
   count: 0,
   id: "mantenimiento"
 }];
+
 interface AppSidebarProps {
   onDirectionSelect: (directionId: string) => void;
   selectedDirection: string;
   onToggleView: () => void;
 }
+
 export function AppSidebar({
   onDirectionSelect,
   selectedDirection,
@@ -112,11 +115,17 @@ export function AppSidebar({
           </SidebarGroupContent>
         </SidebarGroup>
         
-        {/* Toggle View Section at bottom */}
+        {/* Current View Section at bottom */}
         <div className="mt-auto p-2 border-t border-gray-200">
-          <button onClick={onToggleView} className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors font-bold">
-            <User className="h-4 w-4" />
-            Vista Usuario
+          <div className="mb-2 px-3 py-1">
+            <span className="text-xs text-gray-500 font-medium">Vista Administrador</span>
+          </div>
+          <button onClick={onToggleView} className="w-full flex items-center justify-between px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors">
+            <div className="flex items-center gap-2">
+              <User className="h-4 w-4" />
+              <span>Cambiar a Vista de Usuario</span>
+            </div>
+            <ArrowRight className="h-3 w-3" />
           </button>
         </div>
       </SidebarContent>
