@@ -37,7 +37,7 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
 
   return (
     <Card className="p-1 bg-white border-gray-200 shadow-xl">
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-3 rounded-xl mb-1 -m-1 mb-1 relative">
+      <div className="bg-gradient-to-r from-gray-700 to-gray-800 text-white py-3 px-3 rounded-xl mb-1 -m-1 mb-1 relative">
         <h2 className="text-xl font-bold text-center pr-12">
           {title}
         </h2>
@@ -80,7 +80,7 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                   <Textarea
                     value={data[category.key].descripcion}
                     onChange={(e) => onUpdate(category.key, 'descripcion', e.target.value)}
-                    className="text-xs border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 rounded-lg min-h-[60px] resize-none w-full transition-all duration-200"
+                    className="text-xs border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg min-h-[60px] resize-none w-full transition-all duration-200"
                     rows={3}
                   />
                 </td>
@@ -92,7 +92,7 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                         type="number"
                         value={data[category.key].duracion || ''}
                         onChange={(e) => onUpdate(category.key, 'duracion', Number(e.target.value))}
-                        className="text-xs h-5 border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 rounded-lg font-medium w-full transition-all duration-200"
+                        className="text-xs h-5 border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg font-medium w-full transition-all duration-200"
                         min="0"
                         max="99999"
                       />
@@ -101,7 +101,7 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                       <Textarea
                         value={data[category.key].duracionJustificacion}
                         onChange={(e) => onUpdate(category.key, 'duracionJustificacion', e.target.value)}
-                        className="text-xs border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 rounded-lg min-h-[30px] resize-none w-full transition-all duration-200"
+                        className="text-xs border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg min-h-[30px] resize-none w-full transition-all duration-200"
                         rows={2}
                       />
                     </div>
@@ -115,7 +115,7 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                         type="number"
                         value={data[category.key].monto || ''}
                         onChange={(e) => onUpdate(category.key, 'monto', Number(e.target.value))}
-                        className="text-xs h-5 border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 rounded-lg font-medium w-full transition-all duration-200"
+                        className="text-xs h-5 border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg font-medium w-full transition-all duration-200"
                         min="0"
                         max="9999999999"
                       />
@@ -124,7 +124,7 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                       <Textarea
                         value={data[category.key].montoJustificacion}
                         onChange={(e) => onUpdate(category.key, 'montoJustificacion', e.target.value)}
-                        className="text-xs border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 rounded-lg min-h-[30px] resize-none w-full transition-all duration-200"
+                        className="text-xs border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg min-h-[30px] resize-none w-full transition-all duration-200"
                         rows={2}
                       />
                     </div>
@@ -134,13 +134,13 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                   <Textarea
                     value={data[category.key].calidad}
                     onChange={(e) => onUpdate(category.key, 'calidad', e.target.value)}
-                    className="text-xs border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 rounded-lg min-h-[60px] resize-none w-full transition-all duration-200"
+                    className="text-xs border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg min-h-[60px] resize-none w-full transition-all duration-200"
                     rows={3}
                   />
                 </td>
               </tr>
             ))}
-            <tr className="bg-gradient-to-r from-blue-50 to-blue-100 font-semibold">
+            <tr className="bg-gradient-to-r from-gray-50 to-gray-100 font-semibold">
               {title === 'Implementación' ? (
                 <>
                   <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
@@ -161,22 +161,22 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                 </>
               )}
             </tr>
-            <tr className="bg-gradient-to-r from-blue-50 to-blue-100 font-semibold">
+            <tr className="bg-gradient-to-r from-gray-50 to-gray-100 font-semibold">
               {title === 'Implementación' ? (
                 <>
-                  <td className="border border-gray-200 py-2 px-1 text-center text-blue-700 text-base font-bold" colSpan={3}>
+                  <td className="border border-gray-200 py-2 px-1 text-center text-gray-700 text-base font-bold" colSpan={3}>
                     {totalTime} días
                   </td>
-                  <td className="border border-gray-200 py-2 px-1 text-center text-blue-700 text-base font-bold" colSpan={2}>
+                  <td className="border border-gray-200 py-2 px-1 text-center text-gray-700 text-base font-bold" colSpan={2}>
                     ${totalCost.toLocaleString()}
                   </td>
                 </>
               ) : (
                 <>
-                  <td className="border border-gray-200 py-2 px-1 text-center text-blue-700 text-base font-bold" colSpan={3}>
+                  <td className="border border-gray-200 py-2 px-1 text-center text-gray-700 text-base font-bold" colSpan={3}>
                     -
                   </td>
-                  <td className="border border-gray-200 py-2 px-1 text-center text-blue-700 text-base font-bold" colSpan={2}>
+                  <td className="border border-gray-200 py-2 px-1 text-center text-gray-700 text-base font-bold" colSpan={2}>
                     ${totalCost.toLocaleString()}
                   </td>
                 </>
