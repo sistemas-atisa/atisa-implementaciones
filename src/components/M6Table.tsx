@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -27,12 +28,12 @@ const M6Table: React.FC<M6TableProps> = ({
   onToggleExpand 
 }) => {
   const categories = [
-    { name: 'Mano de Obra', key: 'manoDeObra' },
-    { name: 'Metodología', key: 'metodologia' },
-    { name: 'Medición', key: 'medicion' },
-    { name: 'Maquinaria', key: 'maquinaria' },
-    { name: 'Materiales', key: 'materiales' },
-    { name: 'Medio Ambiente', key: 'medioAmbiente' }
+    { name: 'Mano de Obra', key: 'manoDeObra' as keyof SectionData },
+    { name: 'Metodología', key: 'metodologia' as keyof SectionData },
+    { name: 'Medición', key: 'medicion' as keyof SectionData },
+    { name: 'Maquinaria', key: 'maquinaria' as keyof SectionData },
+    { name: 'Materiales', key: 'materiales' as keyof SectionData },
+    { name: 'Medio Ambiente', key: 'medioAmbiente' as keyof SectionData }
   ];
 
   return (
@@ -106,7 +107,7 @@ const M6Table: React.FC<M6TableProps> = ({
                     value={data[category.key].monto || ''}
                     onChange={(e) => onUpdate(category.key, 'monto', parseFloat(e.target.value) || 0)}
                     className="border-gray-200 focus:border-red-600 focus:ring-red-600/20 text-right"
-                    placeholder="0.00"
+                    placeholder="0,00"
                   />
                 </td>
                 <td className="px-4 py-4">
