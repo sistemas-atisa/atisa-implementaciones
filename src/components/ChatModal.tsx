@@ -48,9 +48,10 @@ const ChatModal: React.FC<ChatModalProps> = ({
             </Button>
           </div>
           <div className="text-left space-y-1 text-sm">
-            <div><strong>Insumo:</strong> 6300100 Capacitación Y Adiestramiento De Personal</div>
-            <div><strong>Área Cuenta:</strong> 2-1 GERENTE TECNOLOGÍA</div>
-            <div><strong>Cuenta Contable:</strong> 6000-0030-0100 Capacitación Y Adiestramiento De Personal</div>
+            <div><strong>6M:</strong> {categoryName}</div>
+            <div><strong>Descripción:</strong> {description || 'Sin descripción'}</div>
+            <div><strong>Duración:</strong> {time} días</div>
+            <div><strong>Costos:</strong> ${cost.toLocaleString()} m.n.</div>
           </div>
         </DialogHeader>
         

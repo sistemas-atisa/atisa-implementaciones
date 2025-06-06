@@ -36,12 +36,14 @@ const directions = [{
   title: "PROYECTOS Y PRESUPUESTOS",
   icon: Archive,
   count: 0,
-  id: "proyectos-presupuestos"
+  id: "proyectos-presupuestos",
+  extraSpacing: true
 }, {
   title: "CADENA DE SUMINISTROS",
   icon: Package,
   count: 0,
-  id: "cadena-suministros"
+  id: "cadena-suministros",
+  extraSpacing: true
 }, {
   title: "MAQUINARIA",
   icon: Settings,
@@ -103,7 +105,12 @@ export function AppSidebar({
             <SidebarMenu>
               {directions.map(direction => <SidebarMenuItem key={direction.id}>
                   <SidebarMenuButton asChild isActive={selectedDirection === direction.id}>
-                    <button onClick={() => onDirectionSelect(direction.id)} className="w-full flex items-center gap-2 px-2 py-2 text-left hover:bg-gray-100 rounded-md">
+                    <button 
+                      onClick={() => onDirectionSelect(direction.id)} 
+                      className={`w-full flex items-center gap-2 px-2 py-2 text-left hover:bg-gray-100 rounded-md ${
+                        direction.extraSpacing ? 'my-1' : ''
+                      }`}
+                    >
                       <direction.icon className="h-4 w-4" />
                       <span className="flex-1 text-sm">{direction.title}</span>
                       <span className={`text-xs px-2 py-1 rounded-full ${direction.count > 0 ? 'bg-red-100 text-red-700 font-medium' : 'bg-gray-200 text-gray-700'}`}>

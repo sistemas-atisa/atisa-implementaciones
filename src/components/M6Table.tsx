@@ -99,7 +99,7 @@ const M6Table: React.FC<M6TableProps> = ({
     <>
       <Card className="p-1 bg-white border-gray-200 shadow-xl">
         <div className="bg-gradient-to-r from-red-600 to-red-700 text-white py-3 px-3 rounded-xl mb-1 -m-1 mb-1 relative">
-          <h2 className="text-lg font-bold text-center pr-12">
+          <h2 className="text-base font-bold text-center pr-12">
             {title}
           </h2>
           {onToggleExpand && (
@@ -170,8 +170,8 @@ const M6Table: React.FC<M6TableProps> = ({
                         <Textarea
                           value={rowIndex === 0 ? data[category.key].descripcion : ''}
                           onChange={rowIndex === 0 ? (e) => onUpdate(category.key, 'descripcion', e.target.value) : undefined}
-                          className="text-xs border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg min-h-[60px] resize-none w-full transition-all duration-200"
-                          rows={3}
+                          className="text-xs border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg min-h-[75px] resize-none w-full transition-all duration-200"
+                          rows={4}
                           placeholder={rowIndex > 0 ? `Descripción adicional ${rowIndex + 1}...` : ''}
                         />
                       </td>
@@ -193,7 +193,7 @@ const M6Table: React.FC<M6TableProps> = ({
                             <Textarea
                               value={rowIndex === 0 ? data[category.key].duracionJustificacion : ''}
                               onChange={rowIndex === 0 ? (e) => onUpdate(category.key, 'duracionJustificacion', e.target.value) : undefined}
-                              className="text-xs border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg min-h-[30px] resize-none w-full transition-all duration-200"
+                              className="text-xs border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg min-h-[38px] resize-none w-full transition-all duration-200"
                               rows={2}
                               placeholder={rowIndex > 0 ? "Justificación..." : ""}
                             />
@@ -218,7 +218,7 @@ const M6Table: React.FC<M6TableProps> = ({
                             <Textarea
                               value={rowIndex === 0 ? data[category.key].montoJustificacion : ''}
                               onChange={rowIndex === 0 ? (e) => onUpdate(category.key, 'montoJustificacion', e.target.value) : undefined}
-                              className="text-xs border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg min-h-[30px] resize-none w-full transition-all duration-200"
+                              className="text-xs border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg min-h-[38px] resize-none w-full transition-all duration-200"
                               rows={2}
                               placeholder={rowIndex > 0 ? "Justificación..." : ""}
                             />
@@ -229,8 +229,8 @@ const M6Table: React.FC<M6TableProps> = ({
                         <Textarea
                           value={rowIndex === 0 ? data[category.key].calidad : ''}
                           onChange={rowIndex === 0 ? (e) => onUpdate(category.key, 'calidad', e.target.value) : undefined}
-                          className="text-xs border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg min-h-[60px] resize-none w-full transition-all duration-200"
-                          rows={3}
+                          className="text-xs border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg min-h-[75px] resize-none w-full transition-all duration-200"
+                          rows={4}
                           placeholder={rowIndex > 0 ? "Calidad..." : ""}
                         />
                       </td>
