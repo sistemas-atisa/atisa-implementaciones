@@ -35,8 +35,8 @@ const ChatModal: React.FC<ChatModalProps> = ({
       <DialogContent className="max-w-2xl max-h-[80vh] flex flex-col">
         <DialogHeader className="bg-gradient-to-r from-teal-600 to-teal-700 text-white py-3 px-4 rounded-t-lg -m-6 mb-4">
           <div className="flex items-center justify-between">
-            <DialogTitle className="text-lg font-bold">
-              CC: N12 DIRECCIÓN SISTEMAS Y TECNOLOGÍA
+            <DialogTitle className="text-xl font-bold">
+              DIRECCIÓN SISTEMAS Y TECNOLOGÍA
             </DialogTitle>
             <Button
               variant="ghost"

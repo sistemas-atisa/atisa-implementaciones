@@ -99,7 +99,7 @@ const M6Table: React.FC<M6TableProps> = ({
     <>
       <Card className="p-1 bg-white border-gray-200 shadow-xl">
         <div className="bg-gradient-to-r from-red-600 to-red-700 text-white py-3 px-3 rounded-xl mb-1 -m-1 mb-1 relative">
-          <h2 className="text-base font-bold text-center pr-12">
+          <h2 className="text-lg font-bold text-center pr-12">
             {title}
           </h2>
           {onToggleExpand && (

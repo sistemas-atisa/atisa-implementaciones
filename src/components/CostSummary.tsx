@@ -5,12 +5,14 @@ import { Clock, DollarSign, TrendingUp } from 'lucide-react';
 
 interface CostSummaryProps {
   tiempoImplementacion: number;
+  tiempoOperacion?: number;
   montoTotalImplementacion: number;
   montoTotalOperacion: number;
 }
 
 const CostSummary: React.FC<CostSummaryProps> = ({
   tiempoImplementacion,
+  tiempoOperacion = 0,
   montoTotalImplementacion,
   montoTotalOperacion
 }) => {
@@ -18,7 +20,7 @@ const CostSummary: React.FC<CostSummaryProps> = ({
     <Card className="mt-8 p-8 bg-white border-gray-200 shadow-lg">
       <div className="flex items-center gap-3 mb-8">
         <TrendingUp className="h-6 w-6 text-red-600" />
-        <h3 className="text-2xl font-bold text-gray-900">Resumen de Costos</h3>
+        <h3 className="text-xl font-bold text-gray-900">Resumen de Costos</h3>
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -53,13 +55,23 @@ const CostSummary: React.FC<CostSummaryProps> = ({
             <div className="w-3 h-3 bg-gray-800 rounded-full"></div>
             <h4 className="text-lg font-semibold text-gray-800">Operación</h4>
           </div>
-          <Card className="p-8 bg-gradient-to-br from-gray-50 to-gray-100 border-gray-200 shadow-md hover:shadow-lg transition-shadow duration-200">
-            <div className="flex items-center gap-3 mb-4">
-              <DollarSign className="h-6 w-6 text-gray-800" />
-              <div className="text-sm text-gray-700 font-medium">Costo Total de Operación</div>
-            </div>
-            <div className="text-3xl font-bold text-gray-800">${montoTotalOperacion.toLocaleString()}</div>
-          </Card>
+          <div className="grid grid-cols-2 gap-4">
+            <Card className="p-6 bg-gradient-to-br from-gray-50 to-gray-100 border-gray-200 shadow-md hover:shadow-lg transition-shadow duration-200">
+              <div className="flex items-center gap-3 mb-3">
+                <Clock className="h-5 w-5 text-gray-600" />
+                <div className="text-sm text-gray-700 font-medium">Tiempo Total</div>
+              </div>
+              <div className="text-2xl font-bold text-gray-700">{tiempoOperacion}</div>
+              <div className="text-sm text-gray-600">días</div>
+            </Card>
+            <Card className="p-6 bg-gradient-to-br from-gray-50 to-gray-100 border-gray-200 shadow-md hover:shadow-lg transition-shadow duration-200">
+              <div className="flex items-center gap-3 mb-3">
+                <DollarSign className="h-6 w-6 text-gray-800" />
+                <div className="text-sm text-gray-700 font-medium">Costo Total</div>
+              </div>
+              <div className="text-2xl font-bold text-gray-800">${montoTotalOperacion.toLocaleString()}</div>
+            </Card>
+          </div>
         </div>
       </div>
     </Card>
