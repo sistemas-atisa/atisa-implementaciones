@@ -185,10 +185,19 @@ const Index = () => {
       )}
       
       <div className="flex-1 min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
-        {/* Fixed header with sidebar trigger */}
+        {/* Fixed header with sidebar trigger and ATISA logo */}
         <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm border-b border-gray-200 p-4">
           <div className="flex items-center justify-between">
             <SidebarTrigger />
+            
+            {/* ATISA Logo - Centered */}
+            <div className="absolute left-1/2 transform -translate-x-1/2">
+              <img 
+                src="https://i.postimg.cc/FFfbvfHy/ATISA-Group-Color-page-0001.png" 
+                alt="ATISA Group Logo" 
+                className="h-8 md:h-10 object-contain"
+              />
+            </div>
             
             {/* Navigation for multiple implementations - only in admin view */}
             {isAdminView && hasMultipleImplementations && (
