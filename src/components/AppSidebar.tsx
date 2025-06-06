@@ -1,4 +1,5 @@
-import { Building2, Users, Calculator, Laptop, UserCheck, Truck, Mountain, Hammer, Package, Home, Store, Archive, Settings, MapPin, Wrench, User, ArrowRight } from "lucide-react";
+
+import { Building2, Users, Calculator, Laptop, UserCheck, Truck, Mountain, Hammer, Package, Home, Store, Archive, Settings, MapPin, Wrench, User, ArrowRight, Scale, Heart } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader } from "@/components/ui/sidebar";
 
 const directions = [{
@@ -12,70 +13,70 @@ const directions = [{
   count: 1,
   id: "fiscal"
 }, {
+  title: "LEGAL",
+  icon: Scale,
+  count: 0,
+  id: "legal"
+}, {
   title: "FINANZAS",
   icon: Calculator,
   count: 1,
   id: "finanzas"
-}, {
-  title: "TECNOLOGÍA Y SISTEMAS",
-  icon: Laptop,
-  count: 1,
-  id: "tecnologia"
 }, {
   title: "CAPITAL HUMANO",
   icon: Users,
   count: 1,
   id: "capital-humano"
 }, {
+  title: "TECNOLOGÍA",
+  icon: Laptop,
+  count: 1,
+  id: "tecnologia"
+}, {
+  title: "PROYECTOS Y PRESUPUESTOS",
+  icon: Archive,
+  count: 0,
+  id: "proyectos-presupuestos"
+}, {
+  title: "CADENA DE SUMINISTROS",
+  icon: Package,
+  count: 0,
+  id: "cadena-suministros"
+}, {
   title: "MAQUINARIA",
   icon: Settings,
   count: 1,
   id: "maquinaria"
 }, {
-  title: "MOVIMIENTO DE TIERRAS",
+  title: "MOVIMIENTO DE TIERRA",
   icon: Mountain,
   count: 0,
-  id: "movimiento-tierras"
+  id: "movimiento-tierra"
 }, {
   title: "CONSTRUCCIÓN",
   icon: Hammer,
   count: 0,
   id: "construccion"
 }, {
-  title: "CADENA DE SUMINISTRO",
-  icon: Package,
-  count: 0,
-  id: "cadena-suministro"
-}, {
-  title: "INMOBILIARIA",
+  title: "DESARROLLO",
   icon: Home,
   count: 0,
-  id: "inmobiliaria"
+  id: "desarrollo"
 }, {
   title: "COMERCIAL",
   icon: Store,
   count: 0,
   id: "comercial"
 }, {
-  title: "ADMINISTRACIÓN DE BIENES",
-  icon: Archive,
-  count: 0,
-  id: "admin-bienes"
-}, {
-  title: "COO OPERACIONES",
-  icon: UserCheck,
-  count: 0,
-  id: "coo-operaciones"
-}, {
-  title: "CREO BIENES RAICES",
+  title: "ASSET MANAGEMENT",
   icon: MapPin,
   count: 0,
-  id: "creo-bienes-raices"
+  id: "asset-management"
 }, {
-  title: "MANTENIMIENTO",
-  icon: Wrench,
+  title: "CLÍNICA SANTA CLARITA",
+  icon: Heart,
   count: 0,
-  id: "mantenimiento"
+  id: "clinica-santa-clarita"
 }];
 
 interface AppSidebarProps {
