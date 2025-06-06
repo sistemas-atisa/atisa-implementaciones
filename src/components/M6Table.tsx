@@ -26,7 +26,14 @@ const M6Table: React.FC<M6TableProps> = ({
   isExpanded = false,
   onToggleExpand 
 }) => {
-  const [expandedRows, setExpandedRows] = useState<{ [key: string]: boolean }>({});
+  const [categoryRows, setCategoryRows] = useState<{ [key: string]: number }>({
+    manoDeObra: 1,
+    metodologia: 1,
+    medicion: 1,
+    maquinaria: 1,
+    materiales: 1,
+    medioAmbiente: 1
+  });
   
   const m6Categories = [
     { key: 'manoDeObra' as keyof SectionData, label: 'Mano de obra' },
@@ -37,10 +44,17 @@ const M6Table: React.FC<M6TableProps> = ({
     { key: 'medioAmbiente' as keyof SectionData, label: 'Medio Ambiente' }
   ];
 
-  const toggleRow = (categoryKey: string) => {
-    setExpandedRows(prev => ({
+  const addRow = (categoryKey: string) => {
+    setCategoryRows(prev => ({
       ...prev,
-      [categoryKey]: !prev[categoryKey]
+      [categoryKey]: Math.min(prev[categoryKey] + 1, 10)
+    }));
+  };
+
+  const removeRow = (categoryKey: string) => {
+    setCategoryRows(prev => ({
+      ...prev,
+      [categoryKey]: Math.max(prev[categoryKey] - 1, 1)
     }));
   };
 
@@ -79,120 +93,48 @@ const M6Table: React.FC<M6TableProps> = ({
             </tr>
           </thead>
           <tbody>
-            {m6Categories.map((category, index) => (
+            {m6Categories.map((category, categoryIndex) => (
               <React.Fragment key={category.key}>
-                {/* Main row */}
-                <tr className={index % 2 === 0 ? 'bg-white hover:bg-gray-25' : 'bg-gray-25 hover:bg-gray-50'}>
-                  <td className="border border-gray-200 p-0.5 font-semibold text-gray-900 text-xs align-top bg-gray-50" style={{width: '15%'}}>
-                    <div className="p-1 flex items-center gap-1">
-                      <button
-                        onClick={() => toggleRow(category.key)}
-                        className="text-red-600 hover:text-red-800 transition-colors"
+                {/* Render multiple rows for each category */}
+                {Array.from({ length: categoryRows[category.key] }, (_, rowIndex) => (
+                  <tr key={`${category.key}-${rowIndex}`} className={categoryIndex % 2 === 0 ? 'bg-white hover:bg-gray-25' : 'bg-gray-25 hover:bg-gray-50'}>
+                    {/* Category name cell - only show in first row of each category */}
+                    {rowIndex === 0 ? (
+                      <td 
+                        className="border border-gray-200 p-0.5 font-semibold text-gray-900 text-xs align-top bg-gray-50" 
+                        style={{width: '15%'}}
+                        rowSpan={categoryRows[category.key]}
                       >
-                        {expandedRows[category.key] ? (
-                          <Minus className="h-3 w-3" />
-                        ) : (
-                          <Plus className="h-3 w-3" />
-                        )}
-                      </button>
-                      <span>{category.label}</span>
-                    </div>
-                  </td>
-                  <td className="border border-gray-200 p-0.5 align-top" style={{width: '25%'}}>
-                    <Textarea
-                      value={data[category.key].descripcion}
-                      onChange={(e) => onUpdate(category.key, 'descripcion', e.target.value)}
-                      className="text-xs border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg min-h-[60px] resize-none w-full transition-all duration-200"
-                      rows={3}
-                    />
-                  </td>
-                  <td className="border border-gray-200 p-0.5 align-top" style={{width: '20%'}}>
-                    <div className="space-y-0.5">
-                      <div>
-                        <div className="text-xs text-gray-700 mb-0.5 font-semibold">Duración:</div>
-                        <Input
-                          type="number"
-                          value={data[category.key].duracion || ''}
-                          onChange={(e) => onUpdate(category.key, 'duracion', Number(e.target.value))}
-                          className="text-xs h-5 border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg font-medium w-full transition-all duration-200"
-                          min="0"
-                          max="99999"
-                        />
-                      </div>
-                      <div>
-                        <Textarea
-                          value={data[category.key].duracionJustificacion}
-                          onChange={(e) => onUpdate(category.key, 'duracionJustificacion', e.target.value)}
-                          className="text-xs border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg min-h-[30px] resize-none w-full transition-all duration-200"
-                          rows={2}
-                        />
-                      </div>
-                    </div>
-                  </td>
-                  <td className="border border-gray-200 p-0.5 align-top" style={{width: '20%'}}>
-                    <div className="space-y-0.5">
-                      <div>
-                        <div className="text-xs text-gray-700 mb-0.5 font-semibold">Monto: $</div>
-                        <Input
-                          type="number"
-                          value={data[category.key].monto || ''}
-                          onChange={(e) => onUpdate(category.key, 'monto', Number(e.target.value))}
-                          className="text-xs h-5 border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg font-medium w-full transition-all duration-200"
-                          min="0"
-                          max="9999999999"
-                        />
-                      </div>
-                      <div>
-                        <Textarea
-                          value={data[category.key].montoJustificacion}
-                          onChange={(e) => onUpdate(category.key, 'montoJustificacion', e.target.value)}
-                          className="text-xs border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg min-h-[30px] resize-none w-full transition-all duration-200"
-                          rows={2}
-                        />
-                      </div>
-                    </div>
-                  </td>
-                  <td className="border border-gray-200 p-0.5 align-top" style={{width: '20%'}}>
-                    <Textarea
-                      value={data[category.key].calidad}
-                      onChange={(e) => onUpdate(category.key, 'calidad', e.target.value)}
-                      className="text-xs border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg min-h-[60px] resize-none w-full transition-all duration-200"
-                      rows={3}
-                    />
-                  </td>
-                  <td className="border border-gray-200 p-0.5 align-top" style={{width: '10%'}}>
-                    <div className="flex flex-col gap-1">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="h-6 w-full text-xs border-gray-300 hover:bg-red-50 hover:border-red-300"
-                      >
-                        <MessageCircle className="h-3 w-3" />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="h-6 w-full text-xs border-gray-300 hover:bg-red-50 hover:border-red-300"
-                      >
-                        <Upload className="h-3 w-3" />
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-                
-                {/* Expanded sub-row */}
-                {expandedRows[category.key] && (
-                  <tr className={index % 2 === 0 ? 'bg-gray-25 hover:bg-gray-50' : 'bg-white hover:bg-gray-25'}>
-                    <td className="border border-gray-200 p-0.5 font-semibold text-gray-700 text-xs align-top bg-gray-100" style={{width: '15%'}}>
-                      <div className="p-1 pl-6">
-                        <span className="text-gray-600">Sub-{category.label}</span>
-                      </div>
-                    </td>
+                        <div className="p-1 flex items-center justify-between">
+                          <span>{category.label}</span>
+                          <div className="flex items-center gap-1">
+                            <button
+                              onClick={() => addRow(category.key)}
+                              className="text-red-600 hover:text-red-800 transition-colors bg-red-50 hover:bg-red-100 rounded-full p-1"
+                              disabled={categoryRows[category.key] >= 10}
+                            >
+                              <Plus className="h-3 w-3" />
+                            </button>
+                            {categoryRows[category.key] > 1 && (
+                              <button
+                                onClick={() => removeRow(category.key)}
+                                className="text-red-600 hover:text-red-800 transition-colors bg-red-50 hover:bg-red-100 rounded-full p-1"
+                              >
+                                <Minus className="h-3 w-3" />
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      </td>
+                    ) : null}
+                    
                     <td className="border border-gray-200 p-0.5 align-top" style={{width: '25%'}}>
                       <Textarea
-                        placeholder="Descripción adicional..."
+                        value={rowIndex === 0 ? data[category.key].descripcion : ''}
+                        onChange={rowIndex === 0 ? (e) => onUpdate(category.key, 'descripcion', e.target.value) : undefined}
                         className="text-xs border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg min-h-[60px] resize-none w-full transition-all duration-200"
                         rows={3}
+                        placeholder={rowIndex > 0 ? `Descripción adicional ${rowIndex + 1}...` : ''}
                       />
                     </td>
                     <td className="border border-gray-200 p-0.5 align-top" style={{width: '20%'}}>
@@ -201,17 +143,21 @@ const M6Table: React.FC<M6TableProps> = ({
                           <div className="text-xs text-gray-700 mb-0.5 font-semibold">Duración:</div>
                           <Input
                             type="number"
-                            placeholder="0"
+                            value={rowIndex === 0 ? (data[category.key].duracion || '') : ''}
+                            onChange={rowIndex === 0 ? (e) => onUpdate(category.key, 'duracion', Number(e.target.value)) : undefined}
                             className="text-xs h-5 border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg font-medium w-full transition-all duration-200"
                             min="0"
                             max="99999"
+                            placeholder={rowIndex > 0 ? "0" : ""}
                           />
                         </div>
                         <div>
                           <Textarea
-                            placeholder="Justificación..."
+                            value={rowIndex === 0 ? data[category.key].duracionJustificacion : ''}
+                            onChange={rowIndex === 0 ? (e) => onUpdate(category.key, 'duracionJustificacion', e.target.value) : undefined}
                             className="text-xs border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg min-h-[30px] resize-none w-full transition-all duration-200"
                             rows={2}
+                            placeholder={rowIndex > 0 ? "Justificación..." : ""}
                           />
                         </div>
                       </div>
@@ -222,26 +168,32 @@ const M6Table: React.FC<M6TableProps> = ({
                           <div className="text-xs text-gray-700 mb-0.5 font-semibold">Monto: $</div>
                           <Input
                             type="number"
-                            placeholder="0"
+                            value={rowIndex === 0 ? (data[category.key].monto || '') : ''}
+                            onChange={rowIndex === 0 ? (e) => onUpdate(category.key, 'monto', Number(e.target.value)) : undefined}
                             className="text-xs h-5 border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg font-medium w-full transition-all duration-200"
                             min="0"
                             max="9999999999"
+                            placeholder={rowIndex > 0 ? "0" : ""}
                           />
                         </div>
                         <div>
                           <Textarea
-                            placeholder="Justificación..."
+                            value={rowIndex === 0 ? data[category.key].montoJustificacion : ''}
+                            onChange={rowIndex === 0 ? (e) => onUpdate(category.key, 'montoJustificacion', e.target.value) : undefined}
                             className="text-xs border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg min-h-[30px] resize-none w-full transition-all duration-200"
                             rows={2}
+                            placeholder={rowIndex > 0 ? "Justificación..." : ""}
                           />
                         </div>
                       </div>
                     </td>
                     <td className="border border-gray-200 p-0.5 align-top" style={{width: '20%'}}>
                       <Textarea
-                        placeholder="Calidad..."
+                        value={rowIndex === 0 ? data[category.key].calidad : ''}
+                        onChange={rowIndex === 0 ? (e) => onUpdate(category.key, 'calidad', e.target.value) : undefined}
                         className="text-xs border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg min-h-[60px] resize-none w-full transition-all duration-200"
                         rows={3}
+                        placeholder={rowIndex > 0 ? "Calidad..." : ""}
                       />
                     </td>
                     <td className="border border-gray-200 p-0.5 align-top" style={{width: '10%'}}>
@@ -263,7 +215,7 @@ const M6Table: React.FC<M6TableProps> = ({
                       </div>
                     </td>
                   </tr>
-                )}
+                ))}
               </React.Fragment>
             ))}
             <tr className="bg-gradient-to-r from-red-50 to-red-100 font-semibold">
