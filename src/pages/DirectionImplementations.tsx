@@ -45,7 +45,8 @@ const DirectionImplementations: React.FC = () => {
     const implTime = Object.values(implementation.implementacion).reduce((sum: number, item: any) => {
       if (item && typeof item === 'object' && 'duracion' in item) {
         const duration = item.duracion;
-        return sum + (typeof duration === 'number' ? duration : 0);
+        const numericDuration = typeof duration === 'number' ? duration : (typeof duration === 'string' ? parseFloat(duration) : 0);
+        return sum + (isNaN(numericDuration) ? 0 : numericDuration);
       }
       return sum;
     }, 0);
@@ -53,7 +54,8 @@ const DirectionImplementations: React.FC = () => {
     const implCost = Object.values(implementation.implementacion).reduce((sum: number, item: any) => {
       if (item && typeof item === 'object' && 'monto' in item) {
         const amount = item.monto;
-        return sum + (typeof amount === 'number' ? amount : 0);
+        const numericAmount = typeof amount === 'number' ? amount : (typeof amount === 'string' ? parseFloat(amount) : 0);
+        return sum + (isNaN(numericAmount) ? 0 : numericAmount);
       }
       return sum;
     }, 0);
@@ -110,7 +112,7 @@ const DirectionImplementations: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 w-full">
       <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm border-b border-gray-200 p-4">
         <div className="flex items-center justify-between max-w-7xl mx-auto px-4">
           <div>
