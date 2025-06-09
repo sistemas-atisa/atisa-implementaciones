@@ -44,32 +44,49 @@ const App = () => {
         <SidebarProvider>
           <div className="min-h-screen flex w-full">
             <BrowserRouter>
-              {isAdminView ? (
-                <AppSidebar 
-                  onDirectionSelect={handleDirectionSelect}
-                  selectedDirection={selectedDirection}
-                  onToggleView={handleToggleView}
-                />
-              ) : (
-                <UserSidebar 
-                  employeeData={employeeData}
-                  onEmployeeUpdate={handleEmployeeUpdate}
-                  onToggleView={handleToggleView}
-                />
-              )}
-              <main className="flex-1">
-                <Routes>
-                  <Route path="/" element={
-                    isAdminView ? 
-                      <Navigate to="/directions/administracion" replace /> : 
-                      <Navigate to="/my-implementations" replace />
-                  } />
-                  <Route path="/directions/:direction" element={<DirectionImplementations />} />
-                  <Route path="/my-implementations" element={<MyImplementations />} />
-                  <Route path="/:direction/:implementationIndex" element={<ImplementationDetails />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </main>
+              <Routes>
+                <Route path="/" element={
+                  isAdminView ? 
+                    <Navigate to="/directions/administracion" replace /> : 
+                    <Navigate to="/my-implementations" replace />
+                } />
+                <Route path="/directions/:direction" element={
+                  <div className="flex w-full">
+                    {isAdminView ? (
+                      <AppSidebar 
+                        onDirectionSelect={handleDirectionSelect}
+                        selectedDirection={selectedDirection}
+                        onToggleView={handleToggleView}
+                      />
+                    ) : (
+                      <UserSidebar 
+                        employeeData={employeeData}
+                        onEmployeeUpdate={handleEmployeeUpdate}
+                        onToggleView={handleToggleView}
+                      />
+                    )}
+                    <main className="flex-1">
+                      <DirectionImplementations />
+                    </main>
+                  </div>
+                } />
+                <Route path="/my-implementations" element={
+                  <div className="flex w-full">
+                    <UserSidebar 
+                      employeeData={employeeData}
+                      onEmployeeUpdate={handleEmployeeUpdate}
+                      onToggleView={handleToggleView}
+                    />
+                    <main className="flex-1">
+                      <MyImplementations />
+                    </main>
+                  </div>
+                } />
+                <Route path="/:direction/:implementationIndex" element={
+                  <ImplementationDetails />
+                } />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
             </BrowserRouter>
           </div>
         </SidebarProvider>

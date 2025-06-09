@@ -24,9 +24,9 @@ const ImplementationDetails = () => {
   
   // Employee data for user view
   const [employeeData, setEmployeeData] = useState({
-    nombre: '',
-    numeroEmpleado: '',
-    direccion: ''
+    nombre: 'Oscar Arredondo',
+    numeroEmpleado: '793',
+    direccion: 'Tecnología y Sistemas'
   });
   
   const [headerData, setHeaderData] = useState<ProjectHeaderData>({
@@ -56,8 +56,8 @@ const ImplementationDetails = () => {
     medioAmbiente: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' }
   });
 
-  const [tiempoImplementacion, setTiempoImplementacion] = useState(0);
-  const [tiempoOperacion, setTiempoOperacion] = useState(0);
+  const [customTiempoImplementacion, setCustomTiempoImplementacion] = useState(0);
+  const [customTiempoOperacion, setCustomTiempoOperacion] = useState(0);
   const [montoTotalImplementacion, setMontoTotalImplementacion] = useState(0);
   const [montoTotalOperacion, setMontoTotalOperacion] = useState(0);
 
@@ -78,13 +78,9 @@ const ImplementationDetails = () => {
 
   // Calculate totals automatically
   useEffect(() => {
-    const calcTiempoImpl = Object.values(implementacion).reduce((sum, item) => sum + (item.duracion || 0), 0);
-    const calcTiempoOp = Object.values(operacion).reduce((sum, item) => sum + (item.duracion || 0), 0);
     const calcMontoImpl = Object.values(implementacion).reduce((sum, item) => sum + (item.monto || 0), 0);
     const calcMontoOp = Object.values(operacion).reduce((sum, item) => sum + (item.monto || 0), 0);
     
-    setTiempoImplementacion(calcTiempoImpl);
-    setTiempoOperacion(calcTiempoOp);
     setMontoTotalImplementacion(calcMontoImpl);
     setMontoTotalOperacion(calcMontoOp);
   }, [implementacion, operacion]);
@@ -125,8 +121,14 @@ const ImplementationDetails = () => {
     setExpandedTable(expandedTable === tableType ? null : tableType);
   };
 
+  // For non-admin view, redirect to My Implementations if not looking at user's own data
+  if (!isAdminView && employeeData.direccion !== 'Tecnología y Sistemas') {
+    navigate('/my-implementations');
+    return null;
+  }
+
   return (
-    <div className="flex w-full">
+    <div className="flex w-full min-h-screen">
       {isAdminView ? (
         <AppSidebar 
           onDirectionSelect={() => {}}
@@ -141,7 +143,7 @@ const ImplementationDetails = () => {
         />
       )}
       
-      <div className="flex-1 min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      <div className="flex-1 bg-gradient-to-br from-gray-50 via-white to-gray-50">
         {/* Fixed header with sidebar trigger and ATISA logo */}
         <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm border-b border-gray-200 p-4">
           <div className="flex items-center justify-between">
@@ -149,11 +151,11 @@ const ImplementationDetails = () => {
               <SidebarTrigger />
               <Button 
                 variant="outline" 
-                onClick={() => navigate(`/directions/${direction}`)}
+                onClick={() => navigate(isAdminView ? `/directions/${direction}` : '/my-implementations')}
                 className="flex items-center gap-2"
               >
                 <ArrowLeft className="h-4 w-4" />
-                Regresar a Lista
+                {isAdminView ? 'Regresar a Lista' : 'Regresar a Mis Implementaciones'}
               </Button>
             </div>
             
@@ -188,20 +190,24 @@ const ImplementationDetails = () => {
                     title="Implementación"
                     data={implementacion}
                     onUpdate={updateImplementacion}
-                    totalTime={tiempoImplementacion}
+                    totalTime={customTiempoImplementacion}
                     totalCost={montoTotalImplementacion}
                     isExpanded={expandedTable === 'implementacion'}
                     onToggleExpand={() => handleExpandTable('implementacion')}
+                    customTotalTime={customTiempoImplementacion}
+                    onCustomTotalTimeChange={setCustomTiempoImplementacion}
                   />
                 ) : (
                   <UserM6Table
                     title="Implementación"
                     data={implementacion}
                     onUpdate={updateImplementacion}
-                    totalTime={tiempoImplementacion}
+                    totalTime={customTiempoImplementacion}
                     totalCost={montoTotalImplementacion}
                     isExpanded={expandedTable === 'implementacion'}
                     onToggleExpand={() => handleExpandTable('implementacion')}
+                    customTotalTime={customTiempoImplementacion}
+                    onCustomTotalTimeChange={setCustomTiempoImplementacion}
                   />
                 )
               )}
@@ -212,28 +218,32 @@ const ImplementationDetails = () => {
                     title="Operación"
                     data={operacion}
                     onUpdate={updateOperacion}
-                    totalTime={tiempoOperacion}
+                    totalTime={customTiempoOperacion}
                     totalCost={montoTotalOperacion}
                     isExpanded={expandedTable === 'operacion'}
                     onToggleExpand={() => handleExpandTable('operacion')}
+                    customTotalTime={customTiempoOperacion}
+                    onCustomTotalTimeChange={setCustomTiempoOperacion}
                   />
                 ) : (
                   <UserM6Table
                     title="Operación"
                     data={operacion}
                     onUpdate={updateOperacion}
-                    totalTime={tiempoOperacion}
+                    totalTime={customTiempoOperacion}
                     totalCost={montoTotalOperacion}
                     isExpanded={expandedTable === 'operacion'}
                     onToggleExpand={() => handleExpandTable('operacion')}
+                    customTotalTime={customTiempoOperacion}
+                    onCustomTotalTimeChange={setCustomTiempoOperacion}
                   />
                 )
               )}
             </div>
 
             <CostSummary
-              tiempoImplementacion={tiempoImplementacion}
-              tiempoOperacion={tiempoOperacion}
+              tiempoImplementacion={customTiempoImplementacion}
+              tiempoOperacion={customTiempoOperacion}
               montoTotalImplementacion={montoTotalImplementacion}
               montoTotalOperacion={montoTotalOperacion}
             />
