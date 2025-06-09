@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { SidebarTrigger } from '@/components/ui/sidebar';
@@ -16,10 +15,19 @@ import SixMsAnalysis from '@/components/SixMsAnalysis';
 import { SectionData, ProjectHeaderData } from '@/types/project';
 import { implementacionesData } from '@/data/implementaciones';
 
-const ImplementationDetails = () => {
+interface ImplementationDetailsProps {
+  isAdminView?: boolean;
+  isUserLoggedIn?: boolean;
+}
+
+const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({ 
+  isAdminView: propIsAdminView, 
+  isUserLoggedIn: propIsUserLoggedIn 
+}) => {
   const { direction, implementationIndex } = useParams<{ direction: string; implementationIndex: string }>();
   const navigate = useNavigate();
-  const [isAdminView, setIsAdminView] = useState(true);
+  const [isAdminView, setIsAdminView] = useState(propIsAdminView ?? true);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(propIsUserLoggedIn ?? false);
   const [expandedTable, setExpandedTable] = useState<'implementacion' | 'operacion' | null>(null);
   
   // Employee data for user view
@@ -60,6 +68,16 @@ const ImplementationDetails = () => {
   const [customTiempoOperacion, setCustomTiempoOperacion] = useState(0);
   const [montoTotalImplementacion, setMontoTotalImplementacion] = useState(0);
   const [montoTotalOperacion, setMontoTotalOperacion] = useState(0);
+
+  // Update states when props change
+  useEffect(() => {
+    if (propIsAdminView !== undefined) {
+      setIsAdminView(propIsAdminView);
+    }
+    if (propIsUserLoggedIn !== undefined) {
+      setIsUserLoggedIn(propIsUserLoggedIn);
+    }
+  }, [propIsAdminView, propIsUserLoggedIn]);
 
   // Load data when direction or implementation index changes
   useEffect(() => {
@@ -115,11 +133,24 @@ const ImplementationDetails = () => {
 
   const handleToggleView = () => {
     setIsAdminView(!isAdminView);
+    if (isAdminView) {
+      setIsUserLoggedIn(false);
+    }
+  };
+
+  const handleUserLogin = () => {
+    setIsUserLoggedIn(true);
   };
 
   const handleExpandTable = (tableType: 'implementacion' | 'operacion') => {
     setExpandedTable(expandedTable === tableType ? null : tableType);
   };
+
+  // If user view and not logged in, redirect to my-implementations
+  if (!isAdminView && !isUserLoggedIn) {
+    navigate('/my-implementations');
+    return null;
+  }
 
   // For non-admin view, redirect to My Implementations if not looking at user's own data
   if (!isAdminView && employeeData.direccion !== 'Tecnología y Sistemas') {
@@ -140,6 +171,8 @@ const ImplementationDetails = () => {
           employeeData={employeeData}
           onEmployeeUpdate={updateEmployeeData}
           onToggleView={handleToggleView}
+          isLoggedIn={isUserLoggedIn}
+          onLogin={handleUserLogin}
         />
       )}
       

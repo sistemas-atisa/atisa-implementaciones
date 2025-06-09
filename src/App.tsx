@@ -18,6 +18,7 @@ const queryClient = new QueryClient();
 const App = () => {
   const [selectedDirection, setSelectedDirection] = useState('administracion');
   const [isAdminView, setIsAdminView] = useState(true);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [employeeData, setEmployeeData] = useState({
     nombre: 'Oscar Arredondo',
     numeroEmpleado: '793',
@@ -30,11 +31,37 @@ const App = () => {
 
   const handleToggleView = () => {
     setIsAdminView(!isAdminView);
+    // Reset login state when switching to user view
+    if (isAdminView) {
+      setIsUserLoggedIn(false);
+    }
   };
 
   const handleEmployeeUpdate = (field: keyof typeof employeeData, value: string) => {
     setEmployeeData(prev => ({ ...prev, [field]: value }));
   };
+
+  const handleUserLogin = () => {
+    setIsUserLoggedIn(true);
+  };
+
+  // Component for blank page when user is not logged in
+  const BlankUserPage = () => (
+    <div className="flex-1 bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm border-b border-gray-200 p-4">
+        <div className="flex items-center justify-center">
+          <img 
+            src="https://i.postimg.cc/FFfbvfHy/ATISA-Group-Color-page-0001.png" 
+            alt="ATISA Group Logo" 
+            className="h-8 md:h-10 object-contain"
+          />
+        </div>
+      </div>
+      <div className="flex items-center justify-center h-96">
+        <p className="text-gray-500 text-lg">Por favor, accede para ver tu contenido</p>
+      </div>
+    </div>
+  );
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -63,10 +90,16 @@ const App = () => {
                         employeeData={employeeData}
                         onEmployeeUpdate={handleEmployeeUpdate}
                         onToggleView={handleToggleView}
+                        isLoggedIn={isUserLoggedIn}
+                        onLogin={handleUserLogin}
                       />
                     )}
                     <main className="flex-1">
-                      <DirectionImplementations />
+                      {isAdminView ? (
+                        <DirectionImplementations />
+                      ) : (
+                        isUserLoggedIn ? <MyImplementations /> : <BlankUserPage />
+                      )}
                     </main>
                   </div>
                 } />
@@ -76,14 +109,16 @@ const App = () => {
                       employeeData={employeeData}
                       onEmployeeUpdate={handleEmployeeUpdate}
                       onToggleView={handleToggleView}
+                      isLoggedIn={isUserLoggedIn}
+                      onLogin={handleUserLogin}
                     />
                     <main className="flex-1">
-                      <MyImplementations />
+                      {isUserLoggedIn ? <MyImplementations /> : <BlankUserPage />}
                     </main>
                   </div>
                 } />
                 <Route path="/:direction/:implementationIndex" element={
-                  <ImplementationDetails />
+                  <ImplementationDetails isAdminView={isAdminView} isUserLoggedIn={isUserLoggedIn} />
                 } />
                 <Route path="*" element={<NotFound />} />
               </Routes>

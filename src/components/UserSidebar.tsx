@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {
   Sidebar,
@@ -18,9 +19,11 @@ interface UserSidebarProps {
   employeeData: EmployeeData;
   onEmployeeUpdate: (field: keyof EmployeeData, value: string) => void;
   onToggleView: () => void;
+  isLoggedIn: boolean;
+  onLogin: () => void;
 }
 
-export function UserSidebar({ employeeData, onEmployeeUpdate, onToggleView }: UserSidebarProps) {
+export function UserSidebar({ employeeData, onEmployeeUpdate, onToggleView, isLoggedIn, onLogin }: UserSidebarProps) {
   // Fixed employee data for Oscar Arredondo
   const oscarData = {
     nombre: 'Oscar Arredondo',
@@ -38,6 +41,18 @@ export function UserSidebar({ employeeData, onEmployeeUpdate, onToggleView }: Us
       <SidebarContent>
         <div className="p-2">
           <EmployeeCard data={oscarData} onUpdate={onEmployeeUpdate} />
+          
+          {/* Login button - only show when not logged in */}
+          {!isLoggedIn && (
+            <div className="mt-4">
+              <Button 
+                onClick={onLogin}
+                className="w-full bg-red-600 hover:bg-red-700 text-white"
+              >
+                Acceder
+              </Button>
+            </div>
+          )}
         </div>
         
         {/* Current View Section at bottom */}
