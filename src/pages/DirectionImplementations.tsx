@@ -43,11 +43,13 @@ const DirectionImplementations: React.FC = () => {
     }
     
     const implTime = Object.values(implementation.implementacion).reduce((sum: number, item: any) => {
-      return sum + (typeof item?.duracion === 'number' ? item.duracion : 0);
+      const duration = item?.duracion;
+      return sum + (typeof duration === 'number' ? duration : 0);
     }, 0);
     
     const implCost = Object.values(implementation.implementacion).reduce((sum: number, item: any) => {
-      return sum + (typeof item?.monto === 'number' ? item.monto : 0);
+      const amount = item?.monto;
+      return sum + (typeof amount === 'number' ? amount : 0);
     }, 0);
     
     return { time: implTime, cost: implCost };
@@ -102,9 +104,9 @@ const DirectionImplementations: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 w-full">
-      <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm border-b border-gray-200 p-4 w-full">
-        <div className="flex items-center justify-between w-full max-w-none mx-auto px-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm border-b border-gray-200 p-4">
+        <div className="flex items-center justify-between max-w-7xl mx-auto px-4">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">
               {getDirectionTitle(direction || '')}
@@ -120,10 +122,10 @@ const DirectionImplementations: React.FC = () => {
         </div>
       </div>
 
-      <div className="p-6 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
+      <div className="max-w-7xl mx-auto p-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Pendientes de Revisión */}
-          <div className="w-full">
+          <div>
             <div className="flex items-center gap-3 mb-6">
               <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
               <h2 className="text-xl font-bold text-gray-900">Pendientes de Revisión</h2>
@@ -150,7 +152,7 @@ const DirectionImplementations: React.FC = () => {
           </div>
 
           {/* Resueltas */}
-          <div className="w-full">
+          <div>
             <div className="flex items-center gap-3 mb-6">
               <div className="w-3 h-3 bg-green-500 rounded-full"></div>
               <h2 className="text-xl font-bold text-gray-900">Resueltas</h2>
