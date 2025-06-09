@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Sidebar,
@@ -103,10 +103,16 @@ const directions = [
 
 export function AppSidebar({ onDirectionSelect, selectedDirection, onToggleView }: AppSidebarProps) {
   const navigate = useNavigate();
+  const [isAdminView, setIsAdminView] = useState(false);
 
   const handleDirectionClick = (directionId: string) => {
     onDirectionSelect(directionId);
     navigate(`/directions/${directionId}`);
+  };
+
+  const handleToggleView = () => {
+    setIsAdminView(!isAdminView);
+    onToggleView();
   };
 
   return (
@@ -138,7 +144,7 @@ export function AppSidebar({ onDirectionSelect, selectedDirection, onToggleView 
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <ViewToggle onToggle={onToggleView} />
+        <ViewToggle isAdminView={isAdminView} onToggleView={handleToggleView} />
       </SidebarFooter>
     </Sidebar>
   );

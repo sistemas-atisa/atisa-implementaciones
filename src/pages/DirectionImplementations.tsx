@@ -43,7 +43,13 @@ const DirectionImplementations = () => {
     return { time: implTime, cost: implCost };
   };
 
-  const ImplementationCard = ({ implementation, index, isPending }: { implementation: any, index: number, isPending: boolean }) => {
+  interface ImplementationCardProps {
+    implementation: any;
+    index: number;
+    isPending: boolean;
+  }
+
+  const ImplementationCard: React.FC<ImplementationCardProps> = ({ implementation, index, isPending }) => {
     const totals = calculateTotals(implementation);
     
     return (
