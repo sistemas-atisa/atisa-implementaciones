@@ -1,97 +1,107 @@
 
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Eye, Clock, DollarSign } from 'lucide-react';
-import { implementacionesData } from '@/data/implementaciones';
+import { Eye, Clock, DollarSign, CheckCircle, XCircle } from 'lucide-react';
 
-const DirectionImplementations: React.FC = () => {
-  const { direction } = useParams<{ direction: string }>();
+const MyImplementations: React.FC = () => {
   const navigate = useNavigate();
 
-  const implementations = direction ? implementacionesData[direction as keyof typeof implementacionesData] || [] : [];
-  
-  // For demo purposes, we'll mark some as pending and others as resolved randomly
-  const pendingImplementations = implementations.filter((_, index) => index % 3 === 0);
-  const resolvedImplementations = implementations.filter((_, index) => index % 3 !== 0);
-
-  const getDirectionTitle = (directionKey: string): string => {
-    const directionMap: { [key: string]: string } = {
-      'administracion': 'Administración',
-      'fiscal': 'Fiscal',
-      'legal': 'Legal',
-      'finanzas': 'Finanzas',
-      'capital-humano': 'Capital Humano',
-      'tecnologia': 'Tecnología',
-      'proyectos-presupuestos': 'Proyectos y Presupuestos',
-      'cadena-suministros': 'Cadena de Suministros',
-      'maquinaria': 'Maquinaria',
-      'movimiento-tierra': 'Movimiento de Tierra',
-      'construccion': 'Construcción',
-      'desarrollo': 'Desarrollo',
-      'comercial': 'Comercial',
-      'asset-management': 'Asset Management',
-      'clinica-santa-clarita': 'Clínica Santa Clarita'
-    };
-    return directionMap[directionKey] || directionKey;
-  };
-
-  const calculateTotals = (implementation: any): { time: number; cost: number } => {
-    if (!implementation?.implementacion) {
-      return { time: 0, cost: 0 };
+  // Mock data for user implementations
+  const myImplementations = [
+    {
+      id: 1,
+      title: "Optimización del Sistema de Gestión Documental",
+      description: "Implementar un nuevo sistema para mejorar la gestión y almacenamiento de documentos corporativos.",
+      days: 15,
+      cost: 25000,
+      status: 'pending',
+      direction: 'tecnologia'
+    },
+    {
+      id: 2,
+      title: "Mejora en Procesos de Reclutamiento",
+      description: "Actualizar los procesos de selección y reclutamiento de personal para mayor eficiencia.",
+      days: 20,
+      cost: 18000,
+      status: 'approved',
+      direction: 'capital-humano'
+    },
+    {
+      id: 3,
+      title: "Automatización de Reportes Financieros",
+      description: "Implementar herramientas de automatización para la generación de reportes financieros mensuales.",
+      days: 25,
+      cost: 35000,
+      status: 'rejected',
+      direction: 'finanzas'
     }
-    
-    const implTime = Object.values(implementation.implementacion).reduce((sum: number, item: any) => {
-      return sum + (typeof item?.duracion === 'number' ? item.duracion : 0);
-    }, 0);
-    
-    const implCost = Object.values(implementation.implementacion).reduce((sum: number, item: any) => {
-      return sum + (typeof item?.monto === 'number' ? item.monto : 0);
-    }, 0);
-    
-    return { time: implTime, cost: implCost };
-  };
+  ];
+
+  const pendingImplementations = myImplementations.filter(impl => impl.status === 'pending');
+  const resolvedImplementations = myImplementations.filter(impl => impl.status !== 'pending');
 
   interface ImplementationCardProps {
-    implementation: any;
-    index: number;
+    implementation: typeof myImplementations[0];
     isPending: boolean;
   }
 
-  const ImplementationCard: React.FC<ImplementationCardProps> = ({ implementation, index, isPending }) => {
-    const totals = calculateTotals(implementation);
+  const ImplementationCard: React.FC<ImplementationCardProps> = ({ implementation, isPending }) => {
+    const getStatusInfo = (status: string) => {
+      switch (status) {
+        case 'approved':
+          return { 
+            label: 'Aprobada', 
+            className: 'bg-green-100 text-green-800',
+            icon: <CheckCircle className="h-4 w-4" />
+          };
+        case 'rejected':
+          return { 
+            label: 'Rechazada', 
+            className: 'bg-red-100 text-red-800',
+            icon: <XCircle className="h-4 w-4" />
+          };
+        default:
+          return { 
+            label: 'Pendiente', 
+            className: 'bg-yellow-100 text-yellow-800',
+            icon: <Clock className="h-4 w-4" />
+          };
+      }
+    };
+
+    const statusInfo = getStatusInfo(implementation.status);
     
     return (
       <Card className="p-6 hover:shadow-lg transition-shadow duration-200 border-gray-200">
         <div className="flex justify-between items-start mb-4">
           <h3 className="font-bold text-lg text-gray-900 line-clamp-2">
-            {implementation.header.nombreImplementacion}
+            {implementation.title}
           </h3>
-          <div className={`px-2 py-1 rounded-full text-xs font-medium ${
-            isPending ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'
-          }`}>
-            {isPending ? 'Pendiente' : 'Resuelta'}
+          <div className={`px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${statusInfo.className}`}>
+            {statusInfo.icon}
+            {statusInfo.label}
           </div>
         </div>
         
         <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-          {implementation.header.razon1}
+          {implementation.description}
         </p>
         
         <div className="flex items-center gap-4 mb-4 text-sm text-gray-500">
           <div className="flex items-center gap-1">
             <Clock className="h-4 w-4" />
-            <span>{totals.time} días</span>
+            <span>{implementation.days} días</span>
           </div>
           <div className="flex items-center gap-1">
             <DollarSign className="h-4 w-4" />
-            <span>${totals.cost.toLocaleString()}</span>
+            <span>${implementation.cost.toLocaleString()}</span>
           </div>
         </div>
         
         <Button 
-          onClick={() => navigate(`/${direction}/${index}`)}
+          onClick={() => navigate(`/${implementation.direction}/${implementation.id}`)}
           className="w-full bg-red-600 hover:bg-red-700"
         >
           <Eye className="h-4 w-4 mr-2" />
@@ -107,9 +117,9 @@ const DirectionImplementations: React.FC = () => {
         <div className="flex items-center justify-between w-full max-w-none mx-auto px-4">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">
-              {getDirectionTitle(direction || '')}
+              Mis Implementaciones
             </h1>
-            <p className="text-gray-600">Implementaciones disponibles</p>
+            <p className="text-gray-600">Implementaciones asignadas a tu área</p>
           </div>
           
           <img 
@@ -133,11 +143,10 @@ const DirectionImplementations: React.FC = () => {
             </div>
             <div className="space-y-4">
               {pendingImplementations.length > 0 ? (
-                pendingImplementations.map((implementation, index) => (
+                pendingImplementations.map((implementation) => (
                   <ImplementationCard 
-                    key={`pending-${index}`} 
+                    key={`pending-${implementation.id}`} 
                     implementation={implementation} 
-                    index={implementations.indexOf(implementation)}
                     isPending={true}
                   />
                 ))
@@ -160,11 +169,10 @@ const DirectionImplementations: React.FC = () => {
             </div>
             <div className="space-y-4">
               {resolvedImplementations.length > 0 ? (
-                resolvedImplementations.map((implementation, index) => (
+                resolvedImplementations.map((implementation) => (
                   <ImplementationCard 
-                    key={`resolved-${index}`} 
+                    key={`resolved-${implementation.id}`} 
                     implementation={implementation} 
-                    index={implementations.indexOf(implementation)}
                     isPending={false}
                   />
                 ))
@@ -181,4 +189,4 @@ const DirectionImplementations: React.FC = () => {
   );
 };
 
-export default DirectionImplementations;
+export default MyImplementations;

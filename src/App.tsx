@@ -8,6 +8,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "./components/AppSidebar";
 import { UserSidebar } from "./components/UserSidebar";
 import DirectionImplementations from "./pages/DirectionImplementations";
+import MyImplementations from "./pages/MyImplementations";
 import ImplementationDetails from "./pages/ImplementationDetails";
 import NotFound from "./pages/NotFound";
 import { useState } from "react";
@@ -58,8 +59,13 @@ const App = () => {
               )}
               <main className="flex-1">
                 <Routes>
-                  <Route path="/" element={<Navigate to="/directions/administracion" replace />} />
+                  <Route path="/" element={
+                    isAdminView ? 
+                      <Navigate to="/directions/administracion" replace /> : 
+                      <Navigate to="/my-implementations" replace />
+                  } />
                   <Route path="/directions/:direction" element={<DirectionImplementations />} />
+                  <Route path="/my-implementations" element={<MyImplementations />} />
                   <Route path="/:direction/:implementationIndex" element={<ImplementationDetails />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>

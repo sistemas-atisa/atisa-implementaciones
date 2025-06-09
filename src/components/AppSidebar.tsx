@@ -56,13 +56,11 @@ const directions = [
     id: 'proyectos-presupuestos',
     title: 'Proyectos y Presupuestos',
     icon: Target,
-    extraSpacing: true,
   },
   {
     id: 'cadena-suministros',
     title: 'Cadena de Suministros',
     icon: ShoppingCart,
-    extraSpacing: true,
   },
   {
     id: 'maquinaria',
@@ -119,16 +117,16 @@ export function AppSidebar({ onDirectionSelect, selectedDirection, onToggleView 
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>
+          <SidebarGroupLabel className="text-lg font-bold text-foreground mb-2">
             <div className="flex items-center gap-2">
-              <FileText className="h-4 w-4" />
+              <FileText className="h-5 w-5" />
               Direcciones
             </div>
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="space-y-1">
               {directions.map((direction) => (
-                <SidebarMenuItem key={direction.id} className={direction.extraSpacing ? 'mt-2 mb-2' : ''}>
+                <SidebarMenuItem key={direction.id}>
                   <SidebarMenuButton
                     onClick={() => handleDirectionClick(direction.id)}
                     isActive={selectedDirection === direction.id}
