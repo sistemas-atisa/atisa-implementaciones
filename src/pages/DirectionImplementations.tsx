@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Eye, Clock, DollarSign } from 'lucide-react';
 import { implementacionesData } from '@/data/implementaciones';
 
-const DirectionImplementations = () => {
+const DirectionImplementations: React.FC = () => {
   const { direction } = useParams<{ direction: string }>();
   const navigate = useNavigate();
 
@@ -16,7 +16,7 @@ const DirectionImplementations = () => {
   const pendingImplementations = implementations.filter((_, index) => index % 3 === 0);
   const resolvedImplementations = implementations.filter((_, index) => index % 3 !== 0);
 
-  const getDirectionTitle = (directionKey: string) => {
+  const getDirectionTitle = (directionKey: string): string => {
     const directionMap: { [key: string]: string } = {
       'administracion': 'Administración',
       'fiscal': 'Fiscal',
@@ -37,7 +37,7 @@ const DirectionImplementations = () => {
     return directionMap[directionKey] || directionKey;
   };
 
-  const calculateTotals = (implementation: any) => {
+  const calculateTotals = (implementation: any): { time: number; cost: number } => {
     const implTime = Object.values(implementation.implementacion).reduce((sum: number, item: any) => sum + (item.duracion || 0), 0);
     const implCost = Object.values(implementation.implementacion).reduce((sum: number, item: any) => sum + (item.monto || 0), 0);
     return { time: implTime, cost: implCost };
