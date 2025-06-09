@@ -1,310 +1,82 @@
 
-import React, { useState, useEffect } from 'react';
-import { SidebarTrigger } from '@/components/ui/sidebar';
-import { AppSidebar } from '@/components/AppSidebar';
-import { UserSidebar } from '@/components/UserSidebar';
-import ProjectHeader from '@/components/ProjectHeader';
-import UserProjectHeader from '@/components/UserProjectHeader';
-import M6Table from '@/components/M6Table';
-import UserM6Table from '@/components/UserM6Table';
-import CostSummary from '@/components/CostSummary';
-import CommentsSection from '@/components/CommentsSection';
-import SixMsAnalysis from '@/components/SixMsAnalysis';
-import ViewToggle from '@/components/ViewToggle';
-import { SectionData, ProjectHeaderData } from '@/types/project';
-import { implementacionesData } from '@/data/implementaciones';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, Shield } from 'lucide-react';
+import { Building2, Users, FileText, Calculator, Wrench, Truck, HardHat, Home, ShoppingCart, Stethoscope, Shield, Target, TrendingUp, Briefcase } from 'lucide-react';
 
 const Index = () => {
-  const [isAdminView, setIsAdminView] = useState(true);
-  const [selectedDirection, setSelectedDirection] = useState('administracion');
-  const [currentImplementationIndex, setCurrentImplementationIndex] = useState(0);
-  const [expandedTable, setExpandedTable] = useState<'implementacion' | 'operacion' | null>(null);
-  
-  // Employee data for user view
-  const [employeeData, setEmployeeData] = useState({
-    nombre: '',
-    numeroEmpleado: '',
-    direccion: ''
-  });
-  
-  const [headerData, setHeaderData] = useState<ProjectHeaderData>({
-    direccion: '',
-    gerencia: '',
-    nombreImplementacion: '',
-    razon1: '',
-    razon2: '',
-    razon3: ''
-  });
-  
-  const [implementacion, setImplementacion] = useState<SectionData>({
-    manoDeObra: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-    metodologia: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-    medicion: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-    maquinaria: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-    materiales: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-    medioAmbiente: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' }
-  });
+  const navigate = useNavigate();
 
-  const [operacion, setOperacion] = useState<SectionData>({
-    manoDeObra: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-    metodologia: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-    medicion: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-    maquinaria: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-    materiales: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-    medioAmbiente: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' }
-  });
-
-  const [tiempoImplementacion, setTiempoImplementacion] = useState(0);
-  const [tiempoOperacion, setTiempoOperacion] = useState(0);
-  const [montoTotalImplementacion, setMontoTotalImplementacion] = useState(0);
-  const [montoTotalOperacion, setMontoTotalOperacion] = useState(0);
-
-  // Load data when direction or implementation index changes
-  useEffect(() => {
-    const implementations = implementacionesData[selectedDirection as keyof typeof implementacionesData];
-    if (implementations && implementations[currentImplementationIndex]) {
-      const currentImpl = implementations[currentImplementationIndex];
-      setHeaderData(currentImpl.header);
-      setImplementacion(currentImpl.implementacion);
-      setOperacion(currentImpl.operacion);
-    } else {
-      // Reset to empty data for directions without implementations
-      setHeaderData({
-        direccion: '',
-        gerencia: '',
-        nombreImplementacion: '',
-        razon1: '',
-        razon2: '',
-        razon3: ''
-      });
-      setImplementacion({
-        manoDeObra: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-        metodologia: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-        medicion: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-        maquinaria: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-        materiales: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-        medioAmbiente: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' }
-      });
-      setOperacion({
-        manoDeObra: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-        metodologia: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-        medicion: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-        maquinaria: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-        materiales: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-        medioAmbiente: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' }
-      });
-    }
-  }, [selectedDirection, currentImplementationIndex]);
-
-  // Calculate totals automatically
-  useEffect(() => {
-    const calcTiempoImpl = Object.values(implementacion).reduce((sum, item) => sum + (item.duracion || 0), 0);
-    const calcTiempoOp = Object.values(operacion).reduce((sum, item) => sum + (item.duracion || 0), 0);
-    const calcMontoImpl = Object.values(implementacion).reduce((sum, item) => sum + (item.monto || 0), 0);
-    const calcMontoOp = Object.values(operacion).reduce((sum, item) => sum + (item.monto || 0), 0);
-    
-    setTiempoImplementacion(calcTiempoImpl);
-    setTiempoOperacion(calcTiempoOp);
-    setMontoTotalImplementacion(calcMontoImpl);
-    setMontoTotalOperacion(calcMontoOp);
-  }, [implementacion, operacion]);
-
-  const updateHeaderData = (field: keyof ProjectHeaderData, value: string) => {
-    setHeaderData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const updateEmployeeData = (field: keyof typeof employeeData, value: string) => {
-    setEmployeeData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const updateImplementacion = (category: keyof SectionData, field: keyof SectionData[keyof SectionData], value: string | number) => {
-    setImplementacion(prev => ({
-      ...prev,
-      [category]: {
-        ...prev[category],
-        [field]: value
-      }
-    }));
-  };
-
-  const updateOperacion = (category: keyof SectionData, field: keyof SectionData[keyof SectionData], value: string | number) => {
-    setOperacion(prev => ({
-      ...prev,
-      [category]: {
-        ...prev[category],
-        [field]: value
-      }
-    }));
-  };
-
-  const handleDirectionSelect = (directionId: string) => {
-    setSelectedDirection(directionId);
-    setCurrentImplementationIndex(0); // Reset to first implementation
-  };
-
-  const handleToggleView = () => {
-    setIsAdminView(!isAdminView);
-  };
-
-  const getCurrentImplementations = () => {
-    return implementacionesData[selectedDirection as keyof typeof implementacionesData] || [];
-  };
-
-  const currentImplementations = getCurrentImplementations();
-  const hasMultipleImplementations = currentImplementations.length > 1;
-
-  const nextImplementation = () => {
-    if (currentImplementationIndex < currentImplementations.length - 1) {
-      setCurrentImplementationIndex(currentImplementationIndex + 1);
-    }
-  };
-
-  const previousImplementation = () => {
-    if (currentImplementationIndex > 0) {
-      setCurrentImplementationIndex(currentImplementationIndex - 1);
-    }
-  };
-
-  const handleExpandTable = (tableType: 'implementacion' | 'operacion') => {
-    setExpandedTable(expandedTable === tableType ? null : tableType);
-  };
+  const directions = [
+    { id: 'administracion', title: 'Administración', icon: Building2, description: 'Gestión administrativa y documentos' },
+    { id: 'fiscal', title: 'Fiscal', icon: Calculator, description: 'Control tributario y cumplimiento fiscal' },
+    { id: 'legal', title: 'Legal', icon: Shield, description: 'Gestión jurídica y contratos' },
+    { id: 'finanzas', title: 'Finanzas', icon: TrendingUp, description: 'Control financiero y análisis' },
+    { id: 'capital-humano', title: 'Capital Humano', icon: Users, description: 'Recursos humanos y desarrollo' },
+    { id: 'tecnologia', title: 'Tecnología', icon: Wrench, description: 'Sistemas y tecnología' },
+    { id: 'proyectos-presupuestos', title: 'Proyectos y Presupuestos', icon: Target, description: 'Gestión de proyectos y PMO' },
+    { id: 'cadena-suministros', title: 'Cadena de Suministros', icon: ShoppingCart, description: 'Supply chain e inventarios' },
+    { id: 'maquinaria', title: 'Maquinaria', icon: Wrench, description: 'Equipos y mantenimiento' },
+    { id: 'movimiento-tierra', title: 'Movimiento de Tierra', icon: Truck, description: 'Operaciones de movimiento' },
+    { id: 'construccion', title: 'Construcción', icon: HardHat, description: 'Proyectos constructivos' },
+    { id: 'desarrollo', title: 'Desarrollo', icon: Home, description: 'Desarrollos inmobiliarios' },
+    { id: 'comercial', title: 'Comercial', icon: Briefcase, description: 'Ventas y marketing' },
+    { id: 'asset-management', title: 'Asset Management', icon: Building2, description: 'Gestión de activos' },
+    { id: 'clinica-santa-clarita', title: 'Clínica Santa Clarita', icon: Stethoscope, description: 'Servicios médicos' },
+  ];
 
   return (
-    <div className="flex w-full">
-      {isAdminView ? (
-        <AppSidebar 
-          onDirectionSelect={handleDirectionSelect}
-          selectedDirection={selectedDirection}
-          onToggleView={handleToggleView}
-        />
-      ) : (
-        <UserSidebar 
-          employeeData={employeeData}
-          onEmployeeUpdate={updateEmployeeData}
-          onToggleView={handleToggleView}
-        />
-      )}
-      
-      <div className="flex-1 min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
-        {/* Fixed header with sidebar trigger and ATISA logo */}
-        <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm border-b border-gray-200 p-4">
-          <div className="flex items-center justify-between">
-            <SidebarTrigger />
-            
-            {/* ATISA Logo - Centered */}
-            <div className="absolute left-1/2 transform -translate-x-1/2">
-              <img 
-                src="https://i.postimg.cc/FFfbvfHy/ATISA-Group-Color-page-0001.png" 
-                alt="ATISA Group Logo" 
-                className="h-8 md:h-10 object-contain"
-              />
-            </div>
-            
-            {/* Navigation for multiple implementations - only in admin view */}
-            {isAdminView && hasMultipleImplementations && (
-              <div className="flex items-center gap-4">
-                <span className="text-sm text-gray-600">
-                  Implementación {currentImplementationIndex + 1} de {currentImplementations.length}
-                </span>
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={previousImplementation}
-                    disabled={currentImplementationIndex === 0}
-                  >
-                    <ChevronLeft className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={nextImplementation}
-                    disabled={currentImplementationIndex === currentImplementations.length - 1}
-                  >
-                    <ChevronRight className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            )}
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm border-b border-gray-200 p-4">
+        <div className="flex items-center justify-center">
+          <img 
+            src="https://i.postimg.cc/FFfbvfHy/ATISA-Group-Color-page-0001.png" 
+            alt="ATISA Group Logo" 
+            className="h-12 md:h-16 object-contain"
+          />
         </div>
-        
-        <div className="p-6">
-          <div className="max-w-full mx-auto">
-            {isAdminView ? (
-              <ProjectHeader data={headerData} onUpdate={updateHeaderData} />
-            ) : (
-              <UserProjectHeader data={headerData} onUpdate={updateHeaderData} />
-            )}
+      </div>
 
-            {/* Main Tables with Expandable Layout */}
-            <div className={`transition-all duration-300 ${
-              expandedTable === null 
-                ? 'grid grid-cols-1 xl:grid-cols-2 gap-8' 
-                : 'grid grid-cols-1 gap-8'
-            }`}>
-              {(expandedTable === null || expandedTable === 'implementacion') && (
-                isAdminView ? (
-                  <M6Table
-                    title="Implementación"
-                    data={implementacion}
-                    onUpdate={updateImplementacion}
-                    totalTime={tiempoImplementacion}
-                    totalCost={montoTotalImplementacion}
-                    isExpanded={expandedTable === 'implementacion'}
-                    onToggleExpand={() => handleExpandTable('implementacion')}
-                  />
-                ) : (
-                  <UserM6Table
-                    title="Implementación"
-                    data={implementacion}
-                    onUpdate={updateImplementacion}
-                    totalTime={tiempoImplementacion}
-                    totalCost={montoTotalImplementacion}
-                    isExpanded={expandedTable === 'implementacion'}
-                    onToggleExpand={() => handleExpandTable('implementacion')}
-                  />
-                )
-              )}
-              
-              {(expandedTable === null || expandedTable === 'operacion') && (
-                isAdminView ? (
-                  <M6Table
-                    title="Operación"
-                    data={operacion}
-                    onUpdate={updateOperacion}
-                    totalTime={tiempoOperacion}
-                    totalCost={montoTotalOperacion}
-                    isExpanded={expandedTable === 'operacion'}
-                    onToggleExpand={() => handleExpandTable('operacion')}
-                  />
-                ) : (
-                  <UserM6Table
-                    title="Operación"
-                    data={operacion}
-                    onUpdate={updateOperacion}
-                    totalTime={tiempoOperacion}
-                    totalCost={montoTotalOperacion}
-                    isExpanded={expandedTable === 'operacion'}
-                    onToggleExpand={() => handleExpandTable('operacion')}
-                  />
-                )
-              )}
-            </div>
+      <div className="p-6 max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            Sistema de Gestión de Implementaciones
+          </h1>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Selecciona una dirección para ver las implementaciones disponibles y gestionar proyectos de mejora organizacional.
+          </p>
+        </div>
 
-            <CostSummary
-              tiempoImplementacion={tiempoImplementacion}
-              tiempoOperacion={tiempoOperacion}
-              montoTotalImplementacion={montoTotalImplementacion}
-              montoTotalOperacion={montoTotalOperacion}
-            />
-
-            <CommentsSection />
-
-            <SixMsAnalysis />
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {directions.map((direction) => (
+            <Card 
+              key={direction.id}
+              className="p-6 hover:shadow-lg transition-all duration-200 cursor-pointer border-gray-200 hover:border-red-300"
+              onClick={() => navigate(`/directions/${direction.id}`)}
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-3 bg-red-100 rounded-lg">
+                  <direction.icon className="h-6 w-6 text-red-600" />
+                </div>
+                <h3 className="font-bold text-lg text-gray-900">
+                  {direction.title}
+                </h3>
+              </div>
+              <p className="text-gray-600 mb-4">
+                {direction.description}
+              </p>
+              <Button 
+                className="w-full bg-red-600 hover:bg-red-700"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`/directions/${direction.id}`);
+                }}
+              >
+                Ver Implementaciones
+              </Button>
+            </Card>
+          ))}
         </div>
       </div>
     </div>

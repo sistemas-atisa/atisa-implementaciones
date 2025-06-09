@@ -1,0 +1,251 @@
+
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { SidebarTrigger } from '@/components/ui/sidebar';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
+import { AppSidebar } from '@/components/AppSidebar';
+import { UserSidebar } from '@/components/UserSidebar';
+import ProjectHeader from '@/components/ProjectHeader';
+import UserProjectHeader from '@/components/UserProjectHeader';
+import M6Table from '@/components/M6Table';
+import UserM6Table from '@/components/UserM6Table';
+import CostSummary from '@/components/CostSummary';
+import CommentsSection from '@/components/CommentsSection';
+import SixMsAnalysis from '@/components/SixMsAnalysis';
+import { SectionData, ProjectHeaderData } from '@/types/project';
+import { implementacionesData } from '@/data/implementaciones';
+
+const ImplementationDetails = () => {
+  const { direction, implementationIndex } = useParams<{ direction: string; implementationIndex: string }>();
+  const navigate = useNavigate();
+  const [isAdminView, setIsAdminView] = useState(true);
+  const [expandedTable, setExpandedTable] = useState<'implementacion' | 'operacion' | null>(null);
+  
+  // Employee data for user view
+  const [employeeData, setEmployeeData] = useState({
+    nombre: '',
+    numeroEmpleado: '',
+    direccion: ''
+  });
+  
+  const [headerData, setHeaderData] = useState<ProjectHeaderData>({
+    direccion: '',
+    gerencia: '',
+    nombreImplementacion: '',
+    razon1: '',
+    razon2: '',
+    razon3: ''
+  });
+  
+  const [implementacion, setImplementacion] = useState<SectionData>({
+    manoDeObra: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    metodologia: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    medicion: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    maquinaria: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    materiales: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    medioAmbiente: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' }
+  });
+
+  const [operacion, setOperacion] = useState<SectionData>({
+    manoDeObra: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    metodologia: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    medicion: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    maquinaria: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    materiales: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    medioAmbiente: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' }
+  });
+
+  const [tiempoImplementacion, setTiempoImplementacion] = useState(0);
+  const [tiempoOperacion, setTiempoOperacion] = useState(0);
+  const [montoTotalImplementacion, setMontoTotalImplementacion] = useState(0);
+  const [montoTotalOperacion, setMontoTotalOperacion] = useState(0);
+
+  // Load data when direction or implementation index changes
+  useEffect(() => {
+    if (direction && implementationIndex) {
+      const implementations = implementacionesData[direction as keyof typeof implementacionesData];
+      const index = parseInt(implementationIndex);
+      
+      if (implementations && implementations[index]) {
+        const currentImpl = implementations[index];
+        setHeaderData(currentImpl.header);
+        setImplementacion(currentImpl.implementacion);
+        setOperacion(currentImpl.operacion);
+      }
+    }
+  }, [direction, implementationIndex]);
+
+  // Calculate totals automatically
+  useEffect(() => {
+    const calcTiempoImpl = Object.values(implementacion).reduce((sum, item) => sum + (item.duracion || 0), 0);
+    const calcTiempoOp = Object.values(operacion).reduce((sum, item) => sum + (item.duracion || 0), 0);
+    const calcMontoImpl = Object.values(implementacion).reduce((sum, item) => sum + (item.monto || 0), 0);
+    const calcMontoOp = Object.values(operacion).reduce((sum, item) => sum + (item.monto || 0), 0);
+    
+    setTiempoImplementacion(calcTiempoImpl);
+    setTiempoOperacion(calcTiempoOp);
+    setMontoTotalImplementacion(calcMontoImpl);
+    setMontoTotalOperacion(calcMontoOp);
+  }, [implementacion, operacion]);
+
+  const updateHeaderData = (field: keyof ProjectHeaderData, value: string) => {
+    setHeaderData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const updateEmployeeData = (field: keyof typeof employeeData, value: string) => {
+    setEmployeeData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const updateImplementacion = (category: keyof SectionData, field: keyof SectionData[keyof SectionData], value: string | number) => {
+    setImplementacion(prev => ({
+      ...prev,
+      [category]: {
+        ...prev[category],
+        [field]: value
+      }
+    }));
+  };
+
+  const updateOperacion = (category: keyof SectionData, field: keyof SectionData[keyof SectionData], value: string | number) => {
+    setOperacion(prev => ({
+      ...prev,
+      [category]: {
+        ...prev[category],
+        [field]: value
+      }
+    }));
+  };
+
+  const handleToggleView = () => {
+    setIsAdminView(!isAdminView);
+  };
+
+  const handleExpandTable = (tableType: 'implementacion' | 'operacion') => {
+    setExpandedTable(expandedTable === tableType ? null : tableType);
+  };
+
+  return (
+    <div className="flex w-full">
+      {isAdminView ? (
+        <AppSidebar 
+          onDirectionSelect={() => {}}
+          selectedDirection={direction || ''}
+          onToggleView={handleToggleView}
+        />
+      ) : (
+        <UserSidebar 
+          employeeData={employeeData}
+          onEmployeeUpdate={updateEmployeeData}
+          onToggleView={handleToggleView}
+        />
+      )}
+      
+      <div className="flex-1 min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+        {/* Fixed header with sidebar trigger and ATISA logo */}
+        <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm border-b border-gray-200 p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <SidebarTrigger />
+              <Button 
+                variant="outline" 
+                onClick={() => navigate(`/directions/${direction}`)}
+                className="flex items-center gap-2"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Regresar a Lista
+              </Button>
+            </div>
+            
+            {/* ATISA Logo - Centered */}
+            <div className="absolute left-1/2 transform -translate-x-1/2">
+              <img 
+                src="https://i.postimg.cc/FFfbvfHy/ATISA-Group-Color-page-0001.png" 
+                alt="ATISA Group Logo" 
+                className="h-8 md:h-10 object-contain"
+              />
+            </div>
+          </div>
+        </div>
+        
+        <div className="p-6">
+          <div className="max-w-full mx-auto">
+            {isAdminView ? (
+              <ProjectHeader data={headerData} onUpdate={updateHeaderData} />
+            ) : (
+              <UserProjectHeader data={headerData} onUpdate={updateHeaderData} />
+            )}
+
+            {/* Main Tables with Expandable Layout */}
+            <div className={`transition-all duration-300 ${
+              expandedTable === null 
+                ? 'grid grid-cols-1 xl:grid-cols-2 gap-8' 
+                : 'grid grid-cols-1 gap-8'
+            }`}>
+              {(expandedTable === null || expandedTable === 'implementacion') && (
+                isAdminView ? (
+                  <M6Table
+                    title="Implementación"
+                    data={implementacion}
+                    onUpdate={updateImplementacion}
+                    totalTime={tiempoImplementacion}
+                    totalCost={montoTotalImplementacion}
+                    isExpanded={expandedTable === 'implementacion'}
+                    onToggleExpand={() => handleExpandTable('implementacion')}
+                  />
+                ) : (
+                  <UserM6Table
+                    title="Implementación"
+                    data={implementacion}
+                    onUpdate={updateImplementacion}
+                    totalTime={tiempoImplementacion}
+                    totalCost={montoTotalImplementacion}
+                    isExpanded={expandedTable === 'implementacion'}
+                    onToggleExpand={() => handleExpandTable('implementacion')}
+                  />
+                )
+              )}
+              
+              {(expandedTable === null || expandedTable === 'operacion') && (
+                isAdminView ? (
+                  <M6Table
+                    title="Operación"
+                    data={operacion}
+                    onUpdate={updateOperacion}
+                    totalTime={tiempoOperacion}
+                    totalCost={montoTotalOperacion}
+                    isExpanded={expandedTable === 'operacion'}
+                    onToggleExpand={() => handleExpandTable('operacion')}
+                  />
+                ) : (
+                  <UserM6Table
+                    title="Operación"
+                    data={operacion}
+                    onUpdate={updateOperacion}
+                    totalTime={tiempoOperacion}
+                    totalCost={montoTotalOperacion}
+                    isExpanded={expandedTable === 'operacion'}
+                    onToggleExpand={() => handleExpandTable('operacion')}
+                  />
+                )
+              )}
+            </div>
+
+            <CostSummary
+              tiempoImplementacion={tiempoImplementacion}
+              tiempoOperacion={tiempoOperacion}
+              montoTotalImplementacion={montoTotalImplementacion}
+              montoTotalOperacion={montoTotalOperacion}
+            />
+
+            <CommentsSection />
+
+            <SixMsAnalysis />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ImplementationDetails;
