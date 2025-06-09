@@ -38,8 +38,12 @@ const DirectionImplementations: React.FC = () => {
   };
 
   const calculateTotals = (implementation: any): { time: number; cost: number } => {
-    const implTime = Object.values(implementation.implementacion).reduce((sum: number, item: any) => sum + (item.duracion || 0), 0);
-    const implCost = Object.values(implementation.implementacion).reduce((sum: number, item: any) => sum + (item.monto || 0), 0);
+    const implTime = Object.values(implementation.implementacion).reduce((sum: number, item: any) => {
+      return sum + (typeof item?.duracion === 'number' ? item.duracion : 0);
+    }, 0);
+    const implCost = Object.values(implementation.implementacion).reduce((sum: number, item: any) => {
+      return sum + (typeof item?.monto === 'number' ? item.monto : 0);
+    }, 0);
     return { time: implTime, cost: implCost };
   };
 
