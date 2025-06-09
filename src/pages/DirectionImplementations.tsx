@@ -3,7 +3,7 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Eye, Clock, DollarSign } from 'lucide-react';
+import { Eye, Clock, DollarSign } from 'lucide-react';
 import { implementacionesData } from '@/data/implementaciones';
 
 const DirectionImplementations = () => {
@@ -95,21 +95,11 @@ const DirectionImplementations = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm border-b border-gray-200 p-4">
         <div className="flex items-center justify-between max-w-7xl mx-auto">
-          <div className="flex items-center gap-4">
-            <Button 
-              variant="outline" 
-              onClick={() => navigate('/')}
-              className="flex items-center gap-2"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Regresar
-            </Button>
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">
-                {getDirectionTitle(direction || '')}
-              </h1>
-              <p className="text-gray-600">Implementaciones disponibles</p>
-            </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">
+              {getDirectionTitle(direction || '')}
+            </h1>
+            <p className="text-gray-600">Implementaciones disponibles</p>
           </div>
           
           <img 

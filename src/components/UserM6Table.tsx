@@ -15,6 +15,8 @@ interface UserM6TableProps {
   totalCost: number;
   isExpanded?: boolean;
   onToggleExpand?: () => void;
+  customTotalTime?: number;
+  onCustomTotalTimeChange?: (value: number) => void;
 }
 
 const UserM6Table: React.FC<UserM6TableProps> = ({ 
@@ -24,7 +26,9 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
   totalTime, 
   totalCost, 
   isExpanded = false,
-  onToggleExpand 
+  onToggleExpand,
+  customTotalTime = 0,
+  onCustomTotalTimeChange
 }) => {
   const [categoryRows, setCategoryRows] = useState<{ [key: string]: number }>({
     manoDeObra: 1,
@@ -262,7 +266,7 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                 {title === 'Implementación' ? (
                   <>
                     <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
-                      Tiempo de Implementación
+                      Tiempo de Implementación (Días)
                     </td>
                     <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
                       Monto Total de Implementación
@@ -271,7 +275,7 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                 ) : (
                   <>
                     <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
-                      Tiempo de Implementación
+                      Tiempo Total (Días)
                     </td>
                     <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
                       Monto Total
@@ -280,25 +284,19 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                 )}
               </tr>
               <tr className="bg-gradient-to-r from-gray-50 to-gray-100 font-semibold">
-                {title === 'Implementación' ? (
-                  <>
-                    <td className="border border-gray-200 py-2 px-1 text-center text-gray-700 text-base font-bold" colSpan={3}>
-                      {totalTime} días
-                    </td>
-                    <td className="border border-gray-200 py-2 px-1 text-center text-gray-700 text-base font-bold" colSpan={3}>
-                      ${totalCost.toLocaleString()}
-                    </td>
-                  </>
-                ) : (
-                  <>
-                    <td className="border border-gray-200 py-2 px-1 text-center text-gray-700 text-base font-bold" colSpan={3}>
-                      -
-                    </td>
-                    <td className="border border-gray-200 py-2 px-1 text-center text-gray-700 text-base font-bold" colSpan={3}>
-                      ${totalCost.toLocaleString()}
-                    </td>
-                  </>
-                )}
+                <td className="border border-gray-200 py-2 px-1 text-center" colSpan={3}>
+                  <Input
+                    type="number"
+                    value={customTotalTime}
+                    onChange={(e) => onCustomTotalTimeChange && onCustomTotalTimeChange(Number(e.target.value))}
+                    className="text-center text-gray-700 text-base font-bold border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 bg-transparent"
+                    min="0"
+                    placeholder="0"
+                  />
+                </td>
+                <td className="border border-gray-200 py-2 px-1 text-center text-gray-700 text-base font-bold" colSpan={3}>
+                  ${totalCost.toLocaleString()}
+                </td>
               </tr>
             </tbody>
           </table>
