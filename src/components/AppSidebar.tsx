@@ -117,12 +117,13 @@ export function AppSidebar({ onDirectionSelect, selectedDirection, onToggleView 
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-lg font-bold text-foreground mb-2">
-            <div className="flex items-center gap-2">
-              <FileText className="h-5 w-5" />
-              Direcciones
-            </div>
-          </SidebarGroupLabel>
+          <div className="px-4 py-6 border-b border-gray-200 mb-4">
+            <SidebarGroupLabel className="text-xl font-bold text-foreground flex items-center gap-3">
+              <FileText className="h-6 w-6 text-red-600" />
+              <span className="text-gray-900">Direcciones</span>
+            </SidebarGroupLabel>
+            <p className="text-sm text-gray-500 mt-1 ml-9">Selecciona una dirección</p>
+          </div>
           <SidebarGroupContent>
             <SidebarMenu className="space-y-1">
               {directions.map((direction) => (
