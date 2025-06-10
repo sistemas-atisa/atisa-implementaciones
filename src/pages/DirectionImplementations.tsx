@@ -42,18 +42,18 @@ const DirectionImplementations: React.FC = () => {
       return { time: 0, cost: 0 };
     }
     
-    const implTime = Object.values(implementation.implementacion).reduce((sum, item) => {
+    const implTime = Object.values(implementation.implementacion).reduce((sum: number, item: any) => {
       if (item && typeof item === 'object' && 'duracion' in item) {
-        const duration = (item as any).duracion;
+        const duration = item.duracion;
         const numericDuration = typeof duration === 'number' ? duration : (typeof duration === 'string' ? parseFloat(duration) || 0 : 0);
         return sum + numericDuration;
       }
       return sum;
     }, 0);
     
-    const implCost = Object.values(implementation.implementacion).reduce((sum, item) => {
+    const implCost = Object.values(implementation.implementacion).reduce((sum: number, item: any) => {
       if (item && typeof item === 'object' && 'monto' in item) {
-        const amount = (item as any).monto;
+        const amount = item.monto;
         const numericAmount = typeof amount === 'number' ? amount : (typeof amount === 'string' ? parseFloat(amount) || 0 : 0);
         return sum + numericAmount;
       }
