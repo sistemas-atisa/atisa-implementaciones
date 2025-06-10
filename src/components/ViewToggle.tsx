@@ -18,12 +18,12 @@ const ViewToggle: React.FC<ViewToggleProps> = ({ isAdminView, onToggleView }) =>
       {isAdminView ? (
         <>
           <User className="h-4 w-4" />
-          Cambiar a Vista de Usuario
+          Vista Usuario
         </>
       ) : (
         <>
           <Shield className="h-4 w-4" />
-          Cambiar a Vista de Administrador
+          Vista Administrador
         </>
       )}
     </Button>
