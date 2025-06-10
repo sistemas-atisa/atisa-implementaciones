@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -20,6 +19,7 @@ interface M6TableProps {
   onToggleExpand?: () => void;
   customTotalTime?: number;
   onCustomTotalTimeChange?: (value: number) => void;
+  onTimeUnitChange?: (unit: string) => void;
 }
 
 const M6Table: React.FC<M6TableProps> = ({ 
@@ -31,7 +31,8 @@ const M6Table: React.FC<M6TableProps> = ({
   isExpanded = false,
   onToggleExpand,
   customTotalTime = 0,
-  onCustomTotalTimeChange
+  onCustomTotalTimeChange,
+  onTimeUnitChange
 }) => {
   const [categoryRows, setCategoryRows] = useState<{ [key: string]: number }>({
     manoDeObra: 1,
@@ -118,6 +119,13 @@ const M6Table: React.FC<M6TableProps> = ({
     }
   };
 
+  const handleTimeUnitChange = (unit: TimeUnit) => {
+    setTimeUnit(unit);
+    if (onTimeUnitChange) {
+      onTimeUnitChange(getUnitLabel(unit));
+    }
+  };
+
   return (
     <>
       <Card className="p-1 bg-white border-gray-200 shadow-xl">
@@ -145,7 +153,7 @@ const M6Table: React.FC<M6TableProps> = ({
         <div className="p-3 bg-gray-50 border-b border-gray-200">
           <div className="flex items-center gap-2">
             <span className="text-sm font-medium text-gray-700">Unidad de tiempo:</span>
-            <TimeUnitSelector value={timeUnit} onChange={setTimeUnit} />
+            <TimeUnitSelector value={timeUnit} onChange={handleTimeUnitChange} />
           </div>
         </div>
         

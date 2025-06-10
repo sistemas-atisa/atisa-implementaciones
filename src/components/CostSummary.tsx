@@ -8,13 +8,17 @@ interface CostSummaryProps {
   tiempoOperacion?: number;
   montoTotalImplementacion: number;
   montoTotalOperacion: number;
+  tiempoImplementacionUnit?: string;
+  tiempoOperacionUnit?: string;
 }
 
 const CostSummary: React.FC<CostSummaryProps> = ({
   tiempoImplementacion,
   tiempoOperacion = 0,
   montoTotalImplementacion,
-  montoTotalOperacion
+  montoTotalOperacion,
+  tiempoImplementacionUnit = '',
+  tiempoOperacionUnit = ''
 }) => {
   return (
     <Card className="mt-8 p-8 bg-white border-gray-200 shadow-lg">
@@ -39,6 +43,9 @@ const CostSummary: React.FC<CostSummaryProps> = ({
               <div className="text-2xl font-bold text-red-700">
                 {tiempoImplementacion}
               </div>
+              {tiempoImplementacionUnit && (
+                <div className="text-sm text-gray-600 mt-1">{tiempoImplementacionUnit}</div>
+              )}
             </Card>
             <Card className="p-6 bg-gradient-to-br from-gray-50 to-gray-100 border-gray-200 shadow-md hover:shadow-lg transition-shadow duration-200">
               <div className="flex items-center gap-3 mb-3">
@@ -65,6 +72,9 @@ const CostSummary: React.FC<CostSummaryProps> = ({
               <div className="text-2xl font-bold text-gray-700">
                 {tiempoOperacion}
               </div>
+              {tiempoOperacionUnit && (
+                <div className="text-sm text-gray-600 mt-1">{tiempoOperacionUnit}</div>
+              )}
             </Card>
             <Card className="p-6 bg-gradient-to-br from-gray-50 to-gray-100 border-gray-200 shadow-md hover:shadow-lg transition-shadow duration-200">
               <div className="flex items-center gap-3 mb-3">

@@ -68,6 +68,10 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
   const [customTiempoOperacion, setCustomTiempoOperacion] = useState(0);
   const [montoTotalImplementacion, setMontoTotalImplementacion] = useState(0);
   const [montoTotalOperacion, setMontoTotalOperacion] = useState(0);
+  
+  // Add state for tracking time units for each table
+  const [implementacionTimeUnit, setImplementacionTimeUnit] = useState<string>('días');
+  const [operacionTimeUnit, setOperacionTimeUnit] = useState<string>('días');
 
   // Update states when props change
   useEffect(() => {
@@ -229,6 +233,7 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
                     onToggleExpand={() => handleExpandTable('implementacion')}
                     customTotalTime={customTiempoImplementacion}
                     onCustomTotalTimeChange={setCustomTiempoImplementacion}
+                    onTimeUnitChange={setImplementacionTimeUnit}
                   />
                 ) : (
                   <UserM6Table
@@ -257,6 +262,7 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
                     onToggleExpand={() => handleExpandTable('operacion')}
                     customTotalTime={customTiempoOperacion}
                     onCustomTotalTimeChange={setCustomTiempoOperacion}
+                    onTimeUnitChange={setOperacionTimeUnit}
                   />
                 ) : (
                   <UserM6Table
@@ -279,6 +285,8 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
               tiempoOperacion={customTiempoOperacion}
               montoTotalImplementacion={montoTotalImplementacion}
               montoTotalOperacion={montoTotalOperacion}
+              tiempoImplementacionUnit={implementacionTimeUnit}
+              tiempoOperacionUnit={operacionTimeUnit}
             />
 
             <CommentsSection />
