@@ -171,6 +171,7 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
           onDirectionSelect={() => {}}
           selectedDirection={direction || ''}
           onToggleView={handleToggleView}
+          isAdminView={isAdminView}
         />
       ) : (
         <UserSidebar 

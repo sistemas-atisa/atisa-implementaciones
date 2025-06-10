@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -19,6 +20,15 @@ interface UserM6TableProps {
   onCustomTotalTimeChange?: (value: number) => void;
 }
 
+interface AdditionalRowData {
+  descripcion: string;
+  duracion: number;
+  duracionJustificacion: string;
+  monto: number;
+  montoJustificacion: string;
+  calidad: string;
+}
+
 const UserM6Table: React.FC<UserM6TableProps> = ({ 
   title, 
   data, 
@@ -38,6 +48,9 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
     materiales: 1,
     medioAmbiente: 1
   });
+
+  // Store additional row data
+  const [additionalRowsData, setAdditionalRowsData] = useState<{ [categoryKey: string]: { [rowIndex: number]: AdditionalRowData } }>({});
 
   const [chatModal, setChatModal] = useState<{
     isOpen: boolean;
@@ -66,10 +79,44 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
   };
 
   const removeRow = (categoryKey: string) => {
-    setCategoryRows(prev => ({
+    setCategoryRows(prev => {
+      const newCount = Math.max(prev[categoryKey] - 1, 1);
+      // Remove data for the deleted row
+      setAdditionalRowsData(prevData => {
+        const newData = { ...prevData };
+        if (newData[categoryKey]) {
+          delete newData[categoryKey][newCount];
+        }
+        return newData;
+      });
+      return {
+        ...prev,
+        [categoryKey]: newCount
+      };
+    });
+  };
+
+  const updateAdditionalRowData = (categoryKey: string, rowIndex: number, field: keyof AdditionalRowData, value: string | number) => {
+    setAdditionalRowsData(prev => ({
       ...prev,
-      [categoryKey]: Math.max(prev[categoryKey] - 1, 1)
+      [categoryKey]: {
+        ...prev[categoryKey],
+        [rowIndex]: {
+          ...prev[categoryKey]?.[rowIndex],
+          descripcion: prev[categoryKey]?.[rowIndex]?.descripcion || '',
+          duracion: prev[categoryKey]?.[rowIndex]?.duracion || 0,
+          duracionJustificacion: prev[categoryKey]?.[rowIndex]?.duracionJustificacion || '',
+          monto: prev[categoryKey]?.[rowIndex]?.monto || 0,
+          montoJustificacion: prev[categoryKey]?.[rowIndex]?.montoJustificacion || '',
+          calidad: prev[categoryKey]?.[rowIndex]?.calidad || '',
+          [field]: value
+        }
+      }
     }));
+  };
+
+  const getAdditionalRowData = (categoryKey: string, rowIndex: number, field: keyof AdditionalRowData) => {
+    return additionalRowsData[categoryKey]?.[rowIndex]?.[field] || (field === 'duracion' || field === 'monto' ? 0 : '');
   };
 
   const handleChatClick = (categoryKey: string, categoryLabel: string) => {
@@ -172,8 +219,14 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                       
                       <td className="border border-gray-200 p-0.5 align-top" style={{width: '25%'}}>
                         <Textarea
-                          value={rowIndex === 0 ? data[category.key].descripcion : ''}
-                          onChange={rowIndex === 0 ? (e) => onUpdate(category.key, 'descripcion', e.target.value) : undefined}
+                          value={rowIndex === 0 ? data[category.key].descripcion : getAdditionalRowData(category.key, rowIndex, 'descripcion') as string}
+                          onChange={(e) => {
+                            if (rowIndex === 0) {
+                              onUpdate(category.key, 'descripcion', e.target.value);
+                            } else {
+                              updateAdditionalRowData(category.key, rowIndex, 'descripcion', e.target.value);
+                            }
+                          }}
                           className="text-xs border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg min-h-[75px] resize-none w-full transition-all duration-200"
                           rows={4}
                           placeholder={rowIndex > 0 ? `Descripción adicional ${rowIndex + 1}...` : ''}
@@ -185,21 +238,33 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                             <div className="text-xs text-gray-700 mb-0.5 font-semibold">Duración:</div>
                             <Input
                               type="number"
-                              value={rowIndex === 0 ? (data[category.key].duracion || '') : ''}
-                              onChange={rowIndex === 0 ? (e) => onUpdate(category.key, 'duracion', Number(e.target.value)) : undefined}
+                              value={rowIndex === 0 ? (data[category.key].duracion || '') : (getAdditionalRowData(category.key, rowIndex, 'duracion') || '')}
+                              onChange={(e) => {
+                                if (rowIndex === 0) {
+                                  onUpdate(category.key, 'duracion', Number(e.target.value));
+                                } else {
+                                  updateAdditionalRowData(category.key, rowIndex, 'duracion', Number(e.target.value));
+                                }
+                              }}
                               className="text-xs h-5 border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg font-medium w-full transition-all duration-200"
                               min="0"
                               max="99999"
-                              placeholder={rowIndex > 0 ? "0" : ""}
+                              placeholder="0"
                             />
                           </div>
                           <div>
                             <Textarea
-                              value={rowIndex === 0 ? data[category.key].duracionJustificacion : ''}
-                              onChange={rowIndex === 0 ? (e) => onUpdate(category.key, 'duracionJustificacion', e.target.value) : undefined}
+                              value={rowIndex === 0 ? data[category.key].duracionJustificacion : getAdditionalRowData(category.key, rowIndex, 'duracionJustificacion') as string}
+                              onChange={(e) => {
+                                if (rowIndex === 0) {
+                                  onUpdate(category.key, 'duracionJustificacion', e.target.value);
+                                } else {
+                                  updateAdditionalRowData(category.key, rowIndex, 'duracionJustificacion', e.target.value);
+                                }
+                              }}
                               className="text-xs border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg min-h-[38px] resize-none w-full transition-all duration-200"
                               rows={2}
-                              placeholder={rowIndex > 0 ? "Justificación..." : ""}
+                              placeholder="Justificación..."
                             />
                           </div>
                         </div>
@@ -210,32 +275,50 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                             <div className="text-xs text-gray-700 mb-0.5 font-semibold">Monto: $</div>
                             <Input
                               type="number"
-                              value={rowIndex === 0 ? (data[category.key].monto || '') : ''}
-                              onChange={rowIndex === 0 ? (e) => onUpdate(category.key, 'monto', Number(e.target.value)) : undefined}
+                              value={rowIndex === 0 ? (data[category.key].monto || '') : (getAdditionalRowData(category.key, rowIndex, 'monto') || '')}
+                              onChange={(e) => {
+                                if (rowIndex === 0) {
+                                  onUpdate(category.key, 'monto', Number(e.target.value));
+                                } else {
+                                  updateAdditionalRowData(category.key, rowIndex, 'monto', Number(e.target.value));
+                                }
+                              }}
                               className="text-xs h-5 border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg font-medium w-full transition-all duration-200"
                               min="0"
                               max="9999999999"
-                              placeholder={rowIndex > 0 ? "0" : ""}
+                              placeholder="0"
                             />
                           </div>
                           <div>
                             <Textarea
-                              value={rowIndex === 0 ? data[category.key].montoJustificacion : ''}
-                              onChange={rowIndex === 0 ? (e) => onUpdate(category.key, 'montoJustificacion', e.target.value) : undefined}
+                              value={rowIndex === 0 ? data[category.key].montoJustificacion : getAdditionalRowData(category.key, rowIndex, 'montoJustificacion') as string}
+                              onChange={(e) => {
+                                if (rowIndex === 0) {
+                                  onUpdate(category.key, 'montoJustificacion', e.target.value);
+                                } else {
+                                  updateAdditionalRowData(category.key, rowIndex, 'montoJustificacion', e.target.value);
+                                }
+                              }}
                               className="text-xs border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg min-h-[38px] resize-none w-full transition-all duration-200"
                               rows={2}
-                              placeholder={rowIndex > 0 ? "Justificación..." : ""}
+                              placeholder="Justificación..."
                             />
                           </div>
                         </div>
                       </td>
                       <td className="border border-gray-200 p-0.5 align-top" style={{width: '15%'}}>
                         <Textarea
-                          value={rowIndex === 0 ? data[category.key].calidad : ''}
-                          onChange={rowIndex === 0 ? (e) => onUpdate(category.key, 'calidad', e.target.value) : undefined}
+                          value={rowIndex === 0 ? data[category.key].calidad : getAdditionalRowData(category.key, rowIndex, 'calidad') as string}
+                          onChange={(e) => {
+                            if (rowIndex === 0) {
+                              onUpdate(category.key, 'calidad', e.target.value);
+                            } else {
+                              updateAdditionalRowData(category.key, rowIndex, 'calidad', e.target.value);
+                            }
+                          }}
                           className="text-xs border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg min-h-[75px] resize-none w-full transition-all duration-200"
                           rows={4}
-                          placeholder={rowIndex > 0 ? "Calidad..." : ""}
+                          placeholder="Calidad..."
                         />
                       </td>
                       <td className="border border-gray-200 p-0.5 align-top" style={{width: '5%'}}>
