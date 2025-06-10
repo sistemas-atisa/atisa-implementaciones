@@ -5,7 +5,7 @@ import ProjectHeader from '../components/ProjectHeader';
 import M6Table from '../components/M6Table';
 import CostSummary from '../components/CostSummary';
 import SixMsAnalysis from '../components/SixMsAnalysis';
-import { implementacionesData } from '../data/implementaciones';
+import { implementacionesPorDireccion } from '../data/implementaciones';
 
 const DirectionImplementations = () => {
   const { direction } = useParams<{ direction: string }>();
@@ -13,7 +13,7 @@ const DirectionImplementations = () => {
   const [globalTiempoTotal, setGlobalTiempoTotal] = useState(0);
 
   const implementaciones = direction 
-    ? implementacionesData[direction as keyof typeof implementacionesData] || []
+    ? implementacionesPorDireccion[direction] || []
     : [];
 
   const directionNames: { [key: string]: string } = {
@@ -55,8 +55,12 @@ const DirectionImplementations = () => {
 
   const totals = useMemo(() => {
     const allData = implementaciones.flatMap(impl => [
-      ...Object.values(impl.implementacion),
-      ...Object.values(impl.operacion)
+      ...impl.metodo.data,
+      ...impl.mano.data,
+      ...impl.material.data,
+      ...impl.maquinaria.data,
+      ...impl.medicion.data,
+      ...impl.medioAmbiente.data
     ]);
     return calculateTotals(allData);
   }, [implementaciones, globalTiempoImplementacion, globalTiempoTotal]);
@@ -64,11 +68,6 @@ const DirectionImplementations = () => {
   const handleGlobalTimeChange = (tiempoImplementacion: number, tiempoTotal: number) => {
     setGlobalTiempoImplementacion(tiempoImplementacion);
     setGlobalTiempoTotal(tiempoTotal);
-  };
-
-  const handleProjectHeaderUpdate = (field: string, value: string) => {
-    // Handle project header updates
-    console.log(`Updating ${field} to ${value}`);
   };
 
   if (!direction || implementaciones.length === 0) {
@@ -98,51 +97,27 @@ const DirectionImplementations = () => {
       {/* Main Content */}
       <div className="p-6">
         <div className="space-y-6">
-          {implementaciones.map((implementacion, index) => {
-            // Calculate totals for this specific implementation
-            const implementacionData = Object.values(implementacion.implementacion);
-            const operacionData = Object.values(implementacion.operacion);
-            
-            const tiempoImplementacion = implementacionData.reduce((sum, item) => sum + (item.duracion || 0), 0);
-            const tiempoOperacion = operacionData.reduce((sum, item) => sum + (item.duracion || 0), 0);
-            const montoTotalImplementacion = implementacionData.reduce((sum, item) => sum + (item.monto || 0), 0);
-            const montoTotalOperacion = operacionData.reduce((sum, item) => sum + (item.monto || 0), 0);
-
-            return (
-              <div key={index} className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
-                <ProjectHeader 
-                  data={implementacion.header}
-                  onUpdate={handleProjectHeaderUpdate}
+          {implementaciones.map((implementacion, index) => (
+            <div key={index} className="bg-white rounded-lg shadow-lg border border-gray-200 p-6">
+              <ProjectHeader 
+                title={implementacion.titulo}
+                index={index}
+                onTimeChange={handleGlobalTimeChange}
+                tiempoImplementacion={globalTiempoImplementacion}
+                tiempoTotal={globalTiempoTotal}
+              />
+              
+              <div className="mt-6 space-y-6">
+                <M6Table 
+                  data={implementacion} 
+                  tiempoImplementacion={globalTiempoImplementacion}
+                  tiempoTotal={globalTiempoTotal}
                 />
-                
-                <div className="mt-6 space-y-6">
-                  <M6Table 
-                    title="Implementación"
-                    data={implementacion.implementacion}
-                    onUpdate={() => {}}
-                    totalCost={montoTotalImplementacion}
-                    customTotalTime={tiempoImplementacion}
-                    onCustomTotalTimeChange={() => {}}
-                  />
-                  <M6Table 
-                    title="Operación"
-                    data={implementacion.operacion}
-                    onUpdate={() => {}}
-                    totalCost={montoTotalOperacion}
-                    customTotalTime={tiempoOperacion}
-                    onCustomTotalTimeChange={() => {}}
-                  />
-                  <CostSummary 
-                    tiempoImplementacion={tiempoImplementacion}
-                    tiempoOperacion={tiempoOperacion}
-                    montoTotalImplementacion={montoTotalImplementacion}
-                    montoTotalOperacion={montoTotalOperacion}
-                  />
-                  <SixMsAnalysis />
-                </div>
+                <CostSummary data={implementacion} />
+                <SixMsAnalysis />
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
       </div>
     </div>
