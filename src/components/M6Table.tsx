@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -7,7 +8,7 @@ import { Expand, Plus, Minus, MessageCircle, Upload } from 'lucide-react';
 import { SectionData, M6Data } from '@/types/project';
 import ChatModal from './ChatModal';
 import TimeUnitSelector, { TimeUnit } from './TimeUnitSelector';
-import { convertFromDays, convertToDays, getUnitLabel } from '@/utils/timeConversions';
+import { getUnitLabel } from '@/utils/timeConversions';
 
 interface M6TableProps {
   title: string;
@@ -105,17 +106,11 @@ const M6Table: React.FC<M6TableProps> = ({
     setChatModal({ isOpen: false, category: '', categoryLabel: '' });
   };
 
-  const handleTimeChange = (category: keyof SectionData, value: string) => {
-    const numericValue = parseFloat(value) || 0;
-    const daysValue = convertToDays(numericValue, timeUnit);
-    onUpdate(category, 'duracion', daysValue);
-  };
-
   const handleCustomTotalTimeChange = (value: string) => {
     const numericValue = parseFloat(value) || 0;
-    const daysValue = convertToDays(numericValue, timeUnit);
+    // Pass the raw value directly without any conversion
     if (onCustomTotalTimeChange) {
-      onCustomTotalTimeChange(daysValue);
+      onCustomTotalTimeChange(numericValue);
     }
   };
 
@@ -220,8 +215,8 @@ const M6Table: React.FC<M6TableProps> = ({
                             <div className="text-xs text-gray-700 mb-0.5 font-semibold">Duración:</div>
                             <Input
                               type="number"
-                              value={rowIndex === 0 ? convertFromDays(data[category.key].duracion || 0, timeUnit) : ''}
-                              onChange={rowIndex === 0 ? (e) => handleTimeChange(category.key, e.target.value) : undefined}
+                              value={rowIndex === 0 ? (data[category.key].duracion || '') : ''}
+                              onChange={rowIndex === 0 ? (e) => onUpdate(category.key, 'duracion', Number(e.target.value)) : undefined}
                               className="text-xs h-5 border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg font-medium w-full transition-all duration-200"
                               min="0"
                               step="0.01"
@@ -322,7 +317,7 @@ const M6Table: React.FC<M6TableProps> = ({
                 <td className="border border-gray-200 py-2 px-1 text-center" colSpan={3}>
                   <Input
                     type="number"
-                    value={convertFromDays(customTotalTime, timeUnit)}
+                    value={customTotalTime}
                     onChange={(e) => handleCustomTotalTimeChange(e.target.value)}
                     className="text-center text-red-700 text-base font-bold border-red-200 focus:border-red-600 focus:ring-red-600/20 bg-transparent"
                     min="0"

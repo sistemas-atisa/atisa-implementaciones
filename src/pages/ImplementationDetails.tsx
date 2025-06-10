@@ -65,9 +65,9 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
     medioAmbiente: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' }
   });
 
-  // These represent the display values in the selected time unit
-  const [displayTiempoImplementacion, setDisplayTiempoImplementacion] = useState(0);
-  const [displayTiempoOperacion, setDisplayTiempoOperacion] = useState(0);
+  // Store the EXACT values that appear in the table inputs (without conversions)
+  const [tiempoImplementacionTable, setTiempoImplementacionTable] = useState(0);
+  const [tiempoOperacionTable, setTiempoOperacionTable] = useState(0);
   const [montoTotalImplementacion, setMontoTotalImplementacion] = useState(0);
   const [montoTotalOperacion, setMontoTotalOperacion] = useState(0);
   
@@ -229,12 +229,12 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
                     title="Implementación"
                     data={implementacion}
                     onUpdate={updateImplementacion}
-                    totalTime={displayTiempoImplementacion}
+                    totalTime={tiempoImplementacionTable}
                     totalCost={montoTotalImplementacion}
                     isExpanded={expandedTable === 'implementacion'}
                     onToggleExpand={() => handleExpandTable('implementacion')}
-                    customTotalTime={displayTiempoImplementacion}
-                    onCustomTotalTimeChange={setDisplayTiempoImplementacion}
+                    customTotalTime={tiempoImplementacionTable}
+                    onCustomTotalTimeChange={setTiempoImplementacionTable}
                     onTimeUnitChange={setImplementacionTimeUnit}
                   />
                 ) : (
@@ -242,12 +242,12 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
                     title="Implementación"
                     data={implementacion}
                     onUpdate={updateImplementacion}
-                    totalTime={displayTiempoImplementacion}
+                    totalTime={tiempoImplementacionTable}
                     totalCost={montoTotalImplementacion}
                     isExpanded={expandedTable === 'implementacion'}
                     onToggleExpand={() => handleExpandTable('implementacion')}
-                    customTotalTime={displayTiempoImplementacion}
-                    onCustomTotalTimeChange={setDisplayTiempoImplementacion}
+                    customTotalTime={tiempoImplementacionTable}
+                    onCustomTotalTimeChange={setTiempoImplementacionTable}
                   />
                 )
               )}
@@ -258,12 +258,12 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
                     title="Operación"
                     data={operacion}
                     onUpdate={updateOperacion}
-                    totalTime={displayTiempoOperacion}
+                    totalTime={tiempoOperacionTable}
                     totalCost={montoTotalOperacion}
                     isExpanded={expandedTable === 'operacion'}
                     onToggleExpand={() => handleExpandTable('operacion')}
-                    customTotalTime={displayTiempoOperacion}
-                    onCustomTotalTimeChange={setDisplayTiempoOperacion}
+                    customTotalTime={tiempoOperacionTable}
+                    onCustomTotalTimeChange={setTiempoOperacionTable}
                     onTimeUnitChange={setOperacionTimeUnit}
                   />
                 ) : (
@@ -271,20 +271,20 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
                     title="Operación"
                     data={operacion}
                     onUpdate={updateOperacion}
-                    totalTime={displayTiempoOperacion}
+                    totalTime={tiempoOperacionTable}
                     totalCost={montoTotalOperacion}
                     isExpanded={expandedTable === 'operacion'}
                     onToggleExpand={() => handleExpandTable('operacion')}
-                    customTotalTime={displayTiempoOperacion}
-                    onCustomTotalTimeChange={setDisplayTiempoOperacion}
+                    customTotalTime={tiempoOperacionTable}
+                    onCustomTotalTimeChange={setTiempoOperacionTable}
                   />
                 )
               )}
             </div>
 
             <CostSummary
-              tiempoImplementacion={displayTiempoImplementacion}
-              tiempoOperacion={displayTiempoOperacion}
+              tiempoImplementacion={tiempoImplementacionTable}
+              tiempoOperacion={tiempoOperacionTable}
               montoTotalImplementacion={montoTotalImplementacion}
               montoTotalOperacion={montoTotalOperacion}
               tiempoImplementacionUnit={implementacionTimeUnit}
