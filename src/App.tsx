@@ -31,10 +31,7 @@ const App = () => {
 
   const handleToggleView = () => {
     setIsAdminView(!isAdminView);
-    // Reset login state when switching to user view
-    if (isAdminView) {
-      setIsUserLoggedIn(false);
-    }
+    // Don't reset login state when switching views
   };
 
   const handleEmployeeUpdate = (field: keyof typeof employeeData, value: string) => {
@@ -105,7 +102,14 @@ const App = () => {
                   </div>
                 } />
                 <Route path="/:direction/:implementationIndex" element={
-                  <ImplementationDetails isAdminView={isAdminView} isUserLoggedIn={isUserLoggedIn} />
+                  <ImplementationDetails 
+                    isAdminView={isAdminView} 
+                    isUserLoggedIn={isUserLoggedIn}
+                    onToggleView={handleToggleView}
+                    employeeData={employeeData}
+                    onEmployeeUpdate={handleEmployeeUpdate}
+                    onUserLogin={handleUserLogin}
+                  />
                 } />
                 <Route path="*" element={<NotFound />} />
               </Routes>

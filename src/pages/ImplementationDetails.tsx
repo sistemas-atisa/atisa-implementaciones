@@ -17,26 +17,29 @@ import { SectionData, ProjectHeaderData } from '@/types/project';
 import { implementacionesData } from '@/data/implementaciones';
 
 interface ImplementationDetailsProps {
-  isAdminView?: boolean;
-  isUserLoggedIn?: boolean;
+  isAdminView: boolean;
+  isUserLoggedIn: boolean;
+  onToggleView: () => void;
+  employeeData: {
+    nombre: string;
+    numeroEmpleado: string;
+    direccion: string;
+  };
+  onEmployeeUpdate: (field: keyof any, value: string) => void;
+  onUserLogin: () => void;
 }
 
 const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({ 
-  isAdminView: propIsAdminView, 
-  isUserLoggedIn: propIsUserLoggedIn 
+  isAdminView,
+  isUserLoggedIn,
+  onToggleView,
+  employeeData,
+  onEmployeeUpdate,
+  onUserLogin
 }) => {
   const { direction, implementationIndex } = useParams<{ direction: string; implementationIndex: string }>();
   const navigate = useNavigate();
-  const [isAdminView, setIsAdminView] = useState(propIsAdminView ?? true);
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(propIsUserLoggedIn ?? false);
   const [expandedTable, setExpandedTable] = useState<'implementacion' | 'operacion' | null>(null);
-  
-  // Employee data for user view
-  const [employeeData, setEmployeeData] = useState({
-    nombre: 'Oscar Arredondo',
-    numeroEmpleado: '793',
-    direccion: 'Tecnología y Sistemas'
-  });
   
   const [headerData, setHeaderData] = useState<ProjectHeaderData>({
     direccion: '',
@@ -75,16 +78,6 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
   const [implementacionTimeUnit, setImplementacionTimeUnit] = useState<string>('días');
   const [operacionTimeUnit, setOperacionTimeUnit] = useState<string>('días');
 
-  // Update states when props change
-  useEffect(() => {
-    if (propIsAdminView !== undefined) {
-      setIsAdminView(propIsAdminView);
-    }
-    if (propIsUserLoggedIn !== undefined) {
-      setIsUserLoggedIn(propIsUserLoggedIn);
-    }
-  }, [propIsAdminView, propIsUserLoggedIn]);
-
   // Load data when direction or implementation index changes
   useEffect(() => {
     if (direction && implementationIndex) {
@@ -113,10 +106,6 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
     setHeaderData(prev => ({ ...prev, [field]: value }));
   };
 
-  const updateEmployeeData = (field: keyof typeof employeeData, value: string) => {
-    setEmployeeData(prev => ({ ...prev, [field]: value }));
-  };
-
   const updateImplementacion = (category: keyof SectionData, field: keyof SectionData[keyof SectionData], value: string | number) => {
     setImplementacion(prev => ({
       ...prev,
@@ -138,14 +127,15 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
   };
 
   const handleToggleView = () => {
-    setIsAdminView(!isAdminView);
+    onToggleView();
+    // Navigate based on new view state
     if (isAdminView) {
-      setIsUserLoggedIn(false);
+      // Going to user view
+      navigate('/my-implementations');
+    } else {
+      // Going to admin view
+      navigate('/directions/administracion');
     }
-  };
-
-  const handleUserLogin = () => {
-    setIsUserLoggedIn(true);
   };
 
   const handleExpandTable = (tableType: 'implementacion' | 'operacion') => {
@@ -176,10 +166,10 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
       ) : (
         <UserSidebar 
           employeeData={employeeData}
-          onEmployeeUpdate={updateEmployeeData}
+          onEmployeeUpdate={onEmployeeUpdate}
           onToggleView={handleToggleView}
           isLoggedIn={isUserLoggedIn}
-          onLogin={handleUserLogin}
+          onLogin={onUserLogin}
         />
       )}
       
