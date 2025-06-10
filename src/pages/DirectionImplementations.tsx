@@ -117,8 +117,20 @@ const DirectionImplementations = () => {
                 
                 <div className="mt-6 space-y-6">
                   <M6Table 
-                    implementacionData={implementacion.implementacion}
-                    operacionData={implementacion.operacion}
+                    title="Implementación"
+                    data={implementacion.implementacion}
+                    onUpdate={() => {}}
+                    totalCost={montoTotalImplementacion}
+                    customTotalTime={tiempoImplementacion}
+                    onCustomTotalTimeChange={() => {}}
+                  />
+                  <M6Table 
+                    title="Operación"
+                    data={implementacion.operacion}
+                    onUpdate={() => {}}
+                    totalCost={montoTotalOperacion}
+                    customTotalTime={tiempoOperacion}
+                    onCustomTotalTimeChange={() => {}}
                   />
                   <CostSummary 
                     tiempoImplementacion={tiempoImplementacion}
