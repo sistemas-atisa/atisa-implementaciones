@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -6,6 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Expand, Plus, Minus, MessageCircle, Upload } from 'lucide-react';
 import { SectionData, M6Data } from '@/types/project';
 import ChatModal from './ChatModal';
+import TimeUnitSelector, { TimeUnit } from './TimeUnitSelector';
+import { convertFromDays, convertToDays, getTimeUnitLabel } from '@/utils/timeConversions';
 
 interface M6TableProps {
   title: string;
@@ -38,6 +41,8 @@ const M6Table: React.FC<M6TableProps> = ({
     materiales: 1,
     medioAmbiente: 1
   });
+
+  const [timeUnit, setTimeUnit] = useState<TimeUnit>('dias');
 
   const [chatModal, setChatModal] = useState<{
     isOpen: boolean;
@@ -99,6 +104,24 @@ const M6Table: React.FC<M6TableProps> = ({
     setChatModal({ isOpen: false, category: '', categoryLabel: '' });
   };
 
+  const handleTimeChange = (category: keyof SectionData, value: number) => {
+    // Convert the displayed value back to days for storage
+    const daysValue = convertToDays(value, timeUnit);
+    onUpdate(category, 'duracion', daysValue);
+  };
+
+  const handleCustomTimeChange = (value: number) => {
+    if (onCustomTotalTimeChange) {
+      // Convert the displayed value back to days for storage
+      const daysValue = convertToDays(value, timeUnit);
+      onCustomTotalTimeChange(daysValue);
+    }
+  };
+
+  const getDisplayTime = (days: number): number => {
+    return convertFromDays(days, timeUnit);
+  };
+
   return (
     <>
       <Card className="p-1 bg-white border-gray-200 shadow-xl">
@@ -121,6 +144,11 @@ const M6Table: React.FC<M6TableProps> = ({
             </Button>
           )}
         </div>
+
+        {/* Time Unit Selector */}
+        <div className="p-3 border-b border-gray-200">
+          <TimeUnitSelector value={timeUnit} onChange={setTimeUnit} />
+        </div>
         
         <div className="overflow-x-auto">
           <table className="w-full border-collapse rounded-xl overflow-hidden shadow-lg">
@@ -128,7 +156,7 @@ const M6Table: React.FC<M6TableProps> = ({
               <tr className="bg-gradient-to-r from-gray-800 to-gray-900">
                 <th className="border border-gray-200 py-2 px-1 text-left font-bold text-white text-xs" style={{width: '15%'}}>6 M's</th>
                 <th className="border border-gray-200 py-2 px-1 text-left font-bold text-white text-xs" style={{width: '25%'}}>Descripción</th>
-                <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Tiempo (Días)</th>
+                <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Tiempo ({getTimeUnitLabel(timeUnit)})</th>
                 <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Costo</th>
                 <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '15%'}}>Calidad</th>
                 <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '5%'}}>Acciones</th>
@@ -185,11 +213,11 @@ const M6Table: React.FC<M6TableProps> = ({
                             <div className="text-xs text-gray-700 mb-0.5 font-semibold">Duración:</div>
                             <Input
                               type="number"
-                              value={rowIndex === 0 ? (data[category.key].duracion || '') : ''}
-                              onChange={rowIndex === 0 ? (e) => onUpdate(category.key, 'duracion', Number(e.target.value)) : undefined}
+                              value={rowIndex === 0 ? getDisplayTime(data[category.key].duracion || 0) : ''}
+                              onChange={rowIndex === 0 ? (e) => handleTimeChange(category.key, Number(e.target.value)) : undefined}
                               className="text-xs h-5 border-gray-200 focus:border-red-600 focus:ring-red-600/20 rounded-lg font-medium w-full transition-all duration-200"
                               min="0"
-                              max="99999"
+                              step={timeUnit === 'dias' ? '1' : '0.1'}
                               placeholder={rowIndex > 0 ? "0" : ""}
                             />
                           </div>
@@ -266,7 +294,7 @@ const M6Table: React.FC<M6TableProps> = ({
                 {title === 'Implementación' ? (
                   <>
                     <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
-                      Tiempo de Implementación (Días)
+                      Tiempo de Implementación ({getTimeUnitLabel(timeUnit)})
                     </td>
                     <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
                       Monto Total de Implementación
@@ -275,7 +303,7 @@ const M6Table: React.FC<M6TableProps> = ({
                 ) : (
                   <>
                     <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
-                      Tiempo Total (Días)
+                      Tiempo Total ({getTimeUnitLabel(timeUnit)})
                     </td>
                     <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
                       Monto Total
@@ -287,10 +315,11 @@ const M6Table: React.FC<M6TableProps> = ({
                 <td className="border border-gray-200 py-2 px-1 text-center" colSpan={3}>
                   <Input
                     type="number"
-                    value={customTotalTime}
-                    onChange={(e) => onCustomTotalTimeChange && onCustomTotalTimeChange(Number(e.target.value))}
+                    value={getDisplayTime(customTotalTime)}
+                    onChange={(e) => handleCustomTimeChange(Number(e.target.value))}
                     className="text-center text-red-700 text-base font-bold border-red-200 focus:border-red-600 focus:ring-red-600/20 bg-transparent"
                     min="0"
+                    step={timeUnit === 'dias' ? '1' : '0.1'}
                     placeholder="0"
                   />
                 </td>
