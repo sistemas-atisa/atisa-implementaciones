@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Sidebar,
@@ -18,6 +18,7 @@ interface AppSidebarProps {
   onDirectionSelect: (directionId: string) => void;
   selectedDirection: string;
   onToggleView: () => void;
+  isAdminView: boolean;
 }
 
 const directions = [
@@ -98,9 +99,8 @@ const directions = [
   },
 ];
 
-export function AppSidebar({ onDirectionSelect, selectedDirection, onToggleView }: AppSidebarProps) {
+export function AppSidebar({ onDirectionSelect, selectedDirection, onToggleView, isAdminView }: AppSidebarProps) {
   const navigate = useNavigate();
-  const [isAdminView, setIsAdminView] = useState(false);
 
   const handleDirectionClick = (directionId: string) => {
     onDirectionSelect(directionId);
@@ -108,8 +108,9 @@ export function AppSidebar({ onDirectionSelect, selectedDirection, onToggleView 
   };
 
   const handleToggleView = () => {
-    setIsAdminView(!isAdminView);
     onToggleView();
+    // Navigate to user view
+    navigate('/my-implementations');
   };
 
   return (

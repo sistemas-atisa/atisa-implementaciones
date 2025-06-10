@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Sidebar,
   SidebarContent,
@@ -24,11 +25,19 @@ interface UserSidebarProps {
 }
 
 export function UserSidebar({ employeeData, onEmployeeUpdate, onToggleView, isLoggedIn, onLogin }: UserSidebarProps) {
+  const navigate = useNavigate();
+  
   // Fixed employee data for Oscar Arredondo
   const oscarData = {
     nombre: 'Oscar Arredondo',
     numeroEmpleado: '793',
     direccion: 'Tecnología y Sistemas'
+  };
+
+  const handleToggleView = () => {
+    onToggleView();
+    // Navigate to admin view
+    navigate('/directions/administracion');
   };
 
   return (
@@ -61,7 +70,7 @@ export function UserSidebar({ employeeData, onEmployeeUpdate, onToggleView, isLo
             <span className="text-xs text-gray-500 font-medium">Vista Usuario</span>
           </div>
           <button
-            onClick={onToggleView}
+            onClick={handleToggleView}
             className="w-full flex items-center justify-between px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
           >
             <div className="flex items-center gap-2">

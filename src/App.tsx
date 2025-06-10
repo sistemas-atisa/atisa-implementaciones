@@ -83,6 +83,7 @@ const App = () => {
                       onDirectionSelect={handleDirectionSelect}
                       selectedDirection={selectedDirection}
                       onToggleView={handleToggleView}
+                      isAdminView={isAdminView}
                     />
                     <main className="flex-1">
                       <DirectionImplementations />
