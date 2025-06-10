@@ -23,7 +23,7 @@ const ViewToggle: React.FC<ViewToggleProps> = ({ isAdminView, onToggleView }) =>
       ) : (
         <>
           <Shield className="h-4 w-4" />
-          Vista Administrador
+          Cambiar a Vista de Administrador
         </>
       )}
     </Button>

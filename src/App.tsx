@@ -79,27 +79,13 @@ const App = () => {
                 } />
                 <Route path="/directions/:direction" element={
                   <div className="flex w-full">
-                    {isAdminView ? (
-                      <AppSidebar 
-                        onDirectionSelect={handleDirectionSelect}
-                        selectedDirection={selectedDirection}
-                        onToggleView={handleToggleView}
-                      />
-                    ) : (
-                      <UserSidebar 
-                        employeeData={employeeData}
-                        onEmployeeUpdate={handleEmployeeUpdate}
-                        onToggleView={handleToggleView}
-                        isLoggedIn={isUserLoggedIn}
-                        onLogin={handleUserLogin}
-                      />
-                    )}
+                    <AppSidebar 
+                      onDirectionSelect={handleDirectionSelect}
+                      selectedDirection={selectedDirection}
+                      onToggleView={handleToggleView}
+                    />
                     <main className="flex-1">
-                      {isAdminView ? (
-                        <DirectionImplementations />
-                      ) : (
-                        isUserLoggedIn ? <MyImplementations /> : <BlankUserPage />
-                      )}
+                      <DirectionImplementations />
                     </main>
                   </div>
                 } />
