@@ -101,24 +101,18 @@ const directions = [
 
 export function AppSidebar({ onDirectionSelect, selectedDirection, onToggleView }: AppSidebarProps) {
   const navigate = useNavigate();
-  const [isAdminView, setIsAdminView] = useState(false);
 
   const handleDirectionClick = (directionId: string) => {
     onDirectionSelect(directionId);
     navigate(`/directions/${directionId}`);
   };
 
-  const handleToggleView = () => {
-    setIsAdminView(!isAdminView);
-    onToggleView();
-  };
-
   return (
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-lg font-bold text-foreground mb-2">
-            <div className="flex items-center gap-2">
+          <SidebarGroupLabel className="text-lg font-bold mb-2">
+            <div className="bg-red-600 text-white px-3 py-2 rounded-md flex items-center gap-2">
               <FileText className="h-5 w-5" />
               Direcciones
             </div>
@@ -142,7 +136,7 @@ export function AppSidebar({ onDirectionSelect, selectedDirection, onToggleView 
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <ViewToggle isAdminView={isAdminView} onToggleView={handleToggleView} />
+        <ViewToggle isAdminView={true} onToggleView={onToggleView} />
       </SidebarFooter>
     </Sidebar>
   );
