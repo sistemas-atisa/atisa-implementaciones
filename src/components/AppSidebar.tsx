@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -122,7 +121,6 @@ export function AppSidebar({ onDirectionSelect, selectedDirection, onToggleView 
               <FileText className="h-6 w-6 text-red-600" />
               <span className="text-gray-900">Direcciones</span>
             </SidebarGroupLabel>
-            <p className="text-sm text-gray-500 mt-1 ml-9">Selecciona una dirección</p>
           </div>
           <SidebarGroupContent>
             <SidebarMenu className="space-y-1">

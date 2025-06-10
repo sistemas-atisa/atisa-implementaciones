@@ -2,22 +2,19 @@
 import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Clock, DollarSign, TrendingUp } from 'lucide-react';
-import { convertFromDays, getUnitLabel, TimeUnit } from '@/utils/timeConversions';
 
 interface CostSummaryProps {
   tiempoImplementacion: number;
   tiempoOperacion?: number;
   montoTotalImplementacion: number;
   montoTotalOperacion: number;
-  timeUnit?: TimeUnit;
 }
 
 const CostSummary: React.FC<CostSummaryProps> = ({
   tiempoImplementacion,
   tiempoOperacion = 0,
   montoTotalImplementacion,
-  montoTotalOperacion,
-  timeUnit = 'dias'
+  montoTotalOperacion
 }) => {
   return (
     <Card className="mt-8 p-8 bg-white border-gray-200 shadow-lg">
@@ -40,9 +37,8 @@ const CostSummary: React.FC<CostSummaryProps> = ({
                 <div className="text-sm text-gray-700 font-medium">Tiempo Total</div>
               </div>
               <div className="text-2xl font-bold text-red-700">
-                {convertFromDays(tiempoImplementacion, timeUnit)}
+                {tiempoImplementacion}
               </div>
-              <div className="text-sm text-gray-600">{getUnitLabel(timeUnit)}</div>
             </Card>
             <Card className="p-6 bg-gradient-to-br from-gray-50 to-gray-100 border-gray-200 shadow-md hover:shadow-lg transition-shadow duration-200">
               <div className="flex items-center gap-3 mb-3">
@@ -67,9 +63,8 @@ const CostSummary: React.FC<CostSummaryProps> = ({
                 <div className="text-sm text-gray-700 font-medium">Tiempo Total</div>
               </div>
               <div className="text-2xl font-bold text-gray-700">
-                {convertFromDays(tiempoOperacion, timeUnit)}
+                {tiempoOperacion}
               </div>
-              <div className="text-sm text-gray-600">{getUnitLabel(timeUnit)}</div>
             </Card>
             <Card className="p-6 bg-gradient-to-br from-gray-50 to-gray-100 border-gray-200 shadow-md hover:shadow-lg transition-shadow duration-200">
               <div className="flex items-center gap-3 mb-3">
