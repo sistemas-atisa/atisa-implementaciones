@@ -42,7 +42,7 @@ const DirectionImplementations: React.FC = () => {
       return { time: 0, cost: 0 };
     }
     
-    const implTime = Object.values(implementation.implementacion).reduce((sum: number, item: any) => {
+    const implTime = (Object.values(implementation.implementacion) as any[]).reduce((sum: number, item: any) => {
       if (item && typeof item === 'object' && 'duracion' in item) {
         const duration = item.duracion;
         const numericDuration = typeof duration === 'number' ? duration : 
@@ -52,7 +52,7 @@ const DirectionImplementations: React.FC = () => {
       return sum;
     }, 0);
     
-    const implCost = Object.values(implementation.implementacion).reduce((sum: number, item: any) => {
+    const implCost = (Object.values(implementation.implementacion) as any[]).reduce((sum: number, item: any) => {
       if (item && typeof item === 'object' && 'monto' in item) {
         const amount = item.monto;
         const numericAmount = typeof amount === 'number' ? amount : 
