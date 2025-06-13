@@ -3,12 +3,13 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Eye, Clock, DollarSign, CheckCircle, XCircle } from 'lucide-react';
+import { Eye, CheckCircle, XCircle, Clock } from 'lucide-react';
 
 const MyImplementations: React.FC = () => {
   const navigate = useNavigate();
 
   // Mock data for user implementations - only from 'tecnologia' direction
+  // Expandido para mostrar más implementaciones pendientes y resueltas
   const myImplementations = [
     {
       id: 0,
@@ -17,25 +18,88 @@ const MyImplementations: React.FC = () => {
       days: 15,
       cost: 25000,
       status: 'pending',
-      direction: 'tecnologia'
+      direction: 'administracion'
     },
     {
       id: 1,
+      title: "Modernización de Procesos Administrativos",
+      description: "Actualizar y digitalizar los procesos administrativos principales.",
+      days: 12,
+      cost: 18000,
+      status: 'pending',
+      direction: 'administracion'
+    },
+    {
+      id: 2,
+      title: "Sistema de Control de Inventarios",
+      description: "Implementar un sistema automatizado para el control de inventarios.",
+      days: 20,
+      cost: 32000,
+      status: 'pending',
+      direction: 'administracion'
+    },
+    {
+      id: 3,
+      title: "Plataforma de Gestión de Proveedores",
+      description: "Crear una plataforma centralizada para la gestión de proveedores.",
+      days: 18,
+      cost: 28000,
+      status: 'pending',
+      direction: 'administracion'
+    },
+    {
+      id: 4,
       title: "Mejora en Procesos de Reclutamiento",
       description: "Actualizar los procesos de selección y reclutamiento de personal para mayor eficiencia.",
       days: 20,
       cost: 18000,
       status: 'approved',
-      direction: 'tecnologia'
+      direction: 'administracion'
     },
     {
-      id: 2,
+      id: 5,
       title: "Automatización de Reportes Financieros",
       description: "Implementar herramientas de automatización para la generación de reportes financieros mensuales.",
       days: 25,
       cost: 35000,
       status: 'rejected',
-      direction: 'tecnologia'
+      direction: 'administracion'
+    },
+    {
+      id: 6,
+      title: "Sistema de Gestión de Calidad",
+      description: "Implementar un sistema integral para la gestión de calidad.",
+      days: 30,
+      cost: 45000,
+      status: 'approved',
+      direction: 'administracion'
+    },
+    {
+      id: 7,
+      title: "Optimización de Base de Datos",
+      description: "Mejorar el rendimiento y estructura de las bases de datos corporativas.",
+      days: 15,
+      cost: 22000,
+      status: 'approved',
+      direction: 'administracion'
+    },
+    {
+      id: 8,
+      title: "Portal de Servicios Internos",
+      description: "Crear un portal centralizado para servicios internos de la empresa.",
+      days: 35,
+      cost: 50000,
+      status: 'approved',
+      direction: 'administracion'
+    },
+    {
+      id: 9,
+      title: "Sistema de Monitoreo de KPIs",
+      description: "Implementar un sistema para el monitoreo en tiempo real de KPIs.",
+      days: 22,
+      cost: 38000,
+      status: 'approved',
+      direction: 'administracion'
     }
   ];
 
@@ -54,19 +118,19 @@ const MyImplementations: React.FC = () => {
           return { 
             label: 'Aprobada', 
             className: 'bg-green-100 text-green-800',
-            icon: <CheckCircle className="h-4 w-4" />
+            icon: <CheckCircle className="h-3 w-3" />
           };
         case 'rejected':
           return { 
             label: 'Rechazada', 
             className: 'bg-red-100 text-red-800',
-            icon: <XCircle className="h-4 w-4" />
+            icon: <XCircle className="h-3 w-3" />
           };
         default:
           return { 
             label: 'Pendiente', 
             className: 'bg-yellow-100 text-yellow-800',
-            icon: <Clock className="h-4 w-4" />
+            icon: <Clock className="h-3 w-3" />
           };
       }
     };
@@ -74,39 +138,30 @@ const MyImplementations: React.FC = () => {
     const statusInfo = getStatusInfo(implementation.status);
     
     return (
-      <Card className="p-6 hover:shadow-lg transition-shadow duration-200 border-gray-200">
-        <div className="flex justify-between items-start mb-4">
-          <h3 className="font-bold text-lg text-gray-900 line-clamp-2">
-            {implementation.title}
-          </h3>
-          <div className={`px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${statusInfo.className}`}>
-            {statusInfo.icon}
-            {statusInfo.label}
+      <Card className="p-3 hover:shadow-md transition-shadow duration-200 border-gray-200">
+        <div className="flex items-center justify-between">
+          <div className="flex-1 min-w-0 mr-3">
+            <h3 className="font-semibold text-sm text-gray-900 truncate">
+              {implementation.title}
+            </h3>
+          </div>
+          
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <div className={`px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${statusInfo.className}`}>
+              {statusInfo.icon}
+              {statusInfo.label}
+            </div>
+            
+            <Button 
+              onClick={() => navigate(`/${implementation.direction}/${implementation.id}`)}
+              size="sm"
+              className="bg-red-600 hover:bg-red-700 px-3 py-1 h-8"
+            >
+              <Eye className="h-3 w-3 mr-1" />
+              Ver
+            </Button>
           </div>
         </div>
-        
-        <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-          {implementation.description}
-        </p>
-        
-        <div className="flex items-center gap-4 mb-4 text-sm text-gray-500">
-          <div className="flex items-center gap-1">
-            <Clock className="h-4 w-4" />
-            <span>{implementation.days} días</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <DollarSign className="h-4 w-4" />
-            <span>${implementation.cost.toLocaleString()}</span>
-          </div>
-        </div>
-        
-        <Button 
-          onClick={() => navigate(`/${implementation.direction}/${implementation.id}`)}
-          className="w-full bg-red-600 hover:bg-red-700"
-        >
-          <Eye className="h-4 w-4 mr-2" />
-          Ver Detalles
-        </Button>
       </Card>
     );
   };
@@ -134,14 +189,14 @@ const MyImplementations: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
           {/* Pendientes de Revisión */}
           <div className="w-full">
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-3 mb-4">
               <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
               <h2 className="text-xl font-bold text-gray-900">Pendientes de Revisión</h2>
               <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-sm font-medium">
                 {pendingImplementations.length}
               </span>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-2">
               {pendingImplementations.length > 0 ? (
                 pendingImplementations.map((implementation) => (
                   <ImplementationCard 
@@ -151,7 +206,7 @@ const MyImplementations: React.FC = () => {
                   />
                 ))
               ) : (
-                <Card className="p-8 text-center text-gray-500">
+                <Card className="p-6 text-center text-gray-500">
                   <p>No hay implementaciones pendientes</p>
                 </Card>
               )}
@@ -160,14 +215,14 @@ const MyImplementations: React.FC = () => {
 
           {/* Resueltas */}
           <div className="w-full">
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-3 mb-4">
               <div className="w-3 h-3 bg-green-500 rounded-full"></div>
               <h2 className="text-xl font-bold text-gray-900">Resueltas</h2>
               <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm font-medium">
                 {resolvedImplementations.length}
               </span>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-2">
               {resolvedImplementations.length > 0 ? (
                 resolvedImplementations.map((implementation) => (
                   <ImplementationCard 
@@ -177,7 +232,7 @@ const MyImplementations: React.FC = () => {
                   />
                 ))
               ) : (
-                <Card className="p-8 text-center text-gray-500">
+                <Card className="p-6 text-center text-gray-500">
                   <p>No hay implementaciones resueltas</p>
                 </Card>
               )}

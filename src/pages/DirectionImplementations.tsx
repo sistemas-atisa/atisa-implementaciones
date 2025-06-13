@@ -3,7 +3,7 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Eye, Clock, DollarSign } from 'lucide-react';
+import { Eye } from 'lucide-react';
 import { implementacionesData } from '@/data/implementaciones';
 
 const DirectionImplementations: React.FC = () => {
@@ -37,34 +37,6 @@ const DirectionImplementations: React.FC = () => {
     return directionMap[directionKey] || directionKey;
   };
 
-  const calculateTotals = (implementation: any): { time: number; cost: number } => {
-    if (!implementation?.implementacion) {
-      return { time: 0, cost: 0 };
-    }
-    
-    const implTime = (Object.values(implementation.implementacion) as any[]).reduce((sum: number, item: any) => {
-      if (item && typeof item === 'object' && 'duracion' in item) {
-        const duration = item.duracion;
-        const numericDuration = typeof duration === 'number' ? duration : 
-                               (typeof duration === 'string' ? parseFloat(duration) || 0 : 0);
-        return sum + numericDuration;
-      }
-      return sum;
-    }, 0);
-    
-    const implCost = (Object.values(implementation.implementacion) as any[]).reduce((sum: number, item: any) => {
-      if (item && typeof item === 'object' && 'monto' in item) {
-        const amount = item.monto;
-        const numericAmount = typeof amount === 'number' ? amount : 
-                             (typeof amount === 'string' ? parseFloat(amount) || 0 : 0);
-        return sum + numericAmount;
-      }
-      return sum;
-    }, 0);
-    
-    return { time: implTime, cost: implCost };
-  };
-
   interface ImplementationCardProps {
     implementation: any;
     index: number;
@@ -72,43 +44,32 @@ const DirectionImplementations: React.FC = () => {
   }
 
   const ImplementationCard: React.FC<ImplementationCardProps> = ({ implementation, index, isPending }) => {
-    const totals = calculateTotals(implementation);
-    
     return (
-      <Card className="p-6 hover:shadow-lg transition-shadow duration-200 border-gray-200">
-        <div className="flex justify-between items-start mb-4">
-          <h3 className="font-bold text-lg text-gray-900 line-clamp-2">
-            {implementation.header.nombreImplementacion}
-          </h3>
-          <div className={`px-2 py-1 rounded-full text-xs font-medium ${
-            isPending ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'
-          }`}>
-            {isPending ? 'Pendiente' : 'Resuelta'}
+      <Card className="p-3 hover:shadow-md transition-shadow duration-200 border-gray-200">
+        <div className="flex items-center justify-between">
+          <div className="flex-1 min-w-0 mr-3">
+            <h3 className="font-semibold text-sm text-gray-900 truncate">
+              {implementation.header.nombreImplementacion}
+            </h3>
+          </div>
+          
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <div className={`px-2 py-1 rounded-full text-xs font-medium ${
+              isPending ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'
+            }`}>
+              {isPending ? 'Pendiente' : 'Resuelta'}
+            </div>
+            
+            <Button 
+              onClick={() => navigate(`/${direction}/${index}`)}
+              size="sm"
+              className="bg-red-600 hover:bg-red-700 px-3 py-1 h-8"
+            >
+              <Eye className="h-3 w-3 mr-1" />
+              Ver
+            </Button>
           </div>
         </div>
-        
-        <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-          {implementation.header.razon1}
-        </p>
-        
-        <div className="flex items-center gap-4 mb-4 text-sm text-gray-500">
-          <div className="flex items-center gap-1">
-            <Clock className="h-4 w-4" />
-            <span>{totals.time} días</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <DollarSign className="h-4 w-4" />
-            <span>${totals.cost.toLocaleString()}</span>
-          </div>
-        </div>
-        
-        <Button 
-          onClick={() => navigate(`/${direction}/${index}`)}
-          className="w-full bg-red-600 hover:bg-red-700"
-        >
-          <Eye className="h-4 w-4 mr-2" />
-          Ver Detalles
-        </Button>
       </Card>
     );
   };
@@ -136,14 +97,14 @@ const DirectionImplementations: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Pendientes de Revisión */}
           <div>
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-3 mb-4">
               <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
               <h2 className="text-xl font-bold text-gray-900">Pendientes de Revisión</h2>
               <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-sm font-medium">
                 {pendingImplementations.length}
               </span>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-2">
               {pendingImplementations.length > 0 ? (
                 pendingImplementations.map((implementation, index) => (
                   <ImplementationCard 
@@ -154,7 +115,7 @@ const DirectionImplementations: React.FC = () => {
                   />
                 ))
               ) : (
-                <Card className="p-8 text-center text-gray-500">
+                <Card className="p-6 text-center text-gray-500">
                   <p>No hay implementaciones pendientes</p>
                 </Card>
               )}
@@ -163,14 +124,14 @@ const DirectionImplementations: React.FC = () => {
 
           {/* Resueltas */}
           <div>
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-3 mb-4">
               <div className="w-3 h-3 bg-green-500 rounded-full"></div>
               <h2 className="text-xl font-bold text-gray-900">Resueltas</h2>
               <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm font-medium">
                 {resolvedImplementations.length}
               </span>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-2">
               {resolvedImplementations.length > 0 ? (
                 resolvedImplementations.map((implementation, index) => (
                   <ImplementationCard 
@@ -181,7 +142,7 @@ const DirectionImplementations: React.FC = () => {
                   />
                 ))
               ) : (
-                <Card className="p-8 text-center text-gray-500">
+                <Card className="p-6 text-center text-gray-500">
                   <p>No hay implementaciones resueltas</p>
                 </Card>
               )}
