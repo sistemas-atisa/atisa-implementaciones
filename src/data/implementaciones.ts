@@ -1,4 +1,3 @@
-
 import { ProjectHeaderData, SectionData } from '@/types/project';
 
 // Administración - Sistema de Control de Gestión Documental
@@ -275,7 +274,7 @@ const finanzasExample2: ProjectHeaderData = {
 
 // TECNOLOGÍA
 const tecnologiaExample1: ProjectHeaderData = {
-  direccion: 'TECNOLOGÍA Y SISTEMAS',
+  direccion: 'TECNOLOGÍA',
   gerencia: 'Gerencia de TI',
   nombreImplementacion: 'Migración a Infraestructura Cloud Híbrida',
   razon1: 'Reduce costos operativos de infraestructura y mejora la escalabilidad de los sistemas.',
@@ -284,7 +283,7 @@ const tecnologiaExample1: ProjectHeaderData = {
 };
 
 const tecnologiaExample2: ProjectHeaderData = {
-  direccion: 'TECNOLOGÍA Y SISTEMAS',
+  direccion: 'TECNOLOGÍA',
   gerencia: 'Gerencia de TI',
   nombreImplementacion: 'Sistema de Ciberseguridad Avanzado',
   razon1: 'Protege la información sensible contra amenazas cibernéticas actuales.',
@@ -417,6 +416,50 @@ const clinicaExample2: ProjectHeaderData = {
 };
 
 export const implementacionesData = {
+  // ATISA - Desarrollo
+  desarrollo: [
+    {
+      header: {
+        direccion: 'DESARROLLO',
+        gerencia: 'Gerencia de Desarrollo',
+        nombreImplementacion: 'Sistema de Gestión de Proyectos Inmobiliarios',
+        razon1: 'Centraliza la gestión de desarrollos inmobiliarios desde la concepción hasta entrega.',
+        razon2: 'Mejora el control de tiempos, costos y calidad en desarrollos.',
+        razon3: 'Facilita la comunicación con inversionistas y compradores.'
+      },
+      implementacion: createBaseSectionData(1.3),
+      operacion: createBaseOperationData(1.3)
+    },
+    {
+      header: {
+        direccion: 'DESARROLLO',
+        gerencia: 'Gerencia de Desarrollo',
+        nombreImplementacion: 'Plataforma de Ventas Inmobiliarias Digital',
+        razon1: 'Moderniza el proceso de ventas con herramientas digitales interactivas.',
+        razon2: 'Mejora la experiencia del cliente con tours virtuales y configuradores.',
+        razon3: 'Acelera el proceso de cierre de ventas y documentación.'
+      },
+      implementacion: createBaseSectionData(1.1),
+      operacion: createBaseOperationData(1.1)
+    }
+  ],
+
+  // ATISA - Costos y Proyectos (antes proyectos-presupuestos)
+  'costos-proyectos': [
+    {
+      header: {
+        direccion: 'COSTOS Y PROYECTOS',
+        gerencia: 'Gerencia de Proyectos',
+        nombreImplementacion: 'Sistema de Control de Proyectos PMO',
+        razon1: 'Estandariza la gestión de proyectos con metodologías PMI.',
+        razon2: 'Mejora el control de tiempos, costos y recursos.',
+        razon3: 'Facilita el reporte ejecutivo y toma de decisiones.'
+      },
+      implementacion: createBaseSectionData(1.0),
+      operacion: createBaseOperationData(1.0)
+    }
+  ],
+
   administracion: [
     {
       header: administracionExample1,
@@ -434,6 +477,7 @@ export const implementacionesData = {
       operacion: createBaseOperationData(0.6)
     }
   ],
+
   fiscal: [
     {
       header: fiscalExample1,
@@ -446,6 +490,7 @@ export const implementacionesData = {
       operacion: createBaseOperationData(0.9)
     }
   ],
+
   legal: [
     {
       header: {
@@ -460,6 +505,7 @@ export const implementacionesData = {
       operacion: createBaseOperationData(0.7)
     }
   ],
+
   finanzas: [
     {
       header: finanzasExample1,
@@ -472,6 +518,7 @@ export const implementacionesData = {
       operacion: createBaseOperationData(0.9)
     }
   ],
+
   'capital-humano': [
     {
       header: capitalHumanoExample1,
@@ -484,6 +531,7 @@ export const implementacionesData = {
       operacion: createBaseOperationData(0.7)
     }
   ],
+
   tecnologia: [
     {
       header: tecnologiaExample1,
@@ -496,24 +544,11 @@ export const implementacionesData = {
       operacion: createBaseOperationData(1.3)
     }
   ],
-  'proyectos-presupuestos': [
-    {
-      header: {
-        direccion: 'PROYECTOS Y PRESUPUESTOS',
-        gerencia: 'Gerencia de Proyectos',
-        nombreImplementacion: 'Sistema de Control de Proyectos PMO',
-        razon1: 'Estandariza la gestión de proyectos con metodologías PMI.',
-        razon2: 'Mejora el control de tiempos, costos y recursos.',
-        razon3: 'Facilita el reporte ejecutivo y toma de decisiones.'
-      },
-      implementacion: createBaseSectionData(1.0),
-      operacion: createBaseOperationData(1.0)
-    }
-  ],
+
   'cadena-suministros': [
     {
       header: {
-        direccion: 'CADENA DE SUMINISTROS',
+        direccion: 'CADENA DE SUMINISTRO',
         gerencia: 'Gerencia de Supply Chain',
         nombreImplementacion: 'Sistema ERP de Gestión de Inventarios',
         razon1: 'Optimiza la gestión de inventarios y cadena de suministros.',
@@ -524,6 +559,7 @@ export const implementacionesData = {
       operacion: createBaseOperationData(1.2)
     }
   ],
+
   maquinaria: [
     {
       header: maquinariaExample1,
@@ -536,6 +572,7 @@ export const implementacionesData = {
       operacion: createBaseOperationData(1.1)
     }
   ],
+
   'movimiento-tierra': [
     {
       header: {
@@ -550,6 +587,7 @@ export const implementacionesData = {
       operacion: createBaseOperationData(1.3)
     }
   ],
+
   construccion: [
     {
       header: construccionExample1,
@@ -562,18 +600,7 @@ export const implementacionesData = {
       operacion: createBaseOperationData(1.0)
     }
   ],
-  desarrollo: [
-    {
-      header: desarrolloExample1,
-      implementacion: createBaseSectionData(1.3),
-      operacion: createBaseOperationData(1.3)
-    },
-    {
-      header: desarrolloExample2,
-      implementacion: createBaseSectionData(1.1),
-      operacion: createBaseOperationData(1.1)
-    }
-  ],
+
   comercial: [
     {
       header: comercialExample1,
@@ -586,6 +613,7 @@ export const implementacionesData = {
       operacion: createBaseOperationData(0.8)
     }
   ],
+
   'asset-management': [
     {
       header: assetExample1,
@@ -593,6 +621,7 @@ export const implementacionesData = {
       operacion: createBaseOperationData(1.2)
     }
   ],
+
   'clinica-santa-clarita': [
     {
       header: clinicaExample1,
