@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -12,25 +11,25 @@ import MyImplementations from "./pages/MyImplementations";
 import ImplementationDetails from "./pages/ImplementationDetails";
 import NotFound from "./pages/NotFound";
 import { useState, useEffect } from "react";
+import AdminLogin from "./components/AdminLogin";
 
 const queryClient = new QueryClient();
 
 const AppContent = () => {
   const location = useLocation();
   const [selectedDirection, setSelectedDirection] = useState('administracion');
-  const [isAdminView, setIsAdminView] = useState(false); // Changed default to false
+  const [isAdminView, setIsAdminView] = useState(false);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
+  const [showAdminLogin, setShowAdminLogin] = useState(false);
   const [employeeData, setEmployeeData] = useState({
     nombre: 'Oscar Arredondo',
     numeroEmpleado: '793',
     direccion: 'Tecnología y Sistemas'
   });
 
-  // Remove automatic admin view switching based on routes
   useEffect(() => {
     console.log('🚀 Route changed to:', location.pathname);
-    // Don't automatically switch views based on routes
   }, [location.pathname]);
 
   const handleDirectionSelect = (directionId: string) => {
@@ -40,21 +39,25 @@ const AppContent = () => {
   const handleToggleView = () => {
     console.log('🎯 Toggle view requested. Current:', isAdminView ? 'Admin' : 'User');
     
-    // If switching to admin view, check authentication
     if (!isAdminView && !isAdminAuthenticated) {
-      const username = prompt('Usuario:');
-      const password = prompt('Contraseña:');
-      
-      if (username === 'admin' && password === '12345') {
-        setIsAdminAuthenticated(true);
-        setIsAdminView(true);
-      } else {
-        alert('Credenciales incorrectas');
-        return;
-      }
+      setShowAdminLogin(true);
     } else {
       setIsAdminView(!isAdminView);
     }
+  };
+
+  const handleAdminLogin = (success: boolean) => {
+    if (success) {
+      setIsAdminAuthenticated(true);
+      setIsAdminView(true);
+      setShowAdminLogin(false);
+    } else {
+      setShowAdminLogin(false);
+    }
+  };
+
+  const handleCancelLogin = () => {
+    setShowAdminLogin(false);
   };
 
   const handleEmployeeUpdate = (field: keyof typeof employeeData, value: string) => {
@@ -82,6 +85,11 @@ const AppContent = () => {
       </div>
     </div>
   );
+
+  // Show admin login if requested
+  if (showAdminLogin) {
+    return <AdminLogin onLogin={handleAdminLogin} onCancel={handleCancelLogin} />;
+  }
 
   return (
     <div className="min-h-screen flex w-full">
