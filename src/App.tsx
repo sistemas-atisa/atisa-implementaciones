@@ -18,33 +18,20 @@ const queryClient = new QueryClient();
 const AppContent = () => {
   const location = useLocation();
   const [selectedDirection, setSelectedDirection] = useState('administracion');
-  const [isAdminView, setIsAdminView] = useState(true);
+  const [isAdminView, setIsAdminView] = useState(false); // Changed default to false
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
   const [employeeData, setEmployeeData] = useState({
     nombre: 'Oscar Arredondo',
     numeroEmpleado: '793',
     direccion: 'Tecnología y Sistemas'
   });
 
-  // Sync admin view state with current route
+  // Remove automatic admin view switching based on routes
   useEffect(() => {
-    const path = location.pathname;
-    console.log('🚀 Route changed to:', path);
-    
-    // Auto-set admin view based on route patterns
-    if (path.startsWith('/directions/') || 
-        path.match(/^\/[^\/]+\/\d+$/)) { // Pattern like /desarrollo/0
-      if (!isAdminView) {
-        console.log('🔄 Auto-switching to admin view for route:', path);
-        setIsAdminView(true);
-      }
-    } else if (path.startsWith('/my-implementations')) {
-      if (isAdminView) {
-        console.log('🔄 Auto-switching to user view for route:', path);
-        setIsAdminView(false);
-      }
-    }
-  }, [location.pathname, isAdminView]);
+    console.log('🚀 Route changed to:', location.pathname);
+    // Don't automatically switch views based on routes
+  }, [location.pathname]);
 
   const handleDirectionSelect = (directionId: string) => {
     setSelectedDirection(directionId);
@@ -52,8 +39,22 @@ const AppContent = () => {
 
   const handleToggleView = () => {
     console.log('🎯 Toggle view requested. Current:', isAdminView ? 'Admin' : 'User');
-    setIsAdminView(!isAdminView);
-    // Don't reset login state when switching views
+    
+    // If switching to admin view, check authentication
+    if (!isAdminView && !isAdminAuthenticated) {
+      const username = prompt('Usuario:');
+      const password = prompt('Contraseña:');
+      
+      if (username === 'admin' && password === '12345') {
+        setIsAdminAuthenticated(true);
+        setIsAdminView(true);
+      } else {
+        alert('Credenciales incorrectas');
+        return;
+      }
+    } else {
+      setIsAdminView(!isAdminView);
+    }
   };
 
   const handleEmployeeUpdate = (field: keyof typeof employeeData, value: string) => {
@@ -125,6 +126,7 @@ const AppContent = () => {
             employeeData={employeeData}
             onEmployeeUpdate={handleEmployeeUpdate}
             onUserLogin={handleUserLogin}
+            isAdminAuthenticated={isAdminAuthenticated}
           />
         } />
         <Route path="*" element={<NotFound />} />

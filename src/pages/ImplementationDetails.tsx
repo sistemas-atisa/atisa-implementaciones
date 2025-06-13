@@ -28,6 +28,7 @@ interface ImplementationDetailsProps {
   };
   onEmployeeUpdate: (field: keyof any, value: string) => void;
   onUserLogin: () => void;
+  isAdminAuthenticated: boolean;
 }
 
 const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({ 
@@ -36,7 +37,8 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
   onToggleView,
   employeeData,
   onEmployeeUpdate,
-  onUserLogin
+  onUserLogin,
+  isAdminAuthenticated
 }) => {
   const { direction, implementationIndex } = useParams<{ direction: string; implementationIndex: string }>();
   const navigate = useNavigate();
@@ -45,6 +47,7 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
   // Debug logging
   console.log('🔍 ImplementationDetails Debug:');
   console.log('- isAdminView:', isAdminView);
+  console.log('- isAdminAuthenticated:', isAdminAuthenticated);
   console.log('- direction:', direction);
   console.log('- implementationIndex:', implementationIndex);
   console.log('- Current URL:', window.location.pathname);
@@ -85,6 +88,31 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
   // Add state for tracking time units for each table
   const [implementacionTimeUnit, setImplementacionTimeUnit] = useState<string>('días');
   const [operacionTimeUnit, setOperacionTimeUnit] = useState<string>('días');
+
+  // Access control: Check if user can access this implementation
+  useEffect(() => {
+    // If in admin view but not authenticated, redirect
+    if (isAdminView && !isAdminAuthenticated) {
+      console.log('❌ Admin view requested but not authenticated, redirecting to user view');
+      navigate('/my-implementations');
+      return;
+    }
+
+    // If user view but not logged in, redirect to my-implementations
+    if (!isAdminView && !isUserLoggedIn) {
+      console.log('❌ User not logged in, redirecting to my-implementations');
+      navigate('/my-implementations');
+      return;
+    }
+
+    // For user view: only allow access to their own implementations
+    // For this demo, we'll assume user implementations are in the 'tecnologia' direction
+    if (!isAdminView && direction !== 'tecnologia') {
+      console.log('❌ User trying to access implementation outside their area, redirecting');
+      navigate('/my-implementations');
+      return;
+    }
+  }, [isAdminView, isAdminAuthenticated, isUserLoggedIn, direction, navigate]);
 
   // Load data when direction or implementation index changes
   useEffect(() => {
@@ -146,14 +174,6 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
   const handleToggleView = () => {
     console.log('🔄 Toggling view from:', isAdminView ? 'Admin' : 'User');
     onToggleView();
-    // Navigate based on new view state
-    if (isAdminView) {
-      // Going to user view
-      navigate('/my-implementations');
-    } else {
-      // Going to admin view
-      navigate('/directions/administracion');
-    }
   };
 
   const handleExpandTable = (tableType: 'implementacion' | 'operacion') => {

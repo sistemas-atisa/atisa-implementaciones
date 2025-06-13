@@ -8,10 +8,10 @@ import { Eye, Clock, DollarSign, CheckCircle, XCircle } from 'lucide-react';
 const MyImplementations: React.FC = () => {
   const navigate = useNavigate();
 
-  // Mock data for user implementations
+  // Mock data for user implementations - only from 'tecnologia' direction
   const myImplementations = [
     {
-      id: 1,
+      id: 0,
       title: "Optimización del Sistema de Gestión Documental",
       description: "Implementar un nuevo sistema para mejorar la gestión y almacenamiento de documentos corporativos.",
       days: 15,
@@ -20,22 +20,22 @@ const MyImplementations: React.FC = () => {
       direction: 'tecnologia'
     },
     {
-      id: 2,
+      id: 1,
       title: "Mejora en Procesos de Reclutamiento",
       description: "Actualizar los procesos de selección y reclutamiento de personal para mayor eficiencia.",
       days: 20,
       cost: 18000,
       status: 'approved',
-      direction: 'capital-humano'
+      direction: 'tecnologia'
     },
     {
-      id: 3,
+      id: 2,
       title: "Automatización de Reportes Financieros",
       description: "Implementar herramientas de automatización para la generación de reportes financieros mensuales.",
       days: 25,
       cost: 35000,
       status: 'rejected',
-      direction: 'finanzas'
+      direction: 'tecnologia'
     }
   ];
 
