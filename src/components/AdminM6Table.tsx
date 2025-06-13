@@ -97,7 +97,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
         <div className="p-3 bg-gray-50 border-b border-gray-200">
           <div className="flex items-center gap-2">
             <span className="text-sm font-medium text-gray-700">Unidad de tiempo:</span>
-            <TimeUnitSelector value={timeUnit} onChange={handleTimeUnitChange} disabled />
+            <TimeUnitSelector value={timeUnit} onChange={handleTimeUnitChange} />
           </div>
         </div>
         
@@ -126,7 +126,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                     <Textarea
                       value={data[category.key].descripcion}
                       disabled
-                      className="text-xs bg-gray-100 border-gray-300 text-gray-600 cursor-not-allowed rounded-lg min-h-[75px] resize-none w-full"
+                      className="text-xs bg-white border-2 border-dashed border-gray-400 text-gray-800 rounded-lg min-h-[75px] resize-none w-full pointer-events-none"
                       rows={4}
                     />
                   </td>
@@ -138,14 +138,14 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                           type="number"
                           value={data[category.key].duracion || ''}
                           disabled
-                          className="text-xs h-5 bg-gray-100 border-gray-300 text-gray-600 cursor-not-allowed rounded-lg font-medium w-full"
+                          className="text-xs h-5 bg-white border-2 border-dashed border-gray-400 text-gray-800 rounded-lg font-medium w-full pointer-events-none"
                         />
                       </div>
                       <div>
                         <Textarea
                           value={data[category.key].duracionJustificacion}
                           disabled
-                          className="text-xs bg-gray-100 border-gray-300 text-gray-600 cursor-not-allowed rounded-lg min-h-[38px] resize-none w-full"
+                          className="text-xs bg-white border-2 border-dashed border-gray-400 text-gray-800 rounded-lg min-h-[38px] resize-none w-full pointer-events-none"
                           rows={2}
                         />
                       </div>
@@ -159,14 +159,14 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                           type="number"
                           value={data[category.key].monto || ''}
                           disabled
-                          className="text-xs h-5 bg-gray-100 border-gray-300 text-gray-600 cursor-not-allowed rounded-lg font-medium w-full"
+                          className="text-xs h-5 bg-white border-2 border-dashed border-gray-400 text-gray-800 rounded-lg font-medium w-full pointer-events-none"
                         />
                       </div>
                       <div>
                         <Textarea
                           value={data[category.key].montoJustificacion}
                           disabled
-                          className="text-xs bg-gray-100 border-gray-300 text-gray-600 cursor-not-allowed rounded-lg min-h-[38px] resize-none w-full"
+                          className="text-xs bg-white border-2 border-dashed border-gray-400 text-gray-800 rounded-lg min-h-[38px] resize-none w-full pointer-events-none"
                           rows={2}
                         />
                       </div>
@@ -176,7 +176,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                     <Textarea
                       value={data[category.key].calidad}
                       disabled
-                      className="text-xs bg-gray-100 border-gray-300 text-gray-600 cursor-not-allowed rounded-lg min-h-[75px] resize-none w-full"
+                      className="text-xs bg-white border-2 border-dashed border-gray-400 text-gray-800 rounded-lg min-h-[75px] resize-none w-full pointer-events-none"
                       rows={4}
                     />
                   </td>
@@ -229,7 +229,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                     type="number"
                     value={customTotalTime}
                     disabled
-                    className="text-center bg-gray-100 border-gray-300 text-gray-600 cursor-not-allowed text-base font-bold"
+                    className="text-center bg-white border-2 border-dashed border-gray-400 text-gray-800 text-base font-bold pointer-events-none"
                   />
                 </td>
                 <td className="border border-gray-200 py-2 px-1 text-center text-red-700 text-base font-bold" colSpan={3}>
