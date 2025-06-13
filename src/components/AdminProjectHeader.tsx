@@ -39,7 +39,8 @@ const AdminProjectHeader: React.FC<AdminProjectHeaderProps> = ({ data }) => {
             <Input 
               value={data.nombreImplementacion} 
               disabled
-              className="bg-white border border-gray-300 text-black rounded-lg font-medium text-lg" 
+              className="bg-white border border-gray-300 text-black rounded-lg font-medium text-lg cursor-default" 
+              style={{ cursor: 'default' }}
             />
           </div>
 
@@ -50,7 +51,8 @@ const AdminProjectHeader: React.FC<AdminProjectHeaderProps> = ({ data }) => {
             <Input 
               value={data.direccion} 
               disabled
-              className="bg-white border border-gray-300 text-black rounded-lg" 
+              className="bg-white border border-gray-300 text-black rounded-lg cursor-default" 
+              style={{ cursor: 'default' }}
             />
           </div>
           
@@ -61,7 +63,8 @@ const AdminProjectHeader: React.FC<AdminProjectHeaderProps> = ({ data }) => {
             <Input 
               value={data.gerencia} 
               disabled
-              className="bg-white border border-gray-300 text-black rounded-lg" 
+              className="bg-white border border-gray-300 text-black rounded-lg cursor-default" 
+              style={{ cursor: 'default' }}
             />
           </div>
         </div>
@@ -76,20 +79,23 @@ const AdminProjectHeader: React.FC<AdminProjectHeaderProps> = ({ data }) => {
               <Textarea 
                 value={data.razon1} 
                 disabled
-                className="bg-white border border-gray-300 text-black rounded-lg" 
-                rows={2} 
+                className="bg-white border border-gray-300 text-black rounded-lg cursor-default" 
+                rows={2}
+                style={{ cursor: 'default' }}
               />
               <Textarea 
                 value={data.razon2} 
                 disabled
-                className="bg-white border border-gray-300 text-black rounded-lg" 
-                rows={2} 
+                className="bg-white border border-gray-300 text-black rounded-lg cursor-default" 
+                rows={2}
+                style={{ cursor: 'default' }}
               />
               <Textarea 
                 value={data.razon3} 
                 disabled
-                className="bg-white border border-gray-300 text-black rounded-lg" 
-                rows={2} 
+                className="bg-white border border-gray-300 text-black rounded-lg cursor-default" 
+                rows={2}
+                style={{ cursor: 'default' }}
               />
             </div>
 
