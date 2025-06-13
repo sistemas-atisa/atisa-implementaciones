@@ -1,9 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Shield, User } from 'lucide-react';
 import { AppSidebar } from '@/components/AppSidebar';
 import { UserSidebar } from '@/components/UserSidebar';
 import ProjectHeader from '@/components/ProjectHeader';
@@ -42,6 +41,13 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
   const { direction, implementationIndex } = useParams<{ direction: string; implementationIndex: string }>();
   const navigate = useNavigate();
   const [expandedTable, setExpandedTable] = useState<'implementacion' | 'operacion' | null>(null);
+  
+  // Debug logging
+  console.log('🔍 ImplementationDetails Debug:');
+  console.log('- isAdminView:', isAdminView);
+  console.log('- direction:', direction);
+  console.log('- implementationIndex:', implementationIndex);
+  console.log('- Current URL:', window.location.pathname);
   
   const [headerData, setHeaderData] = useState<ProjectHeaderData>({
     direccion: '',
@@ -138,6 +144,7 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
   };
 
   const handleToggleView = () => {
+    console.log('🔄 Toggling view from:', isAdminView ? 'Admin' : 'User');
     onToggleView();
     // Navigate based on new view state
     if (isAdminView) {
@@ -164,6 +171,10 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
     navigate('/my-implementations');
     return null;
   }
+
+  console.log('🎨 Rendering components:');
+  console.log('- Header component:', isAdminView ? 'AdminProjectHeader' : 'UserProjectHeader');
+  console.log('- Table component:', isAdminView ? 'AdminM6Table' : 'UserM6Table');
 
   return (
     <div className="flex w-full min-h-screen">
@@ -198,6 +209,25 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
                 <ArrowLeft className="h-4 w-4" />
                 {isAdminView ? 'Regresar a Lista' : 'Regresar a Mis Implementaciones'}
               </Button>
+              
+              {/* View Indicator Badge */}
+              <div className={`px-3 py-1 rounded-full text-sm font-medium ${
+                isAdminView 
+                  ? 'bg-red-100 text-red-800 border border-red-200' 
+                  : 'bg-blue-100 text-blue-800 border border-blue-200'
+              }`}>
+                {isAdminView ? (
+                  <>
+                    <Shield className="h-4 w-4 inline mr-1" />
+                    Vista Administrador
+                  </>
+                ) : (
+                  <>
+                    <User className="h-4 w-4 inline mr-1" />
+                    Vista Usuario
+                  </>
+                )}
+              </div>
             </div>
             
             {/* ATISA Logo - Centered */}

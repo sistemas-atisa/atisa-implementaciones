@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "./components/AppSidebar";
 import { UserSidebar } from "./components/UserSidebar";
@@ -11,11 +11,12 @@ import DirectionImplementations from "./pages/DirectionImplementations";
 import MyImplementations from "./pages/MyImplementations";
 import ImplementationDetails from "./pages/ImplementationDetails";
 import NotFound from "./pages/NotFound";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const queryClient = new QueryClient();
 
-const App = () => {
+const AppContent = () => {
+  const location = useLocation();
   const [selectedDirection, setSelectedDirection] = useState('administracion');
   const [isAdminView, setIsAdminView] = useState(true);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
@@ -25,11 +26,32 @@ const App = () => {
     direccion: 'Tecnología y Sistemas'
   });
 
+  // Sync admin view state with current route
+  useEffect(() => {
+    const path = location.pathname;
+    console.log('🚀 Route changed to:', path);
+    
+    // Auto-set admin view based on route patterns
+    if (path.startsWith('/directions/') || 
+        path.match(/^\/[^\/]+\/\d+$/)) { // Pattern like /desarrollo/0
+      if (!isAdminView) {
+        console.log('🔄 Auto-switching to admin view for route:', path);
+        setIsAdminView(true);
+      }
+    } else if (path.startsWith('/my-implementations')) {
+      if (isAdminView) {
+        console.log('🔄 Auto-switching to user view for route:', path);
+        setIsAdminView(false);
+      }
+    }
+  }, [location.pathname, isAdminView]);
+
   const handleDirectionSelect = (directionId: string) => {
     setSelectedDirection(directionId);
   };
 
   const handleToggleView = () => {
+    console.log('🎯 Toggle view requested. Current:', isAdminView ? 'Admin' : 'User');
     setIsAdminView(!isAdminView);
     // Don't reset login state when switching views
   };
@@ -61,60 +83,66 @@ const App = () => {
   );
 
   return (
+    <div className="min-h-screen flex w-full">
+      <Routes>
+        <Route path="/" element={
+          isAdminView ? 
+            <Navigate to="/directions/administracion" replace /> : 
+            <Navigate to="/my-implementations" replace />
+        } />
+        <Route path="/directions/:direction" element={
+          <div className="flex w-full">
+            <AppSidebar 
+              onDirectionSelect={handleDirectionSelect}
+              selectedDirection={selectedDirection}
+              onToggleView={handleToggleView}
+              isAdminView={isAdminView}
+            />
+            <main className="flex-1">
+              <DirectionImplementations />
+            </main>
+          </div>
+        } />
+        <Route path="/my-implementations" element={
+          <div className="flex w-full">
+            <UserSidebar 
+              employeeData={employeeData}
+              onEmployeeUpdate={handleEmployeeUpdate}
+              onToggleView={handleToggleView}
+              isLoggedIn={isUserLoggedIn}
+              onLogin={handleUserLogin}
+            />
+            <main className="flex-1">
+              {isUserLoggedIn ? <MyImplementations /> : <BlankUserPage />}
+            </main>
+          </div>
+        } />
+        <Route path="/:direction/:implementationIndex" element={
+          <ImplementationDetails 
+            isAdminView={isAdminView} 
+            isUserLoggedIn={isUserLoggedIn}
+            onToggleView={handleToggleView}
+            employeeData={employeeData}
+            onEmployeeUpdate={handleEmployeeUpdate}
+            onUserLogin={handleUserLogin}
+          />
+        } />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
+  );
+};
+
+const App = () => {
+  return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
         <Sonner />
         <SidebarProvider>
-          <div className="min-h-screen flex w-full">
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={
-                  isAdminView ? 
-                    <Navigate to="/directions/administracion" replace /> : 
-                    <Navigate to="/my-implementations" replace />
-                } />
-                <Route path="/directions/:direction" element={
-                  <div className="flex w-full">
-                    <AppSidebar 
-                      onDirectionSelect={handleDirectionSelect}
-                      selectedDirection={selectedDirection}
-                      onToggleView={handleToggleView}
-                      isAdminView={isAdminView}
-                    />
-                    <main className="flex-1">
-                      <DirectionImplementations />
-                    </main>
-                  </div>
-                } />
-                <Route path="/my-implementations" element={
-                  <div className="flex w-full">
-                    <UserSidebar 
-                      employeeData={employeeData}
-                      onEmployeeUpdate={handleEmployeeUpdate}
-                      onToggleView={handleToggleView}
-                      isLoggedIn={isUserLoggedIn}
-                      onLogin={handleUserLogin}
-                    />
-                    <main className="flex-1">
-                      {isUserLoggedIn ? <MyImplementations /> : <BlankUserPage />}
-                    </main>
-                  </div>
-                } />
-                <Route path="/:direction/:implementationIndex" element={
-                  <ImplementationDetails 
-                    isAdminView={isAdminView} 
-                    isUserLoggedIn={isUserLoggedIn}
-                    onToggleView={handleToggleView}
-                    employeeData={employeeData}
-                    onEmployeeUpdate={handleEmployeeUpdate}
-                    onUserLogin={handleUserLogin}
-                  />
-                } />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </div>
+          <BrowserRouter>
+            <AppContent />
+          </BrowserRouter>
         </SidebarProvider>
       </TooltipProvider>
     </QueryClientProvider>
