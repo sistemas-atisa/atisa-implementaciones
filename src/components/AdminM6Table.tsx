@@ -126,7 +126,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                     <Textarea
                       value={data[category.key].descripcion}
                       disabled
-                      className="text-xs bg-white border-2 border-dashed border-gray-400 text-gray-800 rounded-lg min-h-[75px] resize-none w-full pointer-events-none"
+                      className="text-xs bg-gray-50 border border-gray-200 text-gray-900 rounded-lg min-h-[75px] resize-none w-full cursor-default"
                       rows={4}
                     />
                   </td>
@@ -138,14 +138,14 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                           type="number"
                           value={data[category.key].duracion || ''}
                           disabled
-                          className="text-xs h-5 bg-white border-2 border-dashed border-gray-400 text-gray-800 rounded-lg font-medium w-full pointer-events-none"
+                          className="text-xs h-5 bg-gray-50 border border-gray-200 text-gray-900 rounded-lg font-medium w-full cursor-default"
                         />
                       </div>
                       <div>
                         <Textarea
                           value={data[category.key].duracionJustificacion}
                           disabled
-                          className="text-xs bg-white border-2 border-dashed border-gray-400 text-gray-800 rounded-lg min-h-[38px] resize-none w-full pointer-events-none"
+                          className="text-xs bg-gray-50 border border-gray-200 text-gray-900 rounded-lg min-h-[38px] resize-none w-full cursor-default"
                           rows={2}
                         />
                       </div>
@@ -159,14 +159,14 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                           type="number"
                           value={data[category.key].monto || ''}
                           disabled
-                          className="text-xs h-5 bg-white border-2 border-dashed border-gray-400 text-gray-800 rounded-lg font-medium w-full pointer-events-none"
+                          className="text-xs h-5 bg-gray-50 border border-gray-200 text-gray-900 rounded-lg font-medium w-full cursor-default"
                         />
                       </div>
                       <div>
                         <Textarea
                           value={data[category.key].montoJustificacion}
                           disabled
-                          className="text-xs bg-white border-2 border-dashed border-gray-400 text-gray-800 rounded-lg min-h-[38px] resize-none w-full pointer-events-none"
+                          className="text-xs bg-gray-50 border border-gray-200 text-gray-900 rounded-lg min-h-[38px] resize-none w-full cursor-default"
                           rows={2}
                         />
                       </div>
@@ -176,7 +176,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                     <Textarea
                       value={data[category.key].calidad}
                       disabled
-                      className="text-xs bg-white border-2 border-dashed border-gray-400 text-gray-800 rounded-lg min-h-[75px] resize-none w-full pointer-events-none"
+                      className="text-xs bg-gray-50 border border-gray-200 text-gray-900 rounded-lg min-h-[75px] resize-none w-full cursor-default"
                       rows={4}
                     />
                   </td>
@@ -229,7 +229,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                     type="number"
                     value={customTotalTime}
                     disabled
-                    className="text-center bg-white border-2 border-dashed border-gray-400 text-gray-800 text-base font-bold pointer-events-none"
+                    className="text-center bg-gray-50 border border-gray-200 text-gray-900 text-base font-bold cursor-default"
                   />
                 </td>
                 <td className="border border-gray-200 py-2 px-1 text-center text-red-700 text-base font-bold" colSpan={3}>
