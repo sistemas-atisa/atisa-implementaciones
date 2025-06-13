@@ -26,8 +26,8 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin, onCancel }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center">
-      <Card className="w-full max-w-md p-8 shadow-lg">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center p-4">
+      <Card className="w-full max-w-md p-8 shadow-lg mx-auto">
         <div className="text-center mb-8">
           <img 
             src="https://i.postimg.cc/FFfbvfHy/ATISA-Group-Color-page-0001.png" 
