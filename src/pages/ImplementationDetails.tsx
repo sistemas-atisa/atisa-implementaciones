@@ -8,8 +8,10 @@ import { AppSidebar } from '@/components/AppSidebar';
 import { UserSidebar } from '@/components/UserSidebar';
 import ProjectHeader from '@/components/ProjectHeader';
 import UserProjectHeader from '@/components/UserProjectHeader';
+import AdminProjectHeader from '@/components/AdminProjectHeader';
 import M6Table from '@/components/M6Table';
 import UserM6Table from '@/components/UserM6Table';
+import AdminM6Table from '@/components/AdminM6Table';
 import CostSummary from '@/components/CostSummary';
 import CommentsSection from '@/components/CommentsSection';
 import SixMsAnalysis from '@/components/SixMsAnalysis';
@@ -103,27 +105,36 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
   }, [implementacion, operacion]);
 
   const updateHeaderData = (field: keyof ProjectHeaderData, value: string) => {
-    setHeaderData(prev => ({ ...prev, [field]: value }));
+    // Only allow updates in user view
+    if (!isAdminView) {
+      setHeaderData(prev => ({ ...prev, [field]: value }));
+    }
   };
 
   const updateImplementacion = (category: keyof SectionData, field: keyof SectionData[keyof SectionData], value: string | number) => {
-    setImplementacion(prev => ({
-      ...prev,
-      [category]: {
-        ...prev[category],
-        [field]: value
-      }
-    }));
+    // Only allow updates in user view
+    if (!isAdminView) {
+      setImplementacion(prev => ({
+        ...prev,
+        [category]: {
+          ...prev[category],
+          [field]: value
+        }
+      }));
+    }
   };
 
   const updateOperacion = (category: keyof SectionData, field: keyof SectionData[keyof SectionData], value: string | number) => {
-    setOperacion(prev => ({
-      ...prev,
-      [category]: {
-        ...prev[category],
-        [field]: value
-      }
-    }));
+    // Only allow updates in user view
+    if (!isAdminView) {
+      setOperacion(prev => ({
+        ...prev,
+        [category]: {
+          ...prev[category],
+          [field]: value
+        }
+      }));
+    }
   };
 
   const handleToggleView = () => {
@@ -202,8 +213,9 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
         
         <div className="p-6">
           <div className="max-w-full mx-auto">
+            {/* Header Component - Different for Admin vs User */}
             {isAdminView ? (
-              <ProjectHeader data={headerData} onUpdate={updateHeaderData} />
+              <AdminProjectHeader data={headerData} />
             ) : (
               <UserProjectHeader data={headerData} onUpdate={updateHeaderData} />
             )}
@@ -216,17 +228,14 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
             }`}>
               {(expandedTable === null || expandedTable === 'implementacion') && (
                 isAdminView ? (
-                  <M6Table
+                  <AdminM6Table
                     title="Implementación"
                     data={implementacion}
-                    onUpdate={updateImplementacion}
                     totalTime={tiempoImplementacionTable}
                     totalCost={montoTotalImplementacion}
                     isExpanded={expandedTable === 'implementacion'}
                     onToggleExpand={() => handleExpandTable('implementacion')}
                     customTotalTime={tiempoImplementacionTable}
-                    onCustomTotalTimeChange={setTiempoImplementacionTable}
-                    onTimeUnitChange={setImplementacionTimeUnit}
                   />
                 ) : (
                   <UserM6Table
@@ -245,17 +254,14 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
               
               {(expandedTable === null || expandedTable === 'operacion') && (
                 isAdminView ? (
-                  <M6Table
+                  <AdminM6Table
                     title="Operación"
                     data={operacion}
-                    onUpdate={updateOperacion}
                     totalTime={tiempoOperacionTable}
                     totalCost={montoTotalOperacion}
                     isExpanded={expandedTable === 'operacion'}
                     onToggleExpand={() => handleExpandTable('operacion')}
                     customTotalTime={tiempoOperacionTable}
-                    onCustomTotalTimeChange={setTiempoOperacionTable}
-                    onTimeUnitChange={setOperacionTimeUnit}
                   />
                 ) : (
                   <UserM6Table
