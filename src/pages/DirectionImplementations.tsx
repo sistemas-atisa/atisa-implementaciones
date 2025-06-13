@@ -3,18 +3,44 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Eye } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { implementacionesData } from '@/data/implementaciones';
 
 const DirectionImplementations: React.FC = () => {
   const { direction } = useParams<{ direction: string }>();
   const navigate = useNavigate();
 
-  const implementations = direction ? implementacionesData[direction as keyof typeof implementacionesData] || [] : [];
+  // Sample data for administracion direction to show more implementations
+  const sampleAdministracionData = [
+    { header: { nombreImplementacion: "Sistema de Gestión de Proyectos Integral" } },
+    { header: { nombreImplementacion: "Automatización de Procesos Administrativos" } },
+    { header: { nombreImplementacion: "Plataforma de Control de Documentos" } },
+    { header: { nombreImplementacion: "Sistema de Monitoreo de KPIs en Tiempo Real" } },
+    { header: { nombreImplementacion: "Portal de Servicios Internos Centralizado" } },
+    { header: { nombreImplementacion: "Optimización del Sistema de Gestión Documental" } },
+    { header: { nombreImplementacion: "Modernización de Procesos Administrativos" } },
+    { header: { nombreImplementacion: "Sistema de Control de Inventarios" } },
+    { header: { nombreImplementacion: "Plataforma de Gestión de Proveedores" } },
+    { header: { nombreImplementacion: "Sistema de Evaluación de Desempeño" } },
+    { header: { nombreImplementacion: "Automatización de Reportes Financieros" } },
+    { header: { nombreImplementacion: "Sistema de Gestión de Calidad" } },
+    { header: { nombreImplementacion: "Optimización de Base de Datos" } },
+    { header: { nombreImplementacion: "Portal de Recursos Humanos" } }
+  ];
+
+  const implementations = direction === 'administracion' 
+    ? sampleAdministracionData 
+    : (direction ? implementacionesData[direction as keyof typeof implementacionesData] || [] : []);
   
-  // For demo purposes, we'll mark some as pending and others as resolved randomly
-  const pendingImplementations = implementations.filter((_, index) => index % 3 === 0);
-  const resolvedImplementations = implementations.filter((_, index) => index % 3 !== 0);
+  // For administracion: first 4 are pending, rest are resolved
+  // For other directions: use the original logic
+  const pendingImplementations = direction === 'administracion' 
+    ? implementations.slice(0, 4)
+    : implementations.filter((_, index) => index % 3 === 0);
+  
+  const resolvedImplementations = direction === 'administracion'
+    ? implementations.slice(4)
+    : implementations.filter((_, index) => index % 3 !== 0);
 
   const getDirectionTitle = (directionKey: string): string => {
     const directionMap: { [key: string]: string } = {
@@ -40,10 +66,9 @@ const DirectionImplementations: React.FC = () => {
   interface ImplementationCardProps {
     implementation: any;
     index: number;
-    isPending: boolean;
   }
 
-  const ImplementationCard: React.FC<ImplementationCardProps> = ({ implementation, index, isPending }) => {
+  const ImplementationCard: React.FC<ImplementationCardProps> = ({ implementation, index }) => {
     return (
       <Card className="p-3 hover:shadow-md transition-shadow duration-200 border-gray-200">
         <div className="flex items-center justify-between">
@@ -54,19 +79,13 @@ const DirectionImplementations: React.FC = () => {
           </div>
           
           <div className="flex items-center gap-2 flex-shrink-0">
-            <div className={`px-2 py-1 rounded-full text-xs font-medium ${
-              isPending ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'
-            }`}>
-              {isPending ? 'Pendiente' : 'Resuelta'}
-            </div>
-            
             <Button 
               onClick={() => navigate(`/${direction}/${index}`)}
               size="sm"
               className="bg-red-600 hover:bg-red-700 px-3 py-1 h-8"
             >
-              <Eye className="h-3 w-3 mr-1" />
-              Ver
+              Ver más
+              <ArrowRight className="h-3 w-3 ml-1" />
             </Button>
           </div>
         </div>
@@ -111,7 +130,6 @@ const DirectionImplementations: React.FC = () => {
                     key={`pending-${index}`} 
                     implementation={implementation} 
                     index={implementations.indexOf(implementation)}
-                    isPending={true}
                   />
                 ))
               ) : (
@@ -138,7 +156,6 @@ const DirectionImplementations: React.FC = () => {
                     key={`resolved-${index}`} 
                     implementation={implementation} 
                     index={implementations.indexOf(implementation)}
-                    isPending={false}
                   />
                 ))
               ) : (

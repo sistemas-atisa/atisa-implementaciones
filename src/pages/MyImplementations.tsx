@@ -3,7 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Eye, CheckCircle, XCircle, Clock } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 const MyImplementations: React.FC = () => {
   const navigate = useNavigate();
@@ -108,35 +108,9 @@ const MyImplementations: React.FC = () => {
 
   interface ImplementationCardProps {
     implementation: typeof myImplementations[0];
-    isPending: boolean;
   }
 
-  const ImplementationCard: React.FC<ImplementationCardProps> = ({ implementation, isPending }) => {
-    const getStatusInfo = (status: string) => {
-      switch (status) {
-        case 'approved':
-          return { 
-            label: 'Aprobada', 
-            className: 'bg-green-100 text-green-800',
-            icon: <CheckCircle className="h-3 w-3" />
-          };
-        case 'rejected':
-          return { 
-            label: 'Rechazada', 
-            className: 'bg-red-100 text-red-800',
-            icon: <XCircle className="h-3 w-3" />
-          };
-        default:
-          return { 
-            label: 'Pendiente', 
-            className: 'bg-yellow-100 text-yellow-800',
-            icon: <Clock className="h-3 w-3" />
-          };
-      }
-    };
-
-    const statusInfo = getStatusInfo(implementation.status);
-    
+  const ImplementationCard: React.FC<ImplementationCardProps> = ({ implementation }) => {
     return (
       <Card className="p-3 hover:shadow-md transition-shadow duration-200 border-gray-200">
         <div className="flex items-center justify-between">
@@ -147,18 +121,13 @@ const MyImplementations: React.FC = () => {
           </div>
           
           <div className="flex items-center gap-2 flex-shrink-0">
-            <div className={`px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${statusInfo.className}`}>
-              {statusInfo.icon}
-              {statusInfo.label}
-            </div>
-            
             <Button 
               onClick={() => navigate(`/${implementation.direction}/${implementation.id}`)}
               size="sm"
               className="bg-red-600 hover:bg-red-700 px-3 py-1 h-8"
             >
-              <Eye className="h-3 w-3 mr-1" />
-              Ver
+              Ver más
+              <ArrowRight className="h-3 w-3 ml-1" />
             </Button>
           </div>
         </div>
@@ -202,7 +171,6 @@ const MyImplementations: React.FC = () => {
                   <ImplementationCard 
                     key={`pending-${implementation.id}`} 
                     implementation={implementation} 
-                    isPending={true}
                   />
                 ))
               ) : (
@@ -228,7 +196,6 @@ const MyImplementations: React.FC = () => {
                   <ImplementationCard 
                     key={`resolved-${implementation.id}`} 
                     implementation={implementation} 
-                    isPending={false}
                   />
                 ))
               ) : (
