@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { SidebarTrigger } from '@/components/ui/sidebar';
@@ -52,6 +53,34 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
   console.log('- implementationIndex:', implementationIndex);
   console.log('- Current URL:', window.location.pathname);
   
+  // Restore the missing state declarations
+  const [headerData, setHeaderData] = useState<ProjectHeaderData>({
+    direccion: '',
+    gerencia: '',
+    nombreImplementacion: '',
+    razon1: '',
+    razon2: '',
+    razon3: ''
+  });
+  
+  const [implementacion, setImplementacion] = useState<SectionData>({
+    manoDeObra: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    metodologia: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    medicion: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    maquinaria: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    materiales: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    medioAmbiente: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' }
+  });
+
+  const [operacion, setOperacion] = useState<SectionData>({
+    manoDeObra: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    metodologia: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    medicion: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    maquinaria: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    materiales: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
+    medioAmbiente: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' }
+  });
+
   // Store the EXACT values that appear in the table inputs (without conversions)
   const [tiempoImplementacionTable, setTiempoImplementacionTable] = useState(0);
   const [tiempoOperacionTable, setTiempoOperacionTable] = useState(0);
