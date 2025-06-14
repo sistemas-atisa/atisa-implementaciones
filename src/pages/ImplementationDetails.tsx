@@ -52,33 +52,6 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
   console.log('- implementationIndex:', implementationIndex);
   console.log('- Current URL:', window.location.pathname);
   
-  const [headerData, setHeaderData] = useState<ProjectHeaderData>({
-    direccion: '',
-    gerencia: '',
-    nombreImplementacion: '',
-    razon1: '',
-    razon2: '',
-    razon3: ''
-  });
-  
-  const [implementacion, setImplementacion] = useState<SectionData>({
-    manoDeObra: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-    metodologia: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-    medicion: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-    maquinaria: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-    materiales: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-    medioAmbiente: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' }
-  });
-
-  const [operacion, setOperacion] = useState<SectionData>({
-    manoDeObra: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-    metodologia: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-    medicion: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-    maquinaria: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-    materiales: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' },
-    medioAmbiente: { duracion: 0, duracionJustificacion: '', monto: 0, montoJustificacion: '', calidad: '', descripcion: '' }
-  });
-
   // Store the EXACT values that appear in the table inputs (without conversions)
   const [tiempoImplementacionTable, setTiempoImplementacionTable] = useState(0);
   const [tiempoOperacionTable, setTiempoOperacionTable] = useState(0);
@@ -105,14 +78,11 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
       return;
     }
 
-    // For user view: only allow access to their own implementations
-    // For this demo, we'll assume user implementations are in the 'tecnologia' direction
-    if (!isAdminView && direction !== 'tecnologia') {
-      console.log('❌ User trying to access implementation outside their area, redirecting');
-      navigate('/my-implementations');
-      return;
-    }
-  }, [isAdminView, isAdminAuthenticated, isUserLoggedIn, direction, navigate]);
+    // For user view: allow access to any implementation when accessed from /my-implementations
+    // The key insight is that users should be able to view their assigned implementations
+    // regardless of which direction they're technically under
+    console.log('✅ Access granted for user view');
+  }, [isAdminView, isAdminAuthenticated, isUserLoggedIn, navigate]);
 
   // Load data when direction or implementation index changes
   useEffect(() => {
@@ -180,17 +150,8 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
     setExpandedTable(expandedTable === tableType ? null : tableType);
   };
 
-  // If user view and not logged in, redirect to my-implementations
-  if (!isAdminView && !isUserLoggedIn) {
-    navigate('/my-implementations');
-    return null;
-  }
-
-  // For non-admin view, redirect to My Implementations if not looking at user's own data
-  if (!isAdminView && employeeData.direccion !== 'Tecnología y Sistemas') {
-    navigate('/my-implementations');
-    return null;
-  }
+  // Remove the restrictive access control that was causing the redirect loop
+  // Users should be able to access their implementations regardless of direction
 
   console.log('🎨 Rendering components:');
   console.log('- Header component:', isAdminView ? 'AdminProjectHeader' : 'UserProjectHeader');
