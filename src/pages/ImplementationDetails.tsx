@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { SidebarTrigger } from '@/components/ui/sidebar';
@@ -283,6 +284,11 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
               <UserProjectHeader data={headerData} onUpdate={updateHeaderData} />
             )}
 
+            {/* Show Save button only in user view - right after header */}
+            {!isAdminView && (
+              <SaveButton onSave={handleSave} />
+            )}
+
             {/* Main Tables with Expandable Layout */}
             <div className={`transition-all duration-300 ${
               expandedTable === null 
@@ -359,11 +365,6 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
             />
 
             <CommentsSection />
-
-            {/* Show Save button only in user view */}
-            {!isAdminView && (
-              <SaveButton onSave={handleSave} />
-            )}
 
             <SixMsAnalysis />
           </div>
