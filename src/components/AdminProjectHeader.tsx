@@ -40,7 +40,7 @@ const AdminProjectHeader: React.FC<AdminProjectHeaderProps> = ({ data }) => {
               value={data.nombreImplementacion} 
               disabled
               className="bg-white border border-gray-300 text-black rounded-lg font-medium text-lg cursor-default" 
-              style={{ cursor: 'default' }}
+              style={{ cursor: 'default', color: 'black' }}
             />
           </div>
 
@@ -52,7 +52,7 @@ const AdminProjectHeader: React.FC<AdminProjectHeaderProps> = ({ data }) => {
               value={data.direccion} 
               disabled
               className="bg-white border border-gray-300 text-black rounded-lg cursor-default" 
-              style={{ cursor: 'default' }}
+              style={{ cursor: 'default', color: 'black' }}
             />
           </div>
           
@@ -64,7 +64,7 @@ const AdminProjectHeader: React.FC<AdminProjectHeaderProps> = ({ data }) => {
               value={data.gerencia} 
               disabled
               className="bg-white border border-gray-300 text-black rounded-lg cursor-default" 
-              style={{ cursor: 'default' }}
+              style={{ cursor: 'default', color: 'black' }}
             />
           </div>
         </div>
@@ -81,21 +81,21 @@ const AdminProjectHeader: React.FC<AdminProjectHeaderProps> = ({ data }) => {
                 disabled
                 className="bg-white border border-gray-300 text-black rounded-lg cursor-default" 
                 rows={2}
-                style={{ cursor: 'default' }}
+                style={{ cursor: 'default', color: 'black' }}
               />
               <Textarea 
                 value={data.razon2} 
                 disabled
                 className="bg-white border border-gray-300 text-black rounded-lg cursor-default" 
                 rows={2}
-                style={{ cursor: 'default' }}
+                style={{ cursor: 'default', color: 'black' }}
               />
               <Textarea 
                 value={data.razon3} 
                 disabled
                 className="bg-white border border-gray-300 text-black rounded-lg cursor-default" 
                 rows={2}
-                style={{ cursor: 'default' }}
+                style={{ cursor: 'default', color: 'black' }}
               />
             </div>
 

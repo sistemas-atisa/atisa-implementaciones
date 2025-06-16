@@ -12,6 +12,7 @@ interface ChatModalProps {
   description: string;
   time: number;
   cost: number;
+  currentDirection?: string;
 }
 
 const ChatModal: React.FC<ChatModalProps> = ({
@@ -20,7 +21,8 @@ const ChatModal: React.FC<ChatModalProps> = ({
   categoryName,
   description,
   time,
-  cost
+  cost,
+  currentDirection = ''
 }) => {
   const [comment, setComment] = useState('');
 
@@ -30,13 +32,19 @@ const ChatModal: React.FC<ChatModalProps> = ({
     setComment('');
   };
 
+  // Capitalize the first letter of the direction
+  const formatDirection = (dir: string) => {
+    if (!dir) return 'DIRECCIÓN SISTEMAS Y TECNOLOGÍA';
+    return `DIRECCIÓN ${dir.toUpperCase()}`;
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[80vh] flex flex-col">
         <DialogHeader className="bg-gradient-to-r from-teal-600 to-teal-700 text-white py-3 px-4 rounded-t-lg -m-6 mb-4">
           <div className="flex items-center justify-between">
             <DialogTitle className="text-xl font-bold">
-              DIRECCIÓN SISTEMAS Y TECNOLOGÍA
+              {formatDirection(currentDirection)}
             </DialogTitle>
             <Button
               variant="ghost"

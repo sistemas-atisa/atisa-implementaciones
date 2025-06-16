@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { SidebarTrigger } from '@/components/ui/sidebar';
@@ -276,6 +277,7 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
                     isExpanded={expandedTable === 'implementacion'}
                     onToggleExpand={() => handleExpandTable('implementacion')}
                     customTotalTime={tiempoImplementacionTable}
+                    currentDirection={direction}
                   />
                 ) : (
                   <UserM6Table
@@ -302,6 +304,7 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
                     isExpanded={expandedTable === 'operacion'}
                     onToggleExpand={() => handleExpandTable('operacion')}
                     customTotalTime={tiempoOperacionTable}
+                    currentDirection={direction}
                   />
                 ) : (
                   <UserM6Table

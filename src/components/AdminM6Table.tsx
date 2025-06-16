@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { Expand, MessageCircle, Eye } from 'lucide-react';
 import { SectionData } from '@/types/project';
 import ChatModal from './ChatModal';
-import TimeUnitSelector, { TimeUnit } from './TimeUnitSelector';
 import { getUnitLabel } from '@/utils/timeConversions';
 
 interface AdminM6TableProps {
@@ -18,6 +17,7 @@ interface AdminM6TableProps {
   isExpanded?: boolean;
   onToggleExpand?: () => void;
   customTotalTime?: number;
+  currentDirection?: string;
 }
 
 const AdminM6Table: React.FC<AdminM6TableProps> = ({ 
@@ -27,9 +27,9 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
   totalCost, 
   isExpanded = false,
   onToggleExpand,
-  customTotalTime = 0
+  customTotalTime = 0,
+  currentDirection = ''
 }) => {
-  const [timeUnit, setTimeUnit] = useState<TimeUnit>('dias');
   const [chatModal, setChatModal] = useState<{
     isOpen: boolean;
     category: string;
@@ -66,10 +66,6 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
     setChatModal({ isOpen: false, category: '', categoryLabel: '' });
   };
 
-  const handleTimeUnitChange = (unit: TimeUnit) => {
-    setTimeUnit(unit);
-  };
-
   return (
     <>
       <Card className="p-1 bg-white border-gray-200 shadow-xl">
@@ -92,14 +88,6 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
             </Button>
           )}
         </div>
-
-        {/* Time Unit Selector - Read Only */}
-        <div className="p-3 bg-gray-50 border-b border-gray-200">
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-gray-700">Unidad de tiempo:</span>
-            <TimeUnitSelector value={timeUnit} onChange={handleTimeUnitChange} />
-          </div>
-        </div>
         
         <div className="overflow-x-auto">
           <table className="w-full border-collapse rounded-xl overflow-hidden shadow-lg">
@@ -107,7 +95,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
               <tr className="bg-gradient-to-r from-gray-800 to-gray-900">
                 <th className="border border-gray-200 py-2 px-1 text-left font-bold text-white text-xs" style={{width: '15%'}}>6 M's</th>
                 <th className="border border-gray-200 py-2 px-1 text-left font-bold text-white text-xs" style={{width: '25%'}}>Descripción</th>
-                <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Tiempo ({getUnitLabel(timeUnit)})</th>
+                <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Tiempo (días)</th>
                 <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Costo</th>
                 <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '15%'}}>Calidad</th>
                 <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '5%'}}>Acciones</th>
@@ -128,7 +116,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                       disabled
                       className="text-xs bg-white border border-gray-300 text-black rounded-lg min-h-[75px] resize-none w-full cursor-default"
                       rows={4}
-                      style={{ cursor: 'default' }}
+                      style={{ cursor: 'default', color: 'black' }}
                     />
                   </td>
                   <td className="border border-gray-200 p-0.5 align-top" style={{width: '20%'}}>
@@ -140,7 +128,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                           value={data[category.key].duracion || ''}
                           disabled
                           className="text-xs h-5 bg-white border border-gray-300 text-black rounded-lg font-medium w-full cursor-default"
-                          style={{ cursor: 'default' }}
+                          style={{ cursor: 'default', color: 'black' }}
                         />
                       </div>
                       <div>
@@ -149,7 +137,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                           disabled
                           className="text-xs bg-white border border-gray-300 text-black rounded-lg min-h-[38px] resize-none w-full cursor-default"
                           rows={2}
-                          style={{ cursor: 'default' }}
+                          style={{ cursor: 'default', color: 'black' }}
                         />
                       </div>
                     </div>
@@ -163,7 +151,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                           value={data[category.key].monto || ''}
                           disabled
                           className="text-xs h-5 bg-white border border-gray-300 text-black rounded-lg font-medium w-full cursor-default"
-                          style={{ cursor: 'default' }}
+                          style={{ cursor: 'default', color: 'black' }}
                         />
                       </div>
                       <div>
@@ -172,7 +160,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                           disabled
                           className="text-xs bg-white border border-gray-300 text-black rounded-lg min-h-[38px] resize-none w-full cursor-default"
                           rows={2}
-                          style={{ cursor: 'default' }}
+                          style={{ cursor: 'default', color: 'black' }}
                         />
                       </div>
                     </div>
@@ -183,7 +171,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                       disabled
                       className="text-xs bg-white border border-gray-300 text-black rounded-lg min-h-[75px] resize-none w-full cursor-default"
                       rows={4}
-                      style={{ cursor: 'default' }}
+                      style={{ cursor: 'default', color: 'black' }}
                     />
                   </td>
                   <td className="border border-gray-200 p-0.5 align-top" style={{width: '5%'}}>
@@ -212,7 +200,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                 {title === 'Implementación' ? (
                   <>
                     <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
-                      Tiempo de Implementación ({getUnitLabel(timeUnit)})
+                      Tiempo de Implementación (días)
                     </td>
                     <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
                       Monto Total de Implementación
@@ -221,7 +209,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                 ) : (
                   <>
                     <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
-                      Tiempo Total ({getUnitLabel(timeUnit)})
+                      Tiempo Total (días)
                     </td>
                     <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
                       Monto Total
@@ -236,7 +224,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                     value={customTotalTime}
                     disabled
                     className="text-center bg-white border border-gray-300 text-black text-base font-bold cursor-default"
-                    style={{ cursor: 'default' }}
+                    style={{ cursor: 'default', color: 'black' }}
                   />
                 </td>
                 <td className="border border-gray-200 py-2 px-1 text-center text-red-700 text-base font-bold" colSpan={3}>
@@ -255,6 +243,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
         description={chatModal.category ? data[chatModal.category as keyof SectionData]?.descripcion || '' : ''}
         time={chatModal.category ? data[chatModal.category as keyof SectionData]?.duracion || 0 : 0}
         cost={chatModal.category ? data[chatModal.category as keyof SectionData]?.monto || 0 : 0}
+        currentDirection={currentDirection}
       />
     </>
   );
