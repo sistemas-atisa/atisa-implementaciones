@@ -84,7 +84,11 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
   return (
     <>
       <Card className="p-1 bg-white border-gray-200 shadow-xl">
-        <div className="bg-gradient-to-r from-red-600 to-red-700 text-white py-3 px-3 rounded-xl mb-1 -m-1 mb-1 relative">
+        <div className={`text-white py-3 px-3 rounded-xl mb-1 -m-1 mb-1 relative ${
+          title === 'Implementación' 
+            ? 'bg-[#36404f]' 
+            : 'bg-gradient-to-r from-red-600 to-red-700'
+        }`}>
           <h2 className="text-lg font-bold text-center pr-12">
             {title}
           </h2>
@@ -111,7 +115,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                 <th className="border border-gray-200 py-2 px-1 text-left font-bold text-white text-xs" style={{width: '15%'}}>6 M's</th>
                 <th className="border border-gray-200 py-2 px-1 text-left font-bold text-white text-xs" style={{width: '25%'}}>Descripción</th>
                 <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Tiempo</th>
-                <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Costo</th>
+                <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Costo (USD)</th>
                 <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '15%'}}>Calidad</th>
                 <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '5%'}}>Acciones</th>
               </tr>
@@ -256,7 +260,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                   />
                 </td>
                 <td className="border border-gray-200 py-2 px-1 text-center text-red-700 text-base font-bold" colSpan={3}>
-                  ${totalCost.toLocaleString()}
+                  ${totalCost.toLocaleString()} USD
                 </td>
               </tr>
             </tbody>

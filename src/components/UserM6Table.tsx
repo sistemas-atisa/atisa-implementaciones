@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -238,7 +239,11 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
   return (
     <>
       <Card className="p-1 bg-white border-gray-200 shadow-xl">
-        <div className="bg-gradient-to-r from-gray-700 to-gray-800 text-white py-3 px-3 rounded-xl mb-1 -m-1 mb-1 relative">
+        <div className={`text-white py-3 px-3 rounded-xl mb-1 -m-1 mb-1 relative ${
+          title === 'Implementación' 
+            ? 'bg-[#36404f]' 
+            : 'bg-gradient-to-r from-gray-700 to-gray-800'
+        }`}>
           <h2 className="text-lg font-bold text-center pr-12">
             {title}
           </h2>
@@ -265,7 +270,7 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                 <th className="border border-gray-200 py-2 px-1 text-left font-bold text-white text-xs" style={{width: '15%'}}>6 M's</th>
                 <th className="border border-gray-200 py-2 px-1 text-left font-bold text-white text-xs" style={{width: '25%'}}>Descripción</th>
                 <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Tiempo</th>
-                <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Costo</th>
+                <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Costo (USD)</th>
                 <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '15%'}}>Calidad</th>
                 <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '5%'}}>Acciones</th>
               </tr>
@@ -543,7 +548,7 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                   />
                 </td>
                 <td className="border border-gray-200 py-2 px-1 text-center">
-                  <span className="text-gray-700 text-sm font-medium">MXN</span>
+                  <span className="text-gray-700 text-sm font-medium">USD</span>
                 </td>
               </tr>
             </tbody>
