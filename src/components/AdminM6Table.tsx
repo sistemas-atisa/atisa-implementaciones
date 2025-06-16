@@ -95,7 +95,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
               <tr className="bg-gradient-to-r from-gray-800 to-gray-900">
                 <th className="border border-gray-200 py-2 px-1 text-left font-bold text-white text-xs" style={{width: '15%'}}>6 M's</th>
                 <th className="border border-gray-200 py-2 px-1 text-left font-bold text-white text-xs" style={{width: '25%'}}>Descripción</th>
-                <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Tiempo (días)</th>
+                <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Tiempo</th>
                 <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Costo</th>
                 <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '15%'}}>Calidad</th>
                 <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '5%'}}>Acciones</th>
@@ -200,7 +200,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                 {title === 'Implementación' ? (
                   <>
                     <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
-                      Tiempo de Implementación (días)
+                      Tiempo de Implementación
                     </td>
                     <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
                       Monto Total de Implementación
@@ -209,7 +209,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                 ) : (
                   <>
                     <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
-                      Tiempo Total (días)
+                      Tiempo Total
                     </td>
                     <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
                       Monto Total
