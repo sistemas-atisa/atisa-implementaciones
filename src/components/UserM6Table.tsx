@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Expand, Plus, Minus, MessageCircle, Upload } from 'lucide-react';
 import { SectionData, M6Data } from '@/types/project';
 import ChatModal from './ChatModal';
@@ -18,6 +19,8 @@ interface UserM6TableProps {
   onToggleExpand?: () => void;
   customTotalTime?: number;
   onCustomTotalTimeChange?: (value: number) => void;
+  customTotalCost?: number;
+  onCustomTotalCostChange?: (value: number) => void;
 }
 
 interface AdditionalRowData {
@@ -27,6 +30,7 @@ interface AdditionalRowData {
   monto: number;
   montoJustificacion: string;
   calidad: string;
+  periodicidad?: string;
 }
 
 const UserM6Table: React.FC<UserM6TableProps> = ({ 
@@ -38,7 +42,9 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
   isExpanded = false,
   onToggleExpand,
   customTotalTime = 0,
-  onCustomTotalTimeChange
+  onCustomTotalTimeChange,
+  customTotalCost,
+  onCustomTotalCostChange
 }) => {
   const [categoryRows, setCategoryRows] = useState<{ [key: string]: number }>({
     manoDeObra: 1,
@@ -51,6 +57,9 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
 
   // Store additional row data
   const [additionalRowsData, setAdditionalRowsData] = useState<{ [categoryKey: string]: { [rowIndex: number]: AdditionalRowData } }>({});
+
+  // Store periodicidad for each category row
+  const [periodicidades, setPeriodicidades] = useState<{ [categoryKey: string]: { [rowIndex: number]: string } }>({});
 
   const [chatModal, setChatModal] = useState<{
     isOpen: boolean;
@@ -71,6 +80,13 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
     { key: 'medioAmbiente' as keyof SectionData, label: 'Medio Ambiente' }
   ];
 
+  const periodicidadOptions = [
+    { value: 'mensual', label: 'Mensual' },
+    { value: 'bimestral', label: 'Bimestral' },
+    { value: 'trimestral', label: 'Trimestral' },
+    { value: 'anual', label: 'Anual' }
+  ];
+
   const addRow = (categoryKey: string) => {
     setCategoryRows(prev => ({
       ...prev,
@@ -83,6 +99,14 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
       const newCount = Math.max(prev[categoryKey] - 1, 1);
       // Remove data for the deleted row
       setAdditionalRowsData(prevData => {
+        const newData = { ...prevData };
+        if (newData[categoryKey]) {
+          delete newData[categoryKey][newCount];
+        }
+        return newData;
+      });
+      // Remove periodicidad for the deleted row
+      setPeriodicidades(prevData => {
         const newData = { ...prevData };
         if (newData[categoryKey]) {
           delete newData[categoryKey][newCount];
@@ -119,6 +143,20 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
     return additionalRowsData[categoryKey]?.[rowIndex]?.[field] || (field === 'duracion' || field === 'monto' ? 0 : '');
   };
 
+  const updatePeriodicidad = (categoryKey: string, rowIndex: number, value: string) => {
+    setPeriodicidades(prev => ({
+      ...prev,
+      [categoryKey]: {
+        ...prev[categoryKey],
+        [rowIndex]: value
+      }
+    }));
+  };
+
+  const getPeriodicidad = (categoryKey: string, rowIndex: number) => {
+    return periodicidades[categoryKey]?.[rowIndex] || '';
+  };
+
   const handleChatClick = (categoryKey: string, categoryLabel: string) => {
     setChatModal({
       isOpen: true,
@@ -145,6 +183,13 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
   const closeChatModal = () => {
     setChatModal({ isOpen: false, category: '', categoryLabel: '' });
   };
+
+  // Determine if we should show the periodicidad dropdown (only for Operación table)
+  const isOperacionTable = title === 'Operación';
+
+  // For Operación table, use custom total cost or allow manual input
+  // For other tables, use calculated total cost
+  const displayTotalCost = isOperacionTable && customTotalCost !== undefined ? customTotalCost : totalCost;
 
   return (
     <>
@@ -175,7 +220,7 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
               <tr className="bg-gradient-to-r from-gray-800 to-gray-900">
                 <th className="border border-gray-200 py-2 px-1 text-left font-bold text-white text-xs" style={{width: '15%'}}>6 M's</th>
                 <th className="border border-gray-200 py-2 px-1 text-left font-bold text-white text-xs" style={{width: '25%'}}>Descripción</th>
-                <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Tiempo (Días)</th>
+                <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Tiempo</th>
                 <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '20%'}}>Costo</th>
                 <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '15%'}}>Calidad</th>
                 <th className="border border-gray-200 py-2 px-1 text-center font-bold text-white text-xs" style={{width: '5%'}}>Acciones</th>
@@ -271,6 +316,27 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                       </td>
                       <td className="border border-gray-200 p-0.5 align-top" style={{width: '20%'}}>
                         <div className="space-y-0.5">
+                          {/* Show periodicidad dropdown only for Operación table */}
+                          {isOperacionTable && (
+                            <div>
+                              <div className="text-xs text-gray-700 mb-0.5 font-semibold">Periodicidad:</div>
+                              <Select
+                                value={getPeriodicidad(category.key, rowIndex)}
+                                onValueChange={(value) => updatePeriodicidad(category.key, rowIndex, value)}
+                              >
+                                <SelectTrigger className="text-xs h-5 border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg w-full">
+                                  <SelectValue placeholder="Seleccionar" />
+                                </SelectTrigger>
+                                <SelectContent className="z-50 bg-white border border-gray-200 rounded-lg shadow-lg">
+                                  {periodicidadOptions.map((option) => (
+                                    <SelectItem key={option.value} value={option.value} className="text-xs">
+                                      {option.label}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            </div>
+                          )}
                           <div>
                             <div className="text-xs text-gray-700 mb-0.5 font-semibold">Monto: $</div>
                             <Input
@@ -349,7 +415,7 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                 {title === 'Implementación' ? (
                   <>
                     <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
-                      Tiempo de Implementación (Días)
+                      Tiempo de Implementación
                     </td>
                     <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
                       Monto Total de Implementación
@@ -358,7 +424,7 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                 ) : (
                   <>
                     <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
-                      Tiempo Total (Días)
+                      Tiempo Total
                     </td>
                     <td className="border border-gray-200 py-2 px-1 text-center text-gray-900 text-xs font-bold" colSpan={3}>
                       Monto Total
@@ -377,8 +443,21 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                     placeholder="0"
                   />
                 </td>
-                <td className="border border-gray-200 py-2 px-1 text-center text-gray-700 text-base font-bold" colSpan={3}>
-                  ${totalCost.toLocaleString()}
+                <td className="border border-gray-200 py-2 px-1 text-center" colSpan={3}>
+                  {isOperacionTable ? (
+                    <Input
+                      type="number"
+                      value={customTotalCost || ''}
+                      onChange={(e) => onCustomTotalCostChange && onCustomTotalCostChange(Number(e.target.value))}
+                      className="text-center text-gray-700 text-base font-bold border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 bg-transparent"
+                      min="0"
+                      placeholder="0"
+                    />
+                  ) : (
+                    <span className="text-gray-700 text-base font-bold">
+                      ${displayTotalCost.toLocaleString()}
+                    </span>
+                  )}
                 </td>
               </tr>
             </tbody>

@@ -88,6 +88,9 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
   const [montoTotalImplementacion, setMontoTotalImplementacion] = useState(0);
   const [montoTotalOperacion, setMontoTotalOperacion] = useState(0);
   
+  // Add custom total cost for operacion table (manual input)
+  const [customMontoTotalOperacion, setCustomMontoTotalOperacion] = useState<number>(0);
+  
   // Add state for tracking time units for each table
   const [implementacionTimeUnit, setImplementacionTimeUnit] = useState<string>('días');
   const [operacionTimeUnit, setOperacionTimeUnit] = useState<string>('días');
@@ -129,14 +132,17 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
     }
   }, [direction, implementationIndex]);
 
-  // Calculate totals automatically
+  // Calculate totals automatically for implementacion only
   useEffect(() => {
     const calcMontoImpl = Object.values(implementacion).reduce((sum, item) => sum + (item.monto || 0), 0);
-    const calcMontoOp = Object.values(operacion).reduce((sum, item) => sum + (item.monto || 0), 0);
-    
     setMontoTotalImplementacion(calcMontoImpl);
+  }, [implementacion]);
+
+  // For operacion, we no longer auto-calculate but use the custom value
+  useEffect(() => {
+    const calcMontoOp = Object.values(operacion).reduce((sum, item) => sum + (item.monto || 0), 0);
     setMontoTotalOperacion(calcMontoOp);
-  }, [implementacion, operacion]);
+  }, [operacion]);
 
   const updateHeaderData = (field: keyof ProjectHeaderData, value: string) => {
     // Only allow updates in user view
@@ -300,7 +306,7 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
                     title="Operación"
                     data={operacion}
                     totalTime={tiempoOperacionTable}
-                    totalCost={montoTotalOperacion}
+                    totalCost={customMontoTotalOperacion || montoTotalOperacion}
                     isExpanded={expandedTable === 'operacion'}
                     onToggleExpand={() => handleExpandTable('operacion')}
                     customTotalTime={tiempoOperacionTable}
@@ -317,6 +323,8 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
                     onToggleExpand={() => handleExpandTable('operacion')}
                     customTotalTime={tiempoOperacionTable}
                     onCustomTotalTimeChange={setTiempoOperacionTable}
+                    customTotalCost={customMontoTotalOperacion}
+                    onCustomTotalCostChange={setCustomMontoTotalOperacion}
                   />
                 )
               )}
@@ -326,7 +334,7 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
               tiempoImplementacion={tiempoImplementacionTable}
               tiempoOperacion={tiempoOperacionTable}
               montoTotalImplementacion={montoTotalImplementacion}
-              montoTotalOperacion={montoTotalOperacion}
+              montoTotalOperacion={customMontoTotalOperacion || montoTotalOperacion}
               tiempoImplementacionUnit={implementacionTimeUnit}
               tiempoOperacionUnit={operacionTimeUnit}
             />
