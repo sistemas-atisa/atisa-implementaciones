@@ -88,15 +88,17 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
   const [montoTotalImplementacion, setMontoTotalImplementacion] = useState(0);
   const [montoTotalOperacion, setMontoTotalOperacion] = useState(0);
   
-  // Add custom total cost for operacion table (manual input)
+  // Add custom total cost for both tables (manual input)
+  const [customMontoTotalImplementacion, setCustomMontoTotalImplementacion] = useState<number>(0);
   const [customMontoTotalOperacion, setCustomMontoTotalOperacion] = useState<number>(0);
   
   // Add state for tracking time units for each table
   const [implementacionTimeUnit, setImplementacionTimeUnit] = useState<string>('días');
   const [operacionTimeUnit, setOperacionTimeUnit] = useState<string>('días');
   
-  // Store periodicidad for each category row
-  const [periodicidades, setPeriodicidades] = useState<{ [categoryKey: string]: { [rowIndex: number]: string } }>({});
+  // Store periodicidad for each category row (now for both tables)
+  const [periodicidadesImplementacion, setPeriodicidadesImplementacion] = useState<{ [categoryKey: string]: { [rowIndex: number]: string } }>({});
+  const [periodicidadesOperacion, setPeriodicidadesOperacion] = useState<{ [categoryKey: string]: { [rowIndex: number]: string } }>({});
 
   // Access control: Check if user can access this implementation
   useEffect(() => {
@@ -194,9 +196,18 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
     console.log('Header data:', headerData);
     console.log('Implementación data:', implementacion);
     console.log('Operación data:', operacion);
-    console.log('Periodicidades:', periodicidades);
-    console.log('Tiempos totales:', { tiempoImplementacionTable, tiempoOperacionTable });
-    console.log('Costos totales:', { montoTotalImplementacion, customMontoTotalOperacion });
+    console.log('Periodicidades Implementación:', periodicidadesImplementacion);
+    console.log('Periodicidades Operación:', periodicidadesOperacion);
+    console.log('Tiempos totales:', { 
+      tiempoImplementacionTable, 
+      tiempoOperacionTable,
+      implementacionTimeUnit,
+      operacionTimeUnit 
+    });
+    console.log('Costos totales:', { 
+      customMontoTotalImplementacion, 
+      customMontoTotalOperacion 
+    });
     
     // Aquí se implementaría la lógica real de guardado
     // Por ahora solo mostramos un mensaje de confirmación
@@ -284,11 +295,6 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
               <UserProjectHeader data={headerData} onUpdate={updateHeaderData} />
             )}
 
-            {/* Show Save button only in user view - right after header */}
-            {!isAdminView && (
-              <SaveButton onSave={handleSave} />
-            )}
-
             {/* Main Tables with Expandable Layout */}
             <div className={`transition-all duration-300 ${
               expandedTable === null 
@@ -301,11 +307,12 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
                     title="Implementación"
                     data={implementacion}
                     totalTime={tiempoImplementacionTable}
-                    totalCost={montoTotalImplementacion}
+                    totalCost={customMontoTotalImplementacion || montoTotalImplementacion}
                     isExpanded={expandedTable === 'implementacion'}
                     onToggleExpand={() => handleExpandTable('implementacion')}
                     customTotalTime={tiempoImplementacionTable}
                     currentDirection={direction}
+                    periodicidades={periodicidadesImplementacion}
                   />
                 ) : (
                   <UserM6Table
@@ -318,6 +325,12 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
                     onToggleExpand={() => handleExpandTable('implementacion')}
                     customTotalTime={tiempoImplementacionTable}
                     onCustomTotalTimeChange={setTiempoImplementacionTable}
+                    customTotalCost={customMontoTotalImplementacion}
+                    onCustomTotalCostChange={setCustomMontoTotalImplementacion}
+                    periodicidades={periodicidadesImplementacion}
+                    onPeriodicidadChange={setPeriodicidadesImplementacion}
+                    timeUnit={implementacionTimeUnit}
+                    onTimeUnitChange={setImplementacionTimeUnit}
                   />
                 )
               )}
@@ -333,7 +346,7 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
                     onToggleExpand={() => handleExpandTable('operacion')}
                     customTotalTime={tiempoOperacionTable}
                     currentDirection={direction}
-                    periodicidades={periodicidades}
+                    periodicidades={periodicidadesOperacion}
                   />
                 ) : (
                   <UserM6Table
@@ -348,8 +361,10 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
                     onCustomTotalTimeChange={setTiempoOperacionTable}
                     customTotalCost={customMontoTotalOperacion}
                     onCustomTotalCostChange={setCustomMontoTotalOperacion}
-                    periodicidades={periodicidades}
-                    onPeriodicidadChange={setPeriodicidades}
+                    periodicidades={periodicidadesOperacion}
+                    onPeriodicidadChange={setPeriodicidadesOperacion}
+                    timeUnit={operacionTimeUnit}
+                    onTimeUnitChange={setOperacionTimeUnit}
                   />
                 )
               )}
@@ -358,13 +373,25 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
             <CostSummary
               tiempoImplementacion={tiempoImplementacionTable}
               tiempoOperacion={tiempoOperacionTable}
-              montoTotalImplementacion={montoTotalImplementacion}
+              montoTotalImplementacion={customMontoTotalImplementacion || montoTotalImplementacion}
               montoTotalOperacion={customMontoTotalOperacion || montoTotalOperacion}
               tiempoImplementacionUnit={implementacionTimeUnit}
               tiempoOperacionUnit={operacionTimeUnit}
             />
 
             <CommentsSection />
+
+            {/* Show Save button only in user view - after comments section */}
+            {!isAdminView && (
+              <div className="mt-6 flex justify-center">
+                <Button 
+                  onClick={handleSave}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg font-semibold rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl"
+                >
+                  Guardar Cambios
+                </Button>
+              </div>
+            )}
 
             <SixMsAnalysis />
           </div>
