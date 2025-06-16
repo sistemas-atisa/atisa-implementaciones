@@ -18,6 +18,7 @@ interface AdminM6TableProps {
   onToggleExpand?: () => void;
   customTotalTime?: number;
   currentDirection?: string;
+  periodicidades?: { [categoryKey: string]: { [rowIndex: number]: string } };
 }
 
 const AdminM6Table: React.FC<AdminM6TableProps> = ({ 
@@ -28,7 +29,8 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
   isExpanded = false,
   onToggleExpand,
   customTotalTime = 0,
-  currentDirection = ''
+  currentDirection = '',
+  periodicidades = {}
 }) => {
   const [chatModal, setChatModal] = useState<{
     isOpen: boolean;
@@ -64,6 +66,19 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
 
   const closeChatModal = () => {
     setChatModal({ isOpen: false, category: '', categoryLabel: '' });
+  };
+
+  // Determine if we should show the periodicidad (only for Operación table)
+  const isOperacionTable = title === 'Operación';
+
+  const getPeriodicidadLabel = (value: string) => {
+    const periodicidadOptions = {
+      'mensual': 'Mensual',
+      'bimestral': 'Bimestral',
+      'trimestral': 'Trimestral',
+      'anual': 'Anual'
+    };
+    return periodicidadOptions[value as keyof typeof periodicidadOptions] || value;
   };
 
   return (
@@ -144,6 +159,19 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                   </td>
                   <td className="border border-gray-200 p-0.5 align-top" style={{width: '20%'}}>
                     <div className="space-y-0.5">
+                      {/* Show periodicidad for Operación table */}
+                      {isOperacionTable && (
+                        <div>
+                          <div className="text-xs text-gray-700 mb-0.5 font-semibold">Periodicidad:</div>
+                          <Input
+                            value={getPeriodicidadLabel(periodicidades[category.key]?.[0] || '')}
+                            disabled
+                            className="text-xs h-5 bg-white border border-gray-300 text-black rounded-lg font-medium w-full cursor-default"
+                            style={{ cursor: 'default', color: 'black' }}
+                            placeholder="No especificada"
+                          />
+                        </div>
+                      )}
                       <div>
                         <div className="text-xs text-gray-700 mb-0.5 font-semibold">Monto: $</div>
                         <Input

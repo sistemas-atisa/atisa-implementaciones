@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { SidebarTrigger } from '@/components/ui/sidebar';
@@ -94,6 +92,9 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
   // Add state for tracking time units for each table
   const [implementacionTimeUnit, setImplementacionTimeUnit] = useState<string>('días');
   const [operacionTimeUnit, setOperacionTimeUnit] = useState<string>('días');
+  
+  // Store periodicidad for each category row
+  const [periodicidades, setPeriodicidades] = useState<{ [categoryKey: string]: { [rowIndex: number]: string } }>({});
 
   // Access control: Check if user can access this implementation
   useEffect(() => {
@@ -184,6 +185,20 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
 
   const handleExpandTable = (tableType: 'implementacion' | 'operacion') => {
     setExpandedTable(expandedTable === tableType ? null : tableType);
+  };
+
+  const handleSave = () => {
+    console.log('💾 Guardando cambios...');
+    console.log('Header data:', headerData);
+    console.log('Implementación data:', implementacion);
+    console.log('Operación data:', operacion);
+    console.log('Periodicidades:', periodicidades);
+    console.log('Tiempos totales:', { tiempoImplementacionTable, tiempoOperacionTable });
+    console.log('Costos totales:', { montoTotalImplementacion, customMontoTotalOperacion });
+    
+    // Aquí se implementaría la lógica real de guardado
+    // Por ahora solo mostramos un mensaje de confirmación
+    alert('Cambios guardados exitosamente');
   };
 
   // Remove the restrictive access control that was causing the redirect loop
@@ -311,6 +326,7 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
                     onToggleExpand={() => handleExpandTable('operacion')}
                     customTotalTime={tiempoOperacionTable}
                     currentDirection={direction}
+                    periodicidades={periodicidades}
                   />
                 ) : (
                   <UserM6Table
@@ -325,6 +341,8 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
                     onCustomTotalTimeChange={setTiempoOperacionTable}
                     customTotalCost={customMontoTotalOperacion}
                     onCustomTotalCostChange={setCustomMontoTotalOperacion}
+                    periodicidades={periodicidades}
+                    onPeriodicidadChange={setPeriodicidades}
                   />
                 )
               )}
@@ -340,6 +358,11 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
             />
 
             <CommentsSection />
+
+            {/* Show Save button only in user view */}
+            {!isAdminView && (
+              <SaveButton onSave={handleSave} />
+            )}
 
             <SixMsAnalysis />
           </div>

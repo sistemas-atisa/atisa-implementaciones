@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -21,6 +20,8 @@ interface UserM6TableProps {
   onCustomTotalTimeChange?: (value: number) => void;
   customTotalCost?: number;
   onCustomTotalCostChange?: (value: number) => void;
+  periodicidades?: { [categoryKey: string]: { [rowIndex: number]: string } };
+  onPeriodicidadChange?: (periodicidades: { [categoryKey: string]: { [rowIndex: number]: string } }) => void;
 }
 
 interface AdditionalRowData {
@@ -44,7 +45,9 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
   customTotalTime = 0,
   onCustomTotalTimeChange,
   customTotalCost,
-  onCustomTotalCostChange
+  onCustomTotalCostChange,
+  periodicidades = {},
+  onPeriodicidadChange
 }) => {
   const [categoryRows, setCategoryRows] = useState<{ [key: string]: number }>({
     manoDeObra: 1,
@@ -59,7 +62,7 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
   const [additionalRowsData, setAdditionalRowsData] = useState<{ [categoryKey: string]: { [rowIndex: number]: AdditionalRowData } }>({});
 
   // Store periodicidad for each category row
-  const [periodicidades, setPeriodicidades] = useState<{ [categoryKey: string]: { [rowIndex: number]: string } }>({});
+  const [periodicidadesState, setPeriodicidadesState] = useState<{ [categoryKey: string]: { [rowIndex: number]: string } }>({});
 
   const [chatModal, setChatModal] = useState<{
     isOpen: boolean;
@@ -106,7 +109,7 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
         return newData;
       });
       // Remove periodicidad for the deleted row
-      setPeriodicidades(prevData => {
+      setPeriodicidadesState(prevData => {
         const newData = { ...prevData };
         if (newData[categoryKey]) {
           delete newData[categoryKey][newCount];
@@ -143,14 +146,19 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
     return additionalRowsData[categoryKey]?.[rowIndex]?.[field] || (field === 'duracion' || field === 'monto' ? 0 : '');
   };
 
+  // Use the periodicidades from props and update parent when changed
   const updatePeriodicidad = (categoryKey: string, rowIndex: number, value: string) => {
-    setPeriodicidades(prev => ({
-      ...prev,
+    const newPeriodicidades = {
+      ...periodicidades,
       [categoryKey]: {
-        ...prev[categoryKey],
+        ...periodicidades[categoryKey],
         [rowIndex]: value
       }
-    }));
+    };
+    
+    if (onPeriodicidadChange) {
+      onPeriodicidadChange(newPeriodicidades);
+    }
   };
 
   const getPeriodicidad = (categoryKey: string, rowIndex: number) => {
