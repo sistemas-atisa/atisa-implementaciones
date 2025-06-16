@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -49,7 +48,7 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
   onToggleExpand,
   customTotalTime = 0,
   onCustomTotalTimeChange,
-  customTotalCost,
+  customTotalCost = 0,
   onCustomTotalCostChange,
   periodicidades = {},
   onPeriodicidadChange,
@@ -241,7 +240,7 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
       <Card className="p-1 bg-white border-gray-200 shadow-xl">
         <div className={`text-white py-3 px-3 rounded-xl mb-1 -m-1 mb-1 relative ${
           title === 'Implementación' 
-            ? 'bg-[#36404f]' 
+            ? 'bg-[#364050]' 
             : 'bg-gradient-to-r from-gray-700 to-gray-800'
         }`}>
           <h2 className="text-lg font-bold text-center pr-12">

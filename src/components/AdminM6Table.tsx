@@ -86,7 +86,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
       <Card className="p-1 bg-white border-gray-200 shadow-xl">
         <div className={`text-white py-3 px-3 rounded-xl mb-1 -m-1 mb-1 relative ${
           title === 'Implementación' 
-            ? 'bg-[#36404f]' 
+            ? 'bg-[#d92525]' 
             : 'bg-gradient-to-r from-red-600 to-red-700'
         }`}>
           <h2 className="text-lg font-bold text-center pr-12">
