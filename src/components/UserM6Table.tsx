@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -25,6 +24,8 @@ interface UserM6TableProps {
   onPeriodicidadChange?: (periodicidades: { [categoryKey: string]: { [rowIndex: number]: string } }) => void;
   timeUnit?: string;
   onTimeUnitChange?: (unit: string) => void;
+  duracionTimeUnits?: { [categoryKey: string]: { [rowIndex: number]: string } };
+  onDuracionTimeUnitChange?: (units: { [categoryKey: string]: { [rowIndex: number]: string } }) => void;
 }
 
 interface AdditionalRowData {
@@ -52,7 +53,9 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
   periodicidades = {},
   onPeriodicidadChange,
   timeUnit = 'días',
-  onTimeUnitChange
+  onTimeUnitChange,
+  duracionTimeUnits = {},
+  onDuracionTimeUnitChange
 }) => {
   const [categoryRows, setCategoryRows] = useState<{ [key: string]: number }>({
     manoDeObra: 1,
@@ -148,6 +151,25 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
 
   const getAdditionalRowData = (categoryKey: string, rowIndex: number, field: keyof AdditionalRowData) => {
     return additionalRowsData[categoryKey]?.[rowIndex]?.[field] || (field === 'duracion' || field === 'monto' ? 0 : '');
+  };
+
+  // Functions for handling duration time units
+  const updateDuracionTimeUnit = (categoryKey: string, rowIndex: number, value: string) => {
+    const newUnits = {
+      ...duracionTimeUnits,
+      [categoryKey]: {
+        ...duracionTimeUnits[categoryKey],
+        [rowIndex]: value
+      }
+    };
+    
+    if (onDuracionTimeUnitChange) {
+      onDuracionTimeUnitChange(newUnits);
+    }
+  };
+
+  const getDuracionTimeUnit = (categoryKey: string, rowIndex: number) => {
+    return duracionTimeUnits[categoryKey]?.[rowIndex] || 'días';
   };
 
   // Use the periodicidades from props and update parent when changed
@@ -303,21 +325,38 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                         <div className="space-y-0.5">
                           <div>
                             <div className="text-xs text-gray-700 mb-0.5 font-semibold">Duración:</div>
-                            <Input
-                              type="number"
-                              value={rowIndex === 0 ? (data[category.key].duracion || '') : (getAdditionalRowData(category.key, rowIndex, 'duracion') || '')}
-                              onChange={(e) => {
-                                if (rowIndex === 0) {
-                                  onUpdate(category.key, 'duracion', Number(e.target.value));
-                                } else {
-                                  updateAdditionalRowData(category.key, rowIndex, 'duracion', Number(e.target.value));
-                                }
-                              }}
-                              className="text-xs h-5 border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg font-medium w-full transition-all duration-200"
-                              min="0"
-                              max="99999"
-                              placeholder="0"
-                            />
+                            <div className="flex gap-1">
+                              <Input
+                                type="number"
+                                value={rowIndex === 0 ? (data[category.key].duracion || '') : (getAdditionalRowData(category.key, rowIndex, 'duracion') || '')}
+                                onChange={(e) => {
+                                  if (rowIndex === 0) {
+                                    onUpdate(category.key, 'duracion', Number(e.target.value));
+                                  } else {
+                                    updateAdditionalRowData(category.key, rowIndex, 'duracion', Number(e.target.value));
+                                  }
+                                }}
+                                className="text-xs h-5 border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg font-medium flex-1 transition-all duration-200"
+                                min="0"
+                                max="99999"
+                                placeholder="0"
+                              />
+                              <Select
+                                value={getDuracionTimeUnit(category.key, rowIndex)}
+                                onValueChange={(value) => updateDuracionTimeUnit(category.key, rowIndex, value)}
+                              >
+                                <SelectTrigger className="text-xs h-5 border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg w-16">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent className="z-50 bg-white border border-gray-200 rounded-lg shadow-lg">
+                                  {timeUnitOptions.map((option) => (
+                                    <SelectItem key={option.value} value={option.value} className="text-xs">
+                                      {option.label}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            </div>
                           </div>
                           <div>
                             <Textarea
@@ -338,7 +377,6 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                       </td>
                       <td className="border border-gray-200 p-0.5 align-top" style={{width: '20%'}}>
                         <div className="space-y-0.5">
-                          {/* Show periodicidad dropdown for both tables now */}
                           <div>
                             <div className="text-xs text-gray-700 mb-0.5 font-semibold">Periodicidad:</div>
                             <Select

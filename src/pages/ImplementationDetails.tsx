@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { SidebarTrigger } from '@/components/ui/sidebar';
@@ -100,6 +99,10 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
   const [periodicidadesImplementacion, setPeriodicidadesImplementacion] = useState<{ [categoryKey: string]: { [rowIndex: number]: string } }>({});
   const [periodicidadesOperacion, setPeriodicidadesOperacion] = useState<{ [categoryKey: string]: { [rowIndex: number]: string } }>({});
 
+  // Add state for duration time units for each category and row
+  const [duracionTimeUnitsImplementacion, setDuracionTimeUnitsImplementacion] = useState<{ [categoryKey: string]: { [rowIndex: number]: string } }>({});
+  const [duracionTimeUnitsOperacion, setDuracionTimeUnitsOperacion] = useState<{ [categoryKey: string]: { [rowIndex: number]: string } }>({});
+
   // Access control: Check if user can access this implementation
   useEffect(() => {
     // If in admin view but not authenticated, redirect
@@ -198,6 +201,8 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
     console.log('Operación data:', operacion);
     console.log('Periodicidades Implementación:', periodicidadesImplementacion);
     console.log('Periodicidades Operación:', periodicidadesOperacion);
+    console.log('Duration Time Units Implementación:', duracionTimeUnitsImplementacion);
+    console.log('Duration Time Units Operación:', duracionTimeUnitsOperacion);
     console.log('Tiempos totales:', { 
       tiempoImplementacionTable, 
       tiempoOperacionTable,
@@ -331,6 +336,8 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
                     onPeriodicidadChange={setPeriodicidadesImplementacion}
                     timeUnit={implementacionTimeUnit}
                     onTimeUnitChange={setImplementacionTimeUnit}
+                    duracionTimeUnits={duracionTimeUnitsImplementacion}
+                    onDuracionTimeUnitChange={setDuracionTimeUnitsImplementacion}
                   />
                 )
               )}
@@ -365,6 +372,8 @@ const ImplementationDetails: React.FC<ImplementationDetailsProps> = ({
                     onPeriodicidadChange={setPeriodicidadesOperacion}
                     timeUnit={operacionTimeUnit}
                     onTimeUnitChange={setOperacionTimeUnit}
+                    duracionTimeUnits={duracionTimeUnitsOperacion}
+                    onDuracionTimeUnitChange={setDuracionTimeUnitsOperacion}
                   />
                 )
               )}
