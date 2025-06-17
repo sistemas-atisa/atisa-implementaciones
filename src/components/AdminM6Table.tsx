@@ -146,7 +146,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                           type="number"
                           value={data[category.key].duracion || ''}
                           disabled
-                          className="text-xs h-5 bg-white border border-gray-300 text-black rounded-lg font-medium w-full cursor-default"
+                          className="text-xs h-8 bg-white border border-gray-300 text-black rounded-lg font-medium w-full cursor-default"
                           style={{ cursor: 'default', color: 'black' }}
                         />
                       </div>
@@ -154,8 +154,8 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                         <Textarea
                           value={data[category.key].duracionJustificacion}
                           disabled
-                          className="text-xs bg-white border border-gray-300 text-black rounded-lg min-h-[38px] resize-none w-full cursor-default"
-                          rows={2}
+                          className="text-xs bg-white border border-gray-300 text-black rounded-lg min-h-[60px] resize-none w-full cursor-default"
+                          rows={3}
                           style={{ cursor: 'default', color: 'black' }}
                         />
                       </div>
@@ -170,7 +170,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                           <Input
                             value={getPeriodicidadLabel(periodicidades[category.key]?.[0] || '')}
                             disabled
-                            className="text-xs h-5 bg-white border border-gray-300 text-black rounded-lg font-medium w-full cursor-default"
+                            className="text-xs h-8 bg-white border border-gray-300 text-black rounded-lg font-medium w-full cursor-default"
                             style={{ cursor: 'default', color: 'black' }}
                             placeholder="No especificada"
                           />
@@ -182,7 +182,7 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                           type="number"
                           value={data[category.key].monto || ''}
                           disabled
-                          className="text-xs h-5 bg-white border border-gray-300 text-black rounded-lg font-medium w-full cursor-default"
+                          className="text-xs h-8 bg-white border border-gray-300 text-black rounded-lg font-medium w-full cursor-default"
                           style={{ cursor: 'default', color: 'black' }}
                         />
                       </div>
@@ -190,8 +190,8 @@ const AdminM6Table: React.FC<AdminM6TableProps> = ({
                         <Textarea
                           value={data[category.key].montoJustificacion}
                           disabled
-                          className="text-xs bg-white border border-gray-300 text-black rounded-lg min-h-[38px] resize-none w-full cursor-default"
-                          rows={2}
+                          className="text-xs bg-white border border-gray-300 text-black rounded-lg min-h-[60px] resize-none w-full cursor-default"
+                          rows={3}
                           style={{ cursor: 'default', color: 'black' }}
                         />
                       </div>

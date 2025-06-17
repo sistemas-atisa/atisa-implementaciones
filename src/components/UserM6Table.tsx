@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -340,7 +341,7 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                                     updateAdditionalRowData(category.key, rowIndex, 'duracion', Number(e.target.value));
                                   }
                                 }}
-                                className="text-xs h-5 border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg font-medium flex-1 transition-all duration-200"
+                                className="text-xs h-8 border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg font-medium flex-1 transition-all duration-200"
                                 min="0"
                                 max="99999"
                                 placeholder="0"
@@ -349,7 +350,7 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                                 value={getDuracionTimeUnit(category.key, rowIndex)}
                                 onValueChange={(value) => updateDuracionTimeUnit(category.key, rowIndex, value)}
                               >
-                                <SelectTrigger className="text-xs h-5 border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg w-16">
+                                <SelectTrigger className="text-xs h-8 border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg w-16">
                                   <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent className="z-50 bg-white border border-gray-200 rounded-lg shadow-lg">
@@ -372,8 +373,8 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                                   updateAdditionalRowData(category.key, rowIndex, 'duracionJustificacion', e.target.value);
                                 }
                               }}
-                              className="text-xs border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg min-h-[38px] resize-none w-full transition-all duration-200"
-                              rows={2}
+                              className="text-xs border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg min-h-[60px] resize-none w-full transition-all duration-200"
+                              rows={3}
                               placeholder="Justificación..."
                             />
                           </div>
@@ -387,7 +388,7 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                               value={getPeriodicidad(category.key, rowIndex)}
                               onValueChange={(value) => updatePeriodicidad(category.key, rowIndex, value)}
                             >
-                              <SelectTrigger className="text-xs h-5 border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg w-full">
+                              <SelectTrigger className="text-xs h-8 border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg w-full">
                                 <SelectValue placeholder="Seleccionar" />
                               </SelectTrigger>
                               <SelectContent className="z-50 bg-white border border-gray-200 rounded-lg shadow-lg">
@@ -407,7 +408,7 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                                 type="text"
                                 value={getCustomPeriodicidad(category.key, rowIndex)}
                                 onChange={(e) => handleCustomPeriodicidadChange(category.key, rowIndex, e.target.value)}
-                                className="text-xs h-5 border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg w-full"
+                                className="text-xs h-8 border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg w-full"
                                 placeholder="Especificar periodicidad..."
                               />
                             </div>
@@ -425,7 +426,7 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                                   updateAdditionalRowData(category.key, rowIndex, 'monto', Number(e.target.value));
                                 }
                               }}
-                              className="text-xs h-5 border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg font-medium w-full transition-all duration-200"
+                              className="text-xs h-8 border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg font-medium w-full transition-all duration-200"
                               min="0"
                               max="9999999999"
                               placeholder="0"
@@ -441,8 +442,8 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                                   updateAdditionalRowData(category.key, rowIndex, 'montoJustificacion', e.target.value);
                                 }
                               }}
-                              className="text-xs border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg min-h-[38px] resize-none w-full transition-all duration-200"
-                              rows={2}
+                              className="text-xs border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg min-h-[60px] resize-none w-full transition-all duration-200"
+                              rows={3}
                               placeholder="Justificación..."
                             />
                           </div>
