@@ -373,8 +373,8 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                                   updateAdditionalRowData(category.key, rowIndex, 'duracionJustificacion', e.target.value);
                                 }
                               }}
-                              className="text-xs border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg min-h-[60px] resize-none w-full transition-all duration-200"
-                              rows={3}
+                              className="text-xs border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg min-h-[90px] resize-none w-full transition-all duration-200"
+                              rows={4}
                               placeholder="Justificación..."
                             />
                           </div>
@@ -442,8 +442,8 @@ const UserM6Table: React.FC<UserM6TableProps> = ({
                                   updateAdditionalRowData(category.key, rowIndex, 'montoJustificacion', e.target.value);
                                 }
                               }}
-                              className="text-xs border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg min-h-[60px] resize-none w-full transition-all duration-200"
-                              rows={3}
+                              className="text-xs border-gray-200 focus:border-gray-600 focus:ring-gray-600/20 rounded-lg min-h-[90px] resize-none w-full transition-all duration-200"
+                              rows={4}
                               placeholder="Justificación..."
                             />
                           </div>
