@@ -13,7 +13,7 @@ interface UserProjectHeaderProps {
 const UserProjectHeader: React.FC<UserProjectHeaderProps> = ({ data, onUpdate }) => {
   return (
     <Card className="p-8 mb-8 bg-white border-gray-200 shadow-xl">
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-6 px-8 rounded-xl mb-8 -m-8 mb-8">
+      <div className="text-white py-6 px-8 rounded-xl mb-8 -m-8 mb-8" style={{ backgroundColor: '#364050' }}>
         <h1 className="text-3xl font-bold text-center">
           Descripción de implementación
         </h1>
